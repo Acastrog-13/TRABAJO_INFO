@@ -127,24 +127,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Alfil.cpp" />
+    <ClCompile Include="Caballo.cpp" />
     <ClCompile Include="Celda.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Coordinador.cpp" />
     <ClCompile Include="Cuatro_Cinco.cpp" />
+    <ClCompile Include="Dama.cpp" />
     <ClCompile Include="Juego.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Speed.cpp" />
+=======
+    <ClCompile Include="Peon.cpp" />
+    <ClCompile Include="Pieza.cpp" />
+    <ClCompile Include="Rey.cpp" />
+>>>>>>> e31c1cd578c85334ea19247131670f8bef794051
     <ClCompile Include="Tablero.cpp" />
+    <ClCompile Include="Torre.cpp" />
     <ClCompile Include="TRABAJO.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Alfil.h" />
+    <ClInclude Include="Caballo.h" />
     <ClInclude Include="Celda.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Coordinador.h" />
     <ClInclude Include="Cuatro_Cinco.h" />
+    <ClInclude Include="Dama.h" />
     <ClInclude Include="Juego.h" />
+<<<<<<< HEAD
     <ClInclude Include="Speed.h" />
+=======
+    <ClInclude Include="Peon.h" />
+    <ClInclude Include="Pieza.h" />
+    <ClInclude Include="Rey.h" />
+>>>>>>> e31c1cd578c85334ea19247131670f8bef794051
     <ClInclude Include="Tablero.h" />
+    <ClInclude Include="Torre.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
