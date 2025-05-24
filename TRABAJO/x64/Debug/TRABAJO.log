@@ -1,29 +1,77 @@
 ﻿  Juego.cpp
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(22,38): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(22,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(23,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(23,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(24,26): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(24,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(25,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(25,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(22,38): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Juego.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(22,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Juego.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(23,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Juego.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(23,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Juego.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(24,26): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Juego.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(24,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Juego.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(25,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Juego.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(25,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Juego.cpp")
+  
   Tablero.cpp
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(22,38): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(22,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(23,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(23,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(24,26): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(24,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(25,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(25,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(22,38): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Tablero.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(22,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Tablero.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(23,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Tablero.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(23,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Tablero.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(24,26): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Tablero.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(24,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Tablero.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(25,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Tablero.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(25,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Tablero.cpp")
+  
   TRABAJO.cpp
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(22,38): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(22,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(23,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(23,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(24,26): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(24,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(25,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
-C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\TRABAJO\Tablero.h(25,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(22,38): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "TRABAJO.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(22,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "TRABAJO.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(23,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "TRABAJO.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(23,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "TRABAJO.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(24,26): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "TRABAJO.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(24,18): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "TRABAJO.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(25,32): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "TRABAJO.cpp")
+  
+C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\TRABAJO\Tablero.h(25,24): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "TRABAJO.cpp")
+  
   Generando código...
-  TRABAJO.vcxproj -> C:\Users\alcba\OneDrive\Documentos\3º Carrera\2º Cuatrimestre\Informatica Industrial\Trabajo\Trabajo\TRABAJO\x64\Debug\TRABAJO.exe
+  TRABAJO.vcxproj -> C:\Users\ariel\iCloudDrive\Ing. electronica (3ero)\2o cuatri\Trabajo infor\x64\Debug\TRABAJO.exe

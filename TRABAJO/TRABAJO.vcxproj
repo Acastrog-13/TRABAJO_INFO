@@ -127,18 +127,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Alfil.cpp" />
+    <ClCompile Include="Caballo.cpp" />
     <ClCompile Include="Celda.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Dama.cpp" />
     <ClCompile Include="Juego.cpp" />
+    <ClCompile Include="Peon.cpp" />
+    <ClCompile Include="Pieza.cpp" />
+    <ClCompile Include="Rey.cpp" />
     <ClCompile Include="Tablero.cpp" />
+    <ClCompile Include="Torre.cpp" />
     <ClCompile Include="TRABAJO.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Alfil.h" />
+    <ClInclude Include="Caballo.h" />
     <ClInclude Include="Celda.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Dama.h" />
     <ClInclude Include="Juego.h" />
+    <ClInclude Include="Peon.h" />
+    <ClInclude Include="Pieza.h" />
+    <ClInclude Include="Rey.h" />
     <ClInclude Include="Tablero.h" />
+    <ClInclude Include="Torre.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
