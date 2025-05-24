@@ -1,6 +1,6 @@
 #include "Juego.h"
 
-
+int prueba;
 void Juego::dibuja() {
 	
 	gluLookAt(40, 40, 130,
@@ -9,3 +9,4 @@ void Juego::dibuja() {
 	
 	mitablero.dibuja();
 }
+
