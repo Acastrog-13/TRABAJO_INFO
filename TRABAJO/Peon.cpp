@@ -1,6 +1,8 @@
 #include "Peon.h"
 #include "Pieza.h"
 
+int prueba;
+
 Peon::Peon(float x, float y) {
     posicion.x = x;
     posicion.y = y;
