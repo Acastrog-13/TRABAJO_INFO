@@ -128,14 +128,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Celda.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Juego.cpp" />
     <ClCompile Include="Tablero.cpp" />
     <ClCompile Include="TRABAJO.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Celda.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Juego.h" />
     <ClInclude Include="Tablero.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
