@@ -1,5 +1,6 @@
 #pragma once
 #include "Juego.h"
+
 class Coordinador
 {
 	enum Estado { INICIO, CUATRO_CINCO, SPEED } estado{};

@@ -1,6 +1,5 @@
 #include "Juego.h"
 
-int prueba;
 void Juego::dibuja() {
 	
 	gluLookAt(40, 40, 130,
