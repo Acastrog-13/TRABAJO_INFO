@@ -11,15 +11,23 @@ public:
     static bool pieza_anclada(const Pieza& pieza, const Tablero& tablero);                          //no se puede mover en otra direccion la pieza si está anclada
     static bool mueve_jaque(const Pieza& rey, const Vector2D & destino, const Tablero& tablero);    //el rey no se mueve a posicion de jaque
 
-    Vector2D mueve_temporal(Pieza& pieza, Vector2D&);
-    Vector2D mueve_definitivo(Pieza& pieza, Vector2D&);
+    static Vector2D mueve_temporal(Pieza& pieza, Vector2D&);
+    static Vector2D mueve_definitivo(Pieza& pieza, Vector2D&);
 
 
    
     //suponemos interaccion, hay que hacerlo
     static bool rey_en_jaque();       
 
+    //Tipos de movimientos
+    static bool delante(Pieza &, Vector2D, Juego&);
+    static bool atras(Pieza&, Vector2D, Juego&);
+    static bool horizontal(Pieza&, Vector2D, Juego&);
+    static bool diag_alante(Pieza&, Vector2D, Juego&);
+    static bool diag_atras(Pieza&, Vector2D, Juego&);
+    static bool ele(Pieza&, Vector2D, Juego&);
 
+    
 
 
     //otras funciones especiales
