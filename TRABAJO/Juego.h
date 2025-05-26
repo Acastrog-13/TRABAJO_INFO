@@ -26,4 +26,6 @@ public:
 
 	int get_columnas() const { return columnas; }
 	int get_filas() const { return filas; }
+
+	friend class Movimientos;
 };

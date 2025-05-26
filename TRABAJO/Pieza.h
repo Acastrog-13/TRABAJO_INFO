@@ -19,6 +19,7 @@ public:
 
 	//virtual void mueve();
 
+	friend class Movimientos;
 };
 
 
