@@ -11,7 +11,7 @@ class Celda
 public: 
 	Celda(Vector2D lim1, Vector2D lim2, Vector2D n, Color c, double l = 10) : 
 		limite1{ lim1 }, limite2{ lim2 }, nombre{ n }, color{ c }, lado { l } {
-		pos_centro = { (limite2.x - limite1.x) / 2, limite1.y + l / 2 };
+		pos_centro = { (l / 2) + limite1.x, limite1.y + l / 2 };
 	}
 	//bool estoy_llena{};
 

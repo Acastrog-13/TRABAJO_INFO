@@ -14,7 +14,9 @@ public:
 	inline void set_posicion(Vector2D& pos) { posicion = pos; }
 	inline void set_color(Color& c) { color = c; }
 	
-	virtual void dibuja();
+	virtual void dibuja() = 0;
+	void dibuja(unsigned int glComun)const;
+
 	//virtual void mueve();
 
 };
