@@ -7,6 +7,6 @@ public:
 	Cuatro_Cinco() : Juego(5, 4) { inicializa(); }
 
 	void inicializa();
-	
+
 };
 

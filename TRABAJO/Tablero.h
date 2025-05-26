@@ -16,3 +16,4 @@ public:
 	Vector2D get_centro(Vector2D);
 };
 
+

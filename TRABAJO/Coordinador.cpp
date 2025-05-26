@@ -16,35 +16,28 @@ void Coordinador::tecla(unsigned char key) {
 			break;
 		}
 		if (key == '2') {
-
-			//se inicializa el juego Speed
+			//inicializa el juego speed
 			juegoS.inicializa();
 			estado = SPEED;
 			break;
 		}
 
 	case CUATRO_CINCO:
-
 		dibuja();
 		if (key == 'i' || key == 'I') {
-
 			juego45.juego_elimina();
 			estado = INICIO;
-
 			break;
 		}
+
 
 	case SPEED:
 		dibuja();
-
 		if (key == 'i' || key == 'I') {
-
 			juegoS.juego_elimina();
 			estado = INICIO;
-
 			break;
 		}
-		
 	}
 }
 

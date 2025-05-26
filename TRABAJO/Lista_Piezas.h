@@ -11,12 +11,11 @@ using std::vector;
 
 class Lista_Piezas
 {
-private:
 	vector <Pieza*> lista;
 	Color color;
 public:
-	Lista_Piezas(Color color) :color{ color }{}
-
+	Lista_Piezas(Color color) :color{ color } {}
+	
 	/*
 	~Lista_Piezas() {
 		for (auto p : lista) delete p;
@@ -24,26 +23,24 @@ public:
 	}
 	*/
 
-	void dibuja() { for (auto p : lista) p->dibuja(); }
-	//void mueve(Vector2D& pos);
-
 	Color get_color() { return color; }
+	
 	inline void agregar(Pieza* p) { lista.push_back(p); }
 
-
-	void agregar_pieza(Peon* p, const Vector2D pos, const Color col);
+	/*void agregar_pieza(Peon* p, const Vector2D pos, const Color col);
 	void agregar_pieza(Torre* p, const Vector2D pos, const Color col);
 	void agregar_pieza(Alfil* p, const Vector2D pos, const Color col);
 	void agregar_pieza(Caballo* p, const Vector2D pos, const Color col);
 	void agregar_pieza(Dama* p, const Vector2D pos, const Color col);
-	void agregar_pieza(Rey* p, const Vector2D pos, const Color col);
+	void agregar_pieza(Rey* p, const Vector2D pos, const Color col);*/
 
+	void dibuja() { for (auto p : lista) p->dibuja(); }
+	void mueve(int index, Vector2D posicion);
+	
+	int size() { return lista.size(); }
 
 	void destruir_contenido();
 	void eliminar(int index);
 	void eliminar(Pieza* p);
-	void mueve(int index, Vector2D posicion);
-	int size() { return lista.size(); }
-
 };
 

@@ -14,7 +14,7 @@ Tablero::Tablero(int f, int c, double lado) : filas{ f }, columnas{ c }{
 
 }
 
-//retorna el centro del nobre de la celda que le pasas
+//retorna el centro del nombre de la celda que le pasas
 Vector2D Tablero::get_centro(Vector2D n) {
 	for (int i = 0; i < lista.size(); i++)
 		if (lista[i].get_nombre() == n)

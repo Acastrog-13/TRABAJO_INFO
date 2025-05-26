@@ -9,10 +9,9 @@ protected:
 	Tablero mitablero;
 	Lista_Piezas piezas_negras, piezas_blancas;
 public:
-	Juego(int f, int c) : mitablero(f, c), filas{ f }, columnas{ c }, 
-		piezas_negras({ 0,0,0}), piezas_blancas({ 255,255,255 }) {}
-
-	
+	Juego(int f, int c) : mitablero(f, c), filas{ f }, columnas{ c },
+		piezas_negras({ 0,0,0 }), piezas_blancas({ 255,255,255 }) {
+	}
 
 	void dibuja();
 
@@ -24,4 +23,7 @@ public:
 	void agregar_pieza(Rey*, Lista_Piezas&, const Vector2D);
 
 	void juego_elimina();
+
+	int get_columnas() const { return columnas; }
+	int get_filas() const { return filas; }
 };

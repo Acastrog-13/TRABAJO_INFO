@@ -3,8 +3,8 @@
 class Speed :   public Juego
 {
 public:
-	Speed() : Juego(6, 5) { inicializa(); }
+    Speed() : Juego(6, 5) { inicializa(); }
 
-	void inicializa();
+    void inicializa();
 };
 
