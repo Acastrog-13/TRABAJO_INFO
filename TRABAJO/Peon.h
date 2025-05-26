@@ -7,6 +7,6 @@ public:
 	Peon(Vector2D pos, Color c = {}) : Pieza(pos, c){}
 	
 	void dibuja();
-	void mueve();
+	void mueve(Vector2D);
 
 };

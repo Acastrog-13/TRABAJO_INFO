@@ -17,8 +17,8 @@ public:
 	virtual void dibuja() = 0;
 	void dibuja(unsigned int glComun)const;
 
-	//virtual void mueve();
-
+	virtual void mueve(Vector2D) = 0;
+	
 	friend class Movimientos;
 };
 

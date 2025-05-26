@@ -24,12 +24,11 @@ public:
 	Color get_color() { return color; }
 	
 	inline void agregar(Pieza* p) { lista.push_back(p); }
-
+	inline int size() { return lista.size(); }
 	
 	void dibuja() { for (auto p : lista) p->dibuja(); }
 	void mueve(int index, Vector2D posicion);
 	
-	int size() { return lista.size(); }
 
 	void destruir_contenido();
 	void eliminar(int index);

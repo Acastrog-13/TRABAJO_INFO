@@ -23,5 +23,6 @@ void Lista_Piezas::eliminar(Pieza* p) {
 
 void Lista_Piezas::mueve(int index, Vector2D posicion) {
 	if ((index < 0) || (index >= lista.size())) return;
-	lista[index]->set_posicion(posicion);
+	lista[index]->mueve();
+
 }
