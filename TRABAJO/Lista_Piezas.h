@@ -16,24 +16,16 @@ class Lista_Piezas
 public:
 	Lista_Piezas(Color color) :color{ color } {}
 	
-	/*
 	~Lista_Piezas() {
-		for (auto p : lista) delete p;
-		lista.clear();
+		destruir_contenido();
 	}
-	*/
+	
 
 	Color get_color() { return color; }
 	
 	inline void agregar(Pieza* p) { lista.push_back(p); }
 
-	/*void agregar_pieza(Peon* p, const Vector2D pos, const Color col);
-	void agregar_pieza(Torre* p, const Vector2D pos, const Color col);
-	void agregar_pieza(Alfil* p, const Vector2D pos, const Color col);
-	void agregar_pieza(Caballo* p, const Vector2D pos, const Color col);
-	void agregar_pieza(Dama* p, const Vector2D pos, const Color col);
-	void agregar_pieza(Rey* p, const Vector2D pos, const Color col);*/
-
+	
 	void dibuja() { for (auto p : lista) p->dibuja(); }
 	void mueve(int index, Vector2D posicion);
 	

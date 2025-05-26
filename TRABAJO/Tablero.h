@@ -12,6 +12,10 @@ class Tablero
 public:
 	Tablero(int, int, double lado = { 10 });
 
+	~Tablero() {
+		lista.clear();
+	}
+
 	inline void dibuja() { for (auto p : lista) p.dibuja(); }
 	Vector2D get_centro(Vector2D);
 };
