@@ -1,14 +1,6 @@
-#include "Juego.h"
+/*#include "Juego.h"
 
-void Juego::dibuja() {
-	gluLookAt(columnas * 5, filas * 5, 100,
-		columnas * 5, filas * 5, 0, 
-		0.0, 1.0, 0.0);
 
-	mitablero.dibuja();
-	piezas_blancas.dibuja();
-	piezas_negras.dibuja();
-}
 
 void Juego::agregar_pieza(Peon* p, Lista_Piezas& l, const Vector2D celda) {
 	l.agregar(new Peon(mitablero.get_centro(celda), l.get_color()));
@@ -35,3 +27,4 @@ void Juego::juego_elimina() {
 	piezas_negras.destruir_contenido();
 	//falta lablero elimina
 }
+*/

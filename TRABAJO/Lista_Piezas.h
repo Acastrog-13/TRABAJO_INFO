@@ -11,27 +11,30 @@ using std::vector;
 
 class Lista_Piezas
 {
+	//Atributos
 	vector <Pieza*> lista;
 	Color color;
 public:
+	//Contructores
 	Lista_Piezas(Color color) :color{ color } {}
 	
+	//Destructores
 	~Lista_Piezas() {
 		destruir_contenido();
 	}
 	
-
-	Color get_color() { return color; }
-	
+	//Métodos inline
+	Color get_color() const{ return color; }
+	inline int size() const{ return (int)lista.size(); }
 	inline void agregar(Pieza* p) { lista.push_back(p); }
-	inline int size() { return (int)lista.size(); }
-	
-	void dibuja() { for (auto p : lista) p->dibuja(); }
+	inline void dibuja() const { for (auto p : lista) p->dibuja(); }					//Dibuja todas las piezas de su lista
+
+	//Métodos
 	void mueve(int index, Vector2D posicion);
 	
-
-	void destruir_contenido();
-	void eliminar(int index);
-	void eliminar(Pieza* p);
+	//Métodos de eliminación
+	void destruir_contenido();													//Elimina las piezas de la lista y la limpia
+	void eliminar(int index);													//Elimina la pieza de una posicion concreta
+	void eliminar(Pieza* p);													//Busca una pieza y la elimina
 };
 

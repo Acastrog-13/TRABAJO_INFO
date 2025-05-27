@@ -1,7 +1,7 @@
 #pragma once
-#include "Juego.h"
 #include "Cuatro_Cinco.h"
 #include "Speed.h"
+#include "Vector2D.h"
 
 class Coordinador
 {

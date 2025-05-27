@@ -11,30 +11,22 @@ void Coordinador::tecla(unsigned char key) {
 		if (key == '1') {
 
 			//se inicializa el juego 45
-			juego45.inicializa();
 			estado = CUATRO_CINCO;
 			break;
 		}
 		if (key == '2') {
 			//inicializa el juego speed
-			juegoS.inicializa();
 			estado = SPEED;
 			break;
 		}
 
 	case CUATRO_CINCO:
-		dibuja();
 		if (key == 'i' || key == 'I') {
-			juego45.juego_elimina();
 			estado = INICIO;
 			break;
 		}
-
-
 	case SPEED:
-		dibuja();
 		if (key == 'i' || key == 'I') {
-			juegoS.juego_elimina();
 			estado = INICIO;
 			break;
 		}

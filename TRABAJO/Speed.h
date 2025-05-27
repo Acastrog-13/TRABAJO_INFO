@@ -1,9 +1,9 @@
 #pragma once
-#include "Juego.h"
-class Speed :   public Juego
+#include "Tablero.h"
+class Speed :   public Tablero
 {
 public:
-    Speed() : Juego(6, 5) { inicializa(); }
+    Speed() : Tablero(6, 5) { inicializa(); }
 
     void inicializa();
 };

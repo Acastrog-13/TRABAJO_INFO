@@ -15,12 +15,11 @@ void Lista_Piezas::eliminar(int index) {
 
 
 void Lista_Piezas::eliminar(Pieza* p) {
-	for (int i = 0; i < lista.size(); i++) {
+	for (int i = 0; i < lista.size(); i++)
 		if (lista[i] == p) {
 			eliminar(i);
 			return;
 		}
-	}
 }
 
 

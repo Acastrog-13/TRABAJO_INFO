@@ -2,7 +2,6 @@
 
 void Speed::inicializa()
 {
-
 	agregar_pieza((Torre*)nullptr, piezas_blancas, { 1,1 });
 	agregar_pieza((Caballo*)nullptr, piezas_blancas, { 1,2 });
 	agregar_pieza((Alfil*)nullptr, piezas_blancas, { 1,3 });

@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include "Tablero.h"
 #include "Lista_Piezas.h"
 
@@ -29,3 +29,4 @@ public:
 
 	friend class Movimientos;
 };
+*/
