@@ -15,10 +15,10 @@ public:
 	}
 	//bool estoy_llena{};
 
-	Vector2D get_nombre() { return nombre; }
-	Vector2D get_centro() { return pos_centro; }
+	Vector2D get_nombre() const{ return nombre; }
+	Vector2D get_centro() const{ return pos_centro; }
 	
-	double get_lado() { return lado; }
+	double get_lado() const{ return lado; }
 	void dibuja();
 
 

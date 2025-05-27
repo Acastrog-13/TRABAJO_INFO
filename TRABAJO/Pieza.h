@@ -15,9 +15,9 @@ public:
 	inline void set_color(Color& c) { color = c; }
 	
 	virtual void dibuja() = 0;
-	void dibuja(unsigned int glComun)const;
+	void dibuja(unsigned int)const;
 
-	virtual void mueve(Vector2D) = 0;
+	//virtual void mueve(Vector2D) = 0;
 	
 	friend class Movimientos;
 };

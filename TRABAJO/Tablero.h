@@ -14,7 +14,7 @@ public:
 
 	inline void dibuja() { for (auto p : lista) p.dibuja(); }
 	Vector2D get_centro(Vector2D);
-	int size() { return lista.size(); } ///////////////
+	int size() { return (int)lista.size(); }
 
 	~Tablero() {
 		lista.clear();
