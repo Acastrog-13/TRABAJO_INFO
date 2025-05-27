@@ -5,7 +5,7 @@
 class Celda
 {
 	double lado;
-	Color color{};
+	Color color;
 	Vector2D limite1, limite2, pos_centro, nombre;
 
 public: 
@@ -13,17 +13,15 @@ public:
 		limite1{ lim1 }, limite2{ lim2 }, nombre{ n }, color{ c }, lado { l } {
 		pos_centro = { (l / 2) + limite1.x, limite1.y + l / 2 };
 	}
-	//bool estoy_llena{};
 
 	Vector2D get_nombre() const{ return nombre; }
 	Vector2D get_centro() const{ return pos_centro; }
+<<<<<<< HEAD
 	
 	double get_lado() const{ return lado; }
+
 	void dibuja();
 
-
-
 	friend class Tablero;
-
 };
 
