@@ -10,5 +10,4 @@ void Celda::dibuja() {
 	glVertex3d(limite1.x, limite1.y + lado, 0);
 	glEnd();
 	glEnable(GL_LIGHTING);
-
 }

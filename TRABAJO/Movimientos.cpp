@@ -69,6 +69,7 @@ bool Movimientos::diag_alante(Pieza& p, Vector2D nombre, Juego& juego)
         p.posicion = juego.mitablero.get_centro(nombre);
         return true;
     }
+    return false;
 }
 //Mueve diagonalmente hacia atras izq y dcha
 bool Movimientos::diag_atras(Pieza& p, Vector2D nombre, Juego& juego)
@@ -84,6 +85,7 @@ bool Movimientos::diag_atras(Pieza& p, Vector2D nombre, Juego& juego)
         p.posicion = juego.mitablero.get_centro(nombre);
         return true;
     }
+    return false;
 }
 //Mueve diagonalmente en L para el caballo
 bool Movimientos::ele(Pieza& p, Vector2D nombre, Juego& juego)
@@ -108,5 +110,6 @@ bool Movimientos::ele(Pieza& p, Vector2D nombre, Juego& juego)
         p.posicion = juego.mitablero.get_centro(nombre);
         return true;
     }
+    return false;
 }
 
