@@ -3,6 +3,7 @@
 #include "freeglut.h"
 #include "Coordinador.h"
 #include "Cuatro_Cinco.h"
+#include <iostream>
 
 
 Coordinador ajedrez; //centralizamos la información en este objeto
@@ -113,7 +114,8 @@ Vector2D detectarCeldaClickada(int x, int y, int lado) {			//x e y son las coord
 	int fila = y / lado;
 	
 	Vector2D a = { (double)columna, (double)fila };		//se convierte a double pq vector2d esta definido por double
-
+	a.x++;
+	a.y++;
 	return a;		// Devolvemos el nombre (o posición en el tablero)
 }
 
@@ -122,9 +124,9 @@ void OnMouse(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		int worldX, worldY;
 		screenToWorld(x, y, worldX, worldY);
-
 		int lado_celda = 10;
-		Vector2D celdaClickada = detectarCeldaClickada(worldX, worldY, lado_celda);
+		Vector2D celdaClickada = detectarCeldaClickada(worldY, worldX, lado_celda);
 		
+		//ajedrez.busca(celdaClickada);
 	}
 }

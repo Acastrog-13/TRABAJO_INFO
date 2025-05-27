@@ -72,3 +72,6 @@ void Coordinador::dibuja()
 	}
 }
 
+void Coordinador::busca(Vector2D vector) {
+
+}

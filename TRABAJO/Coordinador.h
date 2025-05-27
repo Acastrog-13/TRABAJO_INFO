@@ -15,5 +15,6 @@ public:
 	void mueve();
 	void dibuja();
 
+	void busca(Vector2D);
 };
 
