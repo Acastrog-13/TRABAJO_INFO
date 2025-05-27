@@ -16,8 +16,8 @@ public:
 
 	Vector2D get_nombre() const{ return nombre; }
 	Vector2D get_centro() const{ return pos_centro; }
-<<<<<<< HEAD
-	
+
+
 	double get_lado() const{ return lado; }
 
 	void dibuja();
