@@ -5,7 +5,7 @@
 using namespace std;
 
 void Peon::dibuja() {
-    string imagen = (color == Color{ 0, 0, 0 }) ? "imagenes/peon_negro.png" : "imagenes/peon_blanco.png";
+    string imagen = (color_p == Colores::NEGRA) ? "imagenes/peon_negro.png" : "imagenes/peon_blanco.png";
 
     unsigned int glComun = ETSIDI::getTexture(imagen.c_str()).id;
 

@@ -1,19 +1,35 @@
 #pragma once
-#include "Color.h"
 #include "Vector2D.h"
+#include "Color.h"
+#include "freeglut.h"
+
+
 class Pieza
 {
 protected:
-	Color color{};
+	Colores color_p{}; //Colores posibles
+	enum Tipo { NO_TIPO, PEON, TORRE, CABALLO, ALFIL, DAMA, REY } tipo_p{};//Tipos de pieza posibles
 	Vector2D posicion{};
 
 public:
-	Pieza(Vector2D pos, Color c = {}) :posicion{ pos }, color{ c }{}
-	Vector2D get_pos() { return posicion; }
-	Color get_color() {	return color;}
-	inline void set_posicion(Vector2D& pos) { posicion = pos; }
-	inline void set_color(Color& c) { color = c; }
+	//Constructores
+	Pieza(Colores c_p, Tipo t_p, Vector2D pos_p) :
+		color_p{ c_p },
+		tipo_p{ t_p },
+		posicion{ pos_p }
+	{}
+
+	//Destructores
+
+
+	//Metodos inline
+	inline void set_posicion(Vector2D& pos) { posicion = pos; } //Asigna la posicion
+	inline void set_color(Colores& c) { color_p = c; } //Asigna el color
+
+	inline Vector2D get_pos()const { return posicion; } //Devuelve la posicion
+	inline Colores get_color()const { return color_p; } //Desvuelve el color
 	
+	//Metodos
 	virtual void dibuja() = 0;
 	void dibuja(unsigned int)const;
 

@@ -12,13 +12,13 @@ bool Movimientos::limite_tablero(int x, int y, const Tablero& Tablero) {
 
 //Mueve verticalmente hacia alante, no hacia atras
 bool Movimientos::delante(Pieza& p, Vector2D nombre, Tablero& Tablero) {
-    if (p.color == Color{255, 255, 255}) {
+    if (p.color_p == Colores::BLANCA) {
         if (p.posicion == Tablero.get_centro({nombre.x - 1, nombre.y })) {
             p.posicion = Tablero.get_centro(nombre);
             return true;
         }
     }
-    else if (p.color == Color{ 0, 0, 0 }) {
+    else if (p.color_p == Colores::NEGRA) {
         if (p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y })) {
             p.posicion = Tablero.get_centro(nombre);
             return true;
@@ -30,13 +30,13 @@ bool Movimientos::delante(Pieza& p, Vector2D nombre, Tablero& Tablero) {
 //Mueve verticalmente hacia atras, no hacia alante
 bool Movimientos::atras(Pieza& p, Vector2D nombre, Tablero& Tablero)
 {
-    if (p.color == Color{ 255, 255, 255 }) {
+    if (p.color_p == Colores::BLANCA) {
         if (p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y })) {
             p.posicion = Tablero.get_centro(nombre);
             return true;
         }
     }
-    else if (p.color == Color{ 0,0,0 }) {
+    else if (p.color_p == Colores::NEGRA) {
         if (p.posicion == Tablero.get_centro({ nombre.x - 1, nombre.y })) {
             p.posicion = Tablero.get_centro(nombre);
             return true;
@@ -56,15 +56,15 @@ bool Movimientos::horizontal(Pieza& p, Vector2D nombre, Tablero& Tablero)
 }
 
 //Mueve diagonalmente hacia alante izq y dcha
-bool Movimientos::diag_alante(Pieza& p, Vector2D nombre, Tablero& Tablero)
+bool Movimientos::diag_delante(Pieza& p, Vector2D nombre, Tablero& Tablero)
 {
-    if (p.color == Color{ 255, 255, 255 } && 
+    if (p.color_p == Colores::BLANCA && 
         (p.posicion == Tablero.get_centro({nombre.x - 1, nombre.y - 1}) || 
             p.posicion == Tablero.get_centro({ nombre.x - 1, nombre.y + 1 }))) {
         p.posicion = Tablero.get_centro(nombre);
         return true;
     }
-    if (p.color == Color{ 0, 0, 0 } && (p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y - 1 }) 
+    if (p.color_p == Colores::NEGRA && (p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y - 1 }) 
         || p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y + 1 }))) {
         p.posicion = Tablero.get_centro(nombre);
         return true;
@@ -74,12 +74,12 @@ bool Movimientos::diag_alante(Pieza& p, Vector2D nombre, Tablero& Tablero)
 //Mueve diagonalmente hacia atras izq y dcha
 bool Movimientos::diag_atras(Pieza& p, Vector2D nombre, Tablero& Tablero)
 {
-    if (p.color == Color{ 255, 255, 255 } && (p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y - 1 })
+    if (p.color_p == Colores::BLANCA && (p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y - 1 })
         || p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y + 1 }))) {
         p.posicion = Tablero.get_centro(nombre);
         return true;
     }
-    if (p.color == Color{ 0, 0, 0 } &&
+    if (p.color_p == Colores::NEGRA &&
         (p.posicion == Tablero.get_centro({ nombre.x - 1, nombre.y - 1 }) ||
             p.posicion == Tablero.get_centro({ nombre.x - 1, nombre.y + 1 }))) {
         p.posicion = Tablero.get_centro(nombre);

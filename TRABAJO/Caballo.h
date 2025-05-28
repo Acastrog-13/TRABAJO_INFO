@@ -1,12 +1,17 @@
 #pragma once
 #include "Pieza.h"
-class Caballo :  public Pieza
+
+struct Caballo : Pieza
 {
-public:
-	Caballo(Vector2D pos, Color c = {}) : Pieza(pos, c) {}
-	
-	void dibuja();
-	void mueve(Vector2D);
+	//Constructor
+    Caballo(Colores c = {}, Vector2D pos={}) :
+        Pieza(c, CABALLO, pos) {}
+
+
+
+    //Metodos
+    void dibuja();
+    void mueve(Vector2D);
 };
 
 

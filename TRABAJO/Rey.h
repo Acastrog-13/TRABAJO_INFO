@@ -1,10 +1,15 @@
 #pragma once
 #include "Pieza.h"
-class Rey :  public Pieza
+
+struct Rey : Pieza
 {
-public:
-    Rey(Vector2D pos, Color c = {}) : Pieza(pos, c) {}
-    
+	//Constructor
+    Rey(Colores c = {}, Vector2D pos={}) :
+        Pieza(c, REY, pos) {}
+
+
+
+    //Metodos
     void dibuja();
     void mueve(Vector2D);
 };

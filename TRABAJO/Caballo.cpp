@@ -6,7 +6,7 @@
 using namespace std;
 
 void Caballo::dibuja() {
-    string imagen = (color == Color{ 0, 0, 0 }) ? "imagenes/caballo_negro.png" : "imagenes/caballo_blanco.png";
+    string imagen = (color_p == Colores::NEGRA) ? "imagenes/caballo_negro.png" : "imagenes/caballo_blanco.png";
 
     unsigned int glComun = ETSIDI::getTexture(imagen.c_str()).id;
 

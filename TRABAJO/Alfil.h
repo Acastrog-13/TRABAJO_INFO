@@ -1,10 +1,15 @@
 #pragma once
 #include "Pieza.h"
-class Alfil :  public Pieza
-{
-public:
-    Alfil(Vector2D pos, Color c = {}) : Pieza(pos, c) {}
 
+struct Alfil : Pieza{
+
+    //Constructor
+    Alfil(Colores c = {}, Vector2D pos={}) :
+        Pieza(c, ALFIL, pos) {}
+
+
+
+    //Metodos
     void dibuja();
     void mueve(Vector2D);
 };

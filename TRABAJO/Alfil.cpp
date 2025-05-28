@@ -5,7 +5,7 @@
 using namespace std;
 
 void Alfil::dibuja() {
-    string imagen = (color == Color{ 0, 0, 0 }) ? "imagenes/alfil_negro.png" : "imagenes/alfil_blanco.png";
+    string imagen = (color_p == Colores::NEGRA) ? "imagenes/alfil_negro.png" : "imagenes/alfil_blanco.png";
 
     unsigned int glComun = ETSIDI::getTexture(imagen.c_str()).id;
 

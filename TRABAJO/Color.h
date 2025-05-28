@@ -1,6 +1,8 @@
 #pragma once
 #include "freeglut.h"
 
+enum class Colores{NO_COLOR, BLANCA, NEGRA};
+
 struct Color
 {
 	unsigned char r{}, g{}, b{};

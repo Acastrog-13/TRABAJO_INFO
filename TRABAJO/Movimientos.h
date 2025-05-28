@@ -1,7 +1,7 @@
 #pragma once
 #include"pieza.h"
 #include"tablero.h"
-#include"Tablero.h"
+
 
 class Movimientos
 {
@@ -23,7 +23,7 @@ public:
     static bool delante(Pieza &, Vector2D, Tablero&);
     static bool atras(Pieza&, Vector2D, Tablero&);
     static bool horizontal(Pieza&, Vector2D, Tablero&);
-    static bool diag_alante(Pieza&, Vector2D, Tablero&);
+    static bool diag_delante(Pieza&, Vector2D, Tablero&);
     static bool diag_atras(Pieza&, Vector2D, Tablero&);
     static bool ele(Pieza&, Vector2D, Tablero&);
 
