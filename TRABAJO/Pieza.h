@@ -3,7 +3,6 @@
 #include "Color.h"
 #include "freeglut.h"
 
-
 class Pieza
 {
 protected:
@@ -34,7 +33,8 @@ public:
 	void dibuja(unsigned int)const;
 
 	//virtual void mueve(Vector2D) = 0;
-	
+	//virtual vector<Jugadas*> calcular_jugadas(const Tablero&) const = 0;
+
 	friend class Movimientos;
 };
 

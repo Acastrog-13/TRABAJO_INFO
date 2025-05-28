@@ -12,4 +12,5 @@ struct Torre : Pieza
     //Metodos
     void dibuja();
     void mueve(Vector2D);
+    //std::vector<Jugadas*> calcular_jugadas(const Tablero&) const override;
 };

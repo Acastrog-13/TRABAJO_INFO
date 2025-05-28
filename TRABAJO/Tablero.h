@@ -45,6 +45,8 @@ public:
 	void agregar_pieza(Caballo*, Lista_Piezas&, const Vector2D);
 	void agregar_pieza(Dama*, Lista_Piezas&, const Vector2D);
 	void agregar_pieza(Rey*, Lista_Piezas&, const Vector2D);
+	
+	//void recalcula_jugadas();
 
 	//Amistades
 	friend class Movimientos;

@@ -125,3 +125,15 @@ void Tablero::inicializaS()
 		agregar_pieza((Peon*)nullptr, piezas_negras, { 5,i });
 
 }
+
+
+/*void Tablero::recalcula_jugadas() {
+	// Borra las jugadas anteriores
+	for (auto j : jugadas_posibles) delete j;
+	jugadas_posibles.clear();
+
+	for (auto p : piezas) {
+		std::vector<Jugadas*> jugadas_pieza = p->calcular_jugadas(tablero);
+		jugadas_posibles.insert(jugadas_posibles.end(), jugadas_pieza.begin(), jugadas_pieza.end());
+	}
+}*/
