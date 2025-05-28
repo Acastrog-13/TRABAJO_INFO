@@ -88,26 +88,26 @@ bool Movimientos::diag_atras(Pieza& p, Vector2D nombre, Tablero& Tablero)
     return false;
 }
 //Mueve diagonalmente en L para el caballo
-bool Movimientos::ele(Pieza& p, Vector2D nombre, Tablero& Tablero)
+bool Movimientos::ele(Pieza& p, Vector2D destino, Tablero& Tablero)
 {
-    if ((p.posicion == Tablero.get_centro({ nombre.x - 2, nombre.y + 1 }) ||
-            p.posicion == Tablero.get_centro({ nombre.x - 2, nombre.y - 1 }))) {
-        p.posicion = Tablero.get_centro(nombre);
+    if ((p.posicion == Tablero.get_centro({ destino.x - 2, destino.y + 1 }) ||
+            p.posicion == Tablero.get_centro({ destino.x - 2, destino.y - 1 }))) {
+        p.posicion = Tablero.get_centro(destino);
         return true;
     }
-    if ((p.posicion == Tablero.get_centro({ nombre.x - 1, nombre.y + 2 })
-        || p.posicion == Tablero.get_centro({ nombre.x - 1, nombre.y - 2 }))) {
-        p.posicion = Tablero.get_centro(nombre);
+    if ((p.posicion == Tablero.get_centro({ destino.x - 1, destino.y + 2 })
+        || p.posicion == Tablero.get_centro({ destino.x - 1, destino.y - 2 }))) {
+        p.posicion = Tablero.get_centro(destino);
         return true;
     }
-    if ((p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y + 2 })
-        || p.posicion == Tablero.get_centro({ nombre.x + 1, nombre.y - 2 }))) {
-        p.posicion = Tablero.get_centro(nombre);
+    if ((p.posicion == Tablero.get_centro({ destino.x + 1, destino.y + 2 })
+        || p.posicion == Tablero.get_centro({ destino.x + 1, destino.y - 2 }))) {
+        p.posicion = Tablero.get_centro(destino);
         return true;
     }
-    if ((p.posicion == Tablero.get_centro({ nombre.x + 2, nombre.y + 1 })
-        || p.posicion == Tablero.get_centro({ nombre.x + 2, nombre.y - 1 }))) {
-        p.posicion = Tablero.get_centro(nombre);
+    if ((p.posicion == Tablero.get_centro({ destino.x + 2, destino.y + 1 })
+        || p.posicion == Tablero.get_centro({ destino.x + 2, destino.y - 1 }))) {
+        p.posicion = Tablero.get_centro(destino);
         return true;
     }
     return false;

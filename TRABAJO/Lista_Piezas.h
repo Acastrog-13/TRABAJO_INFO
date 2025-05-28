@@ -33,9 +33,9 @@ public:
 	void mueve(int index, Vector2D posicion);
 	
 	//Métodos de eliminación
-	void destruir_contenido();													//Elimina las piezas de la lista y la limpia
-	void eliminar(int index);													//Elimina la pieza de una posicion concreta
-	void eliminar(Pieza* p);													//Busca una pieza y la elimina
+	void destruir_contenido();										//Elimina las piezas de la lista y la limpia
+	void eliminar(int index);										//Elimina la pieza de una posicion concreta
+	void eliminar(Pieza* p);										//Busca una pieza y la elimina
 
 
 	friend class Tablero;
