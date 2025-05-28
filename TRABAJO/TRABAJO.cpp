@@ -104,8 +104,8 @@ void screenToWorld(int screenX, int screenY, int& worldX, int& worldY) {
 
 	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);//toma coordenadas de la pantalla y devuelve las del mundo 3D
 
-	worldX = (float)posX;								//copia las coord del mundo 3D en nuestros parametros de salida
-	worldY = (float)posY;
+	worldX = (int)posX;								//copia las coord del mundo 3D en nuestros parametros de salida
+	worldY = (int)posY;
 }
 
 
