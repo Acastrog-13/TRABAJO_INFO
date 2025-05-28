@@ -1,15 +1,16 @@
 #pragma once
-#include "Cuatro_Cinco.h"
-#include "Speed.h"
 #include "Vector2D.h"
+#include "Tablero.h"
 
 class Coordinador
 {
 	enum Estado { INICIO, CUATRO_CINCO, SPEED,JAQUE_MATE, FIN } estado{};
-	Cuatro_Cinco juego45;
-	Speed juegoS;
+	
+	Tablero mitablero;
+	
 
 public: 
+
 	void tecla_especial(unsigned char key);
 	void tecla (unsigned char key);
 	void mueve();

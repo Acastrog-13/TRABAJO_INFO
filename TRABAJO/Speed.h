@@ -3,7 +3,7 @@
 class Speed :   public Tablero
 {
 public:
-    Speed() : Tablero(6, 5) { inicializa(); }
+    //Speed() : Tablero(6, 5) { inicializa(); }
 
     void inicializa();
 };

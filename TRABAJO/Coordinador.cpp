@@ -6,16 +6,22 @@ void Coordinador::tecla(unsigned char key) {
 
 	switch (estado) {
 	case INICIO:
+
+		mitablero.destruir_contenido();
+
+
 		if (key == '0') exit(0);
 		if (key != '1' && key != '2') return;
 		if (key == '1') {
 
 			//se inicializa el juego 45
+			mitablero.inicializa45();
 			estado = CUATRO_CINCO;
 			break;
 		}
 		if (key == '2') {
 			//inicializa el juego speed
+			mitablero.inicializaS();
 			estado = SPEED;
 			break;
 		}
@@ -37,7 +43,7 @@ void Coordinador::dibuja()
 {
 	switch (estado) {
 	case INICIO:
-		
+
 		gluLookAt(40, 40, 130,
 			40, 40, 0,
 			0.0, 1.0, 0.0);
@@ -55,11 +61,11 @@ void Coordinador::dibuja()
 		break;
 
 	case CUATRO_CINCO:
-		juego45.dibuja();
+		mitablero.dibuja();
 		break;
 
 	case SPEED:
-		juegoS.dibuja();
+		mitablero.dibuja();
 		break;
 	}
 }

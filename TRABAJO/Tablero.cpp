@@ -1,14 +1,14 @@
 #include "Tablero.h"
 
-Tablero::Tablero(int f, int c, double lado) : filas{ f }, columnas{ c }, 
-piezas_negras(Colores::NEGRA), piezas_blancas(Colores::BLANCA) {
+void Tablero::inicializa(int f, int c, double lado)
+{
+	filas={ f };
+	columnas={ c };
+	
 	Color color{};
-	int co, fi;
 	for (double fila = 1.0; fila <= f; fila++)
 		for (double colum = 1.0; colum <= c; colum++) {
-			co = (int)colum;
-			fi = (int)fila;
-			if (((co % 2) == 0 && (fi % 2) == 0) || ((co % 2) == 1 && (fi % 2) == 1)) color = { 100,140, 0}; //celdas oscuras
+			if ((((int)colum% 2) == 0 && ((int)fila% 2) == 0) || (((int)colum% 2) == 1 && ((int)fila% 2) == 1)) color = { 100,140, 0}; //celdas oscuras
 			else color = { 213, 186, 152 }; //celdas claras
 			lista.push_back(Celda({ (colum - 1) * lado, (fila - 1) * lado }, { (colum)*lado, (fila - 1) * lado }, { fila,colum }, color, lado));
 		}
@@ -28,11 +28,17 @@ void Tablero::dibuja() const{
 		columnas * 5, filas * 5, 0,
 		0.0, 1.0, 0.0);
 
-	for (auto p : lista) p.dibuja(); 
+	for (auto c : lista) c.dibuja(); 
 
 
 	piezas_blancas.dibuja();
 	piezas_negras.dibuja();
+}
+
+void Tablero::destruir_contenido() {
+	piezas_blancas.destruir_contenido();
+	piezas_negras.destruir_contenido();
+	lista.clear();
 }
 
 void Tablero::agregar_pieza(Peon* p, Lista_Piezas& l, const Vector2D celda) {
@@ -54,3 +60,43 @@ void Tablero::agregar_pieza(Rey* p, Lista_Piezas& l, const Vector2D celda) {
 	l.agregar(new Rey(l.get_color(),get_centro(celda)));
 }
 
+
+void Tablero::inicializa45()
+{
+	inicializa(5, 4);
+
+	agregar_pieza((Peon*) nullptr, piezas_blancas, { 2,4 });
+	agregar_pieza((Torre*)nullptr, piezas_blancas, { 1,1 });
+	agregar_pieza((Alfil*)nullptr, piezas_blancas, { 1,2 });
+	agregar_pieza((Caballo*)nullptr, piezas_blancas, { 1,3 });
+	agregar_pieza((Rey*)nullptr, piezas_blancas, { 1,4 });
+
+	agregar_pieza((Peon*) nullptr, piezas_negras, { 4,1 });
+	agregar_pieza((Torre*)nullptr, piezas_negras, { 5,4 });
+	agregar_pieza((Alfil*)nullptr, piezas_negras, { 5,3 });
+	agregar_pieza((Caballo*)nullptr, piezas_negras, { 5,2 });
+	agregar_pieza((Rey*)nullptr, piezas_negras, { 5,1 });
+
+}
+
+void Tablero::inicializaS()
+{
+	inicializa(6, 5);
+
+	agregar_pieza((Torre*)nullptr, piezas_blancas, { 1,1 });
+	agregar_pieza((Caballo*)nullptr, piezas_blancas, { 1,2 });
+	agregar_pieza((Alfil*)nullptr, piezas_blancas, { 1,3 });
+	agregar_pieza((Dama*)nullptr, piezas_blancas, { 1,4 });
+	agregar_pieza((Rey*)nullptr, piezas_blancas, { 1,5 });
+	for (double i = 1; i < 6; i++)
+		agregar_pieza((Peon*)nullptr, piezas_blancas, { 2,i });
+
+	agregar_pieza((Torre*)nullptr, piezas_negras, { 6,5 });
+	agregar_pieza((Caballo*)nullptr, piezas_negras, { 6,4 });
+	agregar_pieza((Alfil*)nullptr, piezas_negras, { 6,3 });
+	agregar_pieza((Dama*)nullptr, piezas_negras, { 6,2 });
+	agregar_pieza((Rey*)nullptr, piezas_negras, { 6,1 });
+	for (double i = 1; i < 6; i++)
+		agregar_pieza((Peon*)nullptr, piezas_negras, { 5,i });
+
+}
