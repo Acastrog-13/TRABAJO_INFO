@@ -127,10 +127,16 @@ void OnMouse(int button, int state, int x, int y) {
 		int lado_celda = 10;
 		//No es necesario
 		Vector2D celdaClickada = ajedrez.mitablero.get_nombre({ (double)worldX,(double) worldY });
-		std::cout << celdaClickada.x << " " << celdaClickada.y << " ";
+		if (celdaClickada.x != -1)
+			cout << "Las coordenadas de la celda son: " << celdaClickada.x << "," << celdaClickada.y << endl;
+
 
 		int index = ajedrez.mitablero.indice_pieza(celdaClickada, Colores::NEGRA);
-		cout << index << std::endl;
+		if (index != -1)
+			cout << "La pieza es negra y esta en la posicion: " << index << endl << endl;
+		index = ajedrez.mitablero.indice_pieza(celdaClickada, Colores::BLANCA);
+		if (index != -1)
+			cout << "La pieza es blanca y esta en la posicion: " << index << endl << endl;
 		//ajedrez.busca(celdaClickada);
 	}
 }
