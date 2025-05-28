@@ -126,7 +126,10 @@ void OnMouse(int button, int state, int x, int y) {
 		screenToWorld(x, y, worldX, worldY);
 		int lado_celda = 10;
 		Vector2D celdaClickada = detectarCeldaClickada(worldY, worldX, lado_celda);
+		std::cout << celdaClickada.x << " " << celdaClickada.y << std::endl;
 		
 		//ajedrez.busca(celdaClickada);
+
+
 	}
 }
