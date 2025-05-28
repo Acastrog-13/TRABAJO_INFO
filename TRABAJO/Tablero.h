@@ -8,11 +8,10 @@ using namespace std;
 class Tablero
 {
 	//Atributos
-	int filas, columnas;
-	vector <Celda> lista;
+	int filas{}, columnas{};
+	vector <Celda> celdas;
 
 	//Protected para que Cuatro_Cinco y Speed puedan cambiarlas
-protected:
 	Lista_Piezas piezas_negras{ Colores::NEGRA }, piezas_blancas{ Colores::BLANCA };
 
 public:
@@ -31,9 +30,10 @@ public:
 	Vector2D get_nombre(Vector2D) const;
 	void dibuja() const;													//Dibuja las celdas y las piezas blancas y negras
 	void destruir_contenido();
+	int indice_pieza (Vector2D, Colores);
 
 	//Métodos inline
-	int size() const { return (int)lista.size(); }							//Devuelve la cantidad de celdas en el tablero
+	int size() const { return (int)celdas.size(); }							//Devuelve la cantidad de celdas en el tablero
 	int get_columnas() const { return columnas; }
 	int get_filas() const { return filas; }
 
