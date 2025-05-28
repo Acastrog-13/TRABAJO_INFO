@@ -16,15 +16,10 @@ protected:
 	Lista_Piezas piezas_negras{ Colores::NEGRA }, piezas_blancas{ Colores::BLANCA };
 
 public:
-	//Constructores
-	
-
 	//Destructores
 	~Tablero() {
 		destruir_contenido();
 	}
-
-
 
 	//Métodos de inicialización
 	void inicializa(int, int, double lado = { 10 });
@@ -33,6 +28,7 @@ public:
 
 	//Métodos 
 	Vector2D get_centro (Vector2D) const;									//Devuelve el centro con el nombre de la celda
+	Vector2D get_nombre(Vector2D) const;
 	void dibuja() const;													//Dibuja las celdas y las piezas blancas y negras
 	void destruir_contenido();
 

@@ -125,7 +125,7 @@ void OnMouse(int button, int state, int x, int y) {
 		int worldX, worldY;
 		screenToWorld(x, y, worldX, worldY);
 		int lado_celda = 10;
-		Vector2D celdaClickada = detectarCeldaClickada(worldY, worldX, lado_celda);
+		Vector2D celdaClickada = ajedrez.mitablero.get_nombre({ (double)worldX,(double) worldY });
 		std::cout << celdaClickada.x << " " << celdaClickada.y << std::endl;
 		
 		//ajedrez.busca(celdaClickada);

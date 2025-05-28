@@ -7,9 +7,6 @@ void Coordinador::tecla(unsigned char key) {
 	switch (estado) {
 	case INICIO:
 
-		mitablero.destruir_contenido();
-
-
 		if (key == '0') exit(0);
 		if (key != '1' && key != '2') return;
 		if (key == '1') {
@@ -28,11 +25,13 @@ void Coordinador::tecla(unsigned char key) {
 
 	case CUATRO_CINCO:
 		if (key == 'i' || key == 'I') {
+			mitablero.destruir_contenido();
 			estado = INICIO;
 			break;
 		}
 	case SPEED:
 		if (key == 'i' || key == 'I') {
+			mitablero.destruir_contenido();
 			estado = INICIO;
 			break;
 		}

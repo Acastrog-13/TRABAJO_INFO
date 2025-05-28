@@ -23,6 +23,17 @@ Vector2D Tablero::get_centro(Vector2D n) const {
 	return{ -1,-1 };
 }
 
+Vector2D Tablero::get_nombre(Vector2D pos) const {
+	for (int i = 0; i < lista.size(); i++) {
+		if (pos.x > lista[i].limite1.x &&
+			pos.x <= lista[i].limite2.x &&
+			pos.y > lista[i].limite1.y &&
+			pos.y <= lista[i].limite1.y + lista[i].lado)
+			return lista[i].get_nombre();
+	}
+	return{ -1,-1 };
+}
+
 void Tablero::dibuja() const{
 	gluLookAt(columnas * 5, filas * 5, 100,
 		columnas * 5, filas * 5, 0,

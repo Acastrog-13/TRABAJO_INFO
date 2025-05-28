@@ -5,11 +5,9 @@
 class Coordinador
 {
 	enum Estado { INICIO, CUATRO_CINCO, SPEED,JAQUE_MATE, FIN } estado{};
-	
-	Tablero mitablero;
-	
 
 public: 
+	Tablero mitablero;
 
 	void tecla_especial(unsigned char key);
 	void tecla (unsigned char key);
