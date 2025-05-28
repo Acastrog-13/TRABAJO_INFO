@@ -22,13 +22,12 @@ void Lista_Piezas::eliminar(Pieza* p) {
 		}
 }
 
+int Lista_Piezas::indice_pieza (Vector2D pos_celda){
+	for (int i = 0; i < lista.size(); i++) {
+		if (lista[i]->get_pos() == pos_celda) return i;
+	}
+	return -1;
+}
 
 
-/*void Lista_Piezas::mueve(int index, Vector2D posicion) {
-=======
-/*void Lista_Piezas::mueve(int index, Vector2D pos_fin) {
->>>>>>> c926a4cfb515d4335360f3431b97e904a8610425
-	if ((index < 0) || (index >= lista.size())) return;
-	lista[index]->mueve(pos_fin);
 
-}*/

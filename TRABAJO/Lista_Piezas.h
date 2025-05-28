@@ -31,7 +31,8 @@ public:
 
 	//Métodos
 	void mueve(int index, Vector2D posicion);
-	
+	int indice_pieza (Vector2D);                                     //Devuelve el indice de la pieza con su posicion
+
 	//Métodos de eliminación
 	void destruir_contenido();										//Elimina las piezas de la lista y la limpia
 	void eliminar(int index);										//Elimina la pieza de una posicion concreta

@@ -104,8 +104,8 @@ void screenToWorld(int screenX, int screenY, int& worldX, int& worldY) {
 
 	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);//toma coordenadas de la pantalla y devuelve las del mundo 3D
 
-	worldX = (float)posX;								//copia las coord del mundo 3D en nuestros parametros de salida
-	worldY = (float)posY;
+	worldX = (int)posX;								//copia las coord del mundo 3D en nuestros parametros de salida
+	worldY = (int)posY;
 }
 
 
@@ -125,11 +125,12 @@ void OnMouse(int button, int state, int x, int y) {
 		int worldX, worldY;
 		screenToWorld(x, y, worldX, worldY);
 		int lado_celda = 10;
+		//No es necesario
 		Vector2D celdaClickada = ajedrez.mitablero.get_nombre({ (double)worldX,(double) worldY });
-		std::cout << celdaClickada.x << " " << celdaClickada.y << std::endl;
-		
+		std::cout << celdaClickada.x << " " << celdaClickada.y << " ";
+
+		int index = ajedrez.mitablero.indice_pieza(celdaClickada, Colores::NEGRA);
+		cout << index << std::endl;
 		//ajedrez.busca(celdaClickada);
-
-
 	}
 }
