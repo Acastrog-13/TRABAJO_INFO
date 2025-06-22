@@ -1,41 +1,35 @@
 #pragma once
-#include "Vector2D.h"
-#include "Color.h"
-#include "freeglut.h"
+#include <string>
+#include "Posicion.h"
+#include "TablaInfo.h"
+
+using namespace std;
 
 class Pieza
 {
 protected:
-	Colores color_p{}; //Colores posibles
-	enum Tipo { NO_TIPO, PEON, TORRE, CABALLO, ALFIL, DAMA, REY } tipo_p{};//Tipos de pieza posibles
-	Vector2D posicion{};
+	string nombre;
+	Posicion pos{};
+	Color color{};
+	Pieza (const string& n, const Posicion& p, Color c) : nombre{ n }, pos{ p }, color{ c } {}
 
 public:
-	//Constructores
-	Pieza(Colores c_p, Tipo t_p, Vector2D pos_p) :
-		color_p{ c_p },
-		tipo_p{ t_p },
-		posicion{ pos_p }
-	{}
-
-	//Destructores
-
-
-	//Metodos inline
-	inline void set_posicion(Vector2D& pos) { posicion = pos; } //Asigna la posicion
-	inline void set_color(Colores& c) { color_p = c; } //Asigna el color
-
-	inline Vector2D get_pos()const { return posicion; } //Devuelve la posicion
-	inline Colores get_color()const { return color_p; } //Desvuelve el color
-	
-	//Metodos
-	virtual void dibuja() = 0;
-	void dibuja(unsigned int)const;
-
-	//virtual void mueve(Vector2D) = 0;
-	//virtual vector<Jugadas*> calcular_jugadas(const Tablero&) const = 0;
-
-	friend class Movimientos;
+	virtual bool check(Posicion objetivo, const TablaInfo& info) {
+		if ((objetivo.col == pos.col) && (objetivo.fil == pos.fil)) return false;
+		if (!objetivo.check(info.filas,info.columnas)) return false;
+		return check_recorrido (objetivo, info);
+	}
+	virtual bool check_recorrido(Posicion objetivo, const TablaInfo& info) {
+		Posicion dif = objetivo - pos,
+			inc = Posicion ((dif.fil >= 0 ? 1 : (dif.fil < 0 ? -1 : 0)), (dif.col > 0 ? 1 : (dif.col < 0 ? -1 : 0))),
+			npos = pos + inc;
+		while (!(npos == objetivo)) {
+			if (info(npos) != NONE) return false; 
+			npos = npos + inc;
+		}
+		return true;
+	}
+	friend class Tablero;
 };
 
 

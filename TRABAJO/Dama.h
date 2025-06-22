@@ -4,12 +4,16 @@
 struct Dama : Pieza
 {
 	//Constructor
-    Dama(Colores c = {}, Vector2D pos={}) :
-        Pieza(c, DAMA, pos) {}
+    Dama(Posicion pos, Color  col) : Pieza("Dama", pos, col){}
 
 
-
+    bool check(Posicion objetivo, const TablaInfo& info) {
+        auto dif = pos - objetivo;
+        if ((dif.col != 0) && (dif.fil != 0)&&
+            (abs(pos.col-objetivo.col)!=abs(pos.fil-objetivo.fil))) return false;
+        return Pieza::check (objetivo, info);
+    }
     //Metodos
-    void dibuja();
-    void mueve(Vector2D);
+   // void dibuja();
+    //void mueve(Vector2D);
 };

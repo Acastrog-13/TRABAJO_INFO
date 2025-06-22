@@ -2,7 +2,7 @@
 #include"ETSIDI.h"
 
 #include <iostream>
-
+/*
 using namespace std;
 
 void Caballo::dibuja() {
@@ -12,3 +12,4 @@ void Caballo::dibuja() {
 
     Pieza::dibuja(glComun);
 }
+*/

@@ -3,7 +3,7 @@
 #include <iostream>
 
 using namespace std;
-
+/*
 void Rey::dibuja() {
     string imagen = (color_p == Colores::NEGRA) ? "imagenes/rey_negro.png" : "imagenes/rey_blanco.png";
 
@@ -11,3 +11,4 @@ void Rey::dibuja() {
 
     Pieza::dibuja(glComun);
 }
+*/

@@ -3,7 +3,7 @@
 #include <iostream>
 
 using namespace std;
-
+/*
 void Alfil::dibuja() {
     string imagen = (color_p == Colores::NEGRA) ? "imagenes/alfil_negro.png" : "imagenes/alfil_blanco.png";
 
@@ -11,3 +11,5 @@ void Alfil::dibuja() {
 
     Pieza::dibuja(glComun);
 }
+
+*/

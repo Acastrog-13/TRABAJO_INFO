@@ -4,12 +4,15 @@
 struct Alfil : Pieza{
 
     //Constructor
-    Alfil(Colores c = {}, Vector2D pos={}) :
-        Pieza(c, ALFIL, pos) {}
+    Alfil(Posicion pos, Color col) : Pieza("Alfil", pos, col) {}
 
+    bool check (Posicion objetivo, const TablaInfo& info) {
+        if ((abs(pos.col - objetivo.col) != abs(pos.fil - objetivo.fil))) return false;
+        return Pieza::check(objetivo, info);
+    }
 
 
     //Metodos
-    void dibuja();
-    void mueve(Vector2D);
+  //  void dibuja();
+    //void mueve(Vector2D);
 };

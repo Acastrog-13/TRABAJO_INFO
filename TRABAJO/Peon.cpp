@@ -3,7 +3,7 @@
 #include <iostream>
 
 using namespace std;
-
+/*
 void Peon::dibuja() {
     string imagen = (color_p == Colores::NEGRA) ? "imagenes/peon_negro.png" : "imagenes/peon_blanco.png";
 
@@ -11,3 +11,5 @@ void Peon::dibuja() {
 
     Pieza::dibuja(glComun);
 }
+
+*/

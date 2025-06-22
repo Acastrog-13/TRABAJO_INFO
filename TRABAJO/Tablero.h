@@ -1,54 +1,60 @@
 #pragma once
-#include "freeglut.h"
-#include "Celda.h"
 #include <vector>
-#include "Lista_Piezas.h"
+
+#include "Pieza.h"
+#include "Posicion.h"
+#include "TablaInfo.h"
+
+
 using namespace std;
 
 class Tablero
 {
-	//Atributos
-	int filas{}, columnas{};
-	vector <Celda> celdas;
-
-	//Protected para que Cuatro_Cinco y Speed puedan cambiarlas
-	Lista_Piezas piezas_negras{ Colores::NEGRA }, piezas_blancas{ Colores::BLANCA };
+	int num = 0; //numero de piezas vivas
+	const int max = 0;
+	vector <Pieza*> lista;
+	const int filas = 0, columnas = 0;
 
 public:
-	//Destructores
-	~Tablero() {
-		destruir_contenido();
+
+	Tablero(int fil, int col, int max) : filas{ fil }, columnas{ col }, max{ max } {}
+
+	Pieza* operator()(const Posicion&); //retorna una pieza o nullptr
+	bool operator += (Pieza* p); //añade una pieza a la lista
+	Pieza* operator () (int fil, int col) { return operator ()(Posicion(fil, col)); }
+
+	TablaInfo get_ocupacion () {
+		TablaInfo retorno(filas, columnas);
+		for (int i = 0; i < num; i++) retorno ((lista[i]->pos).fil, (lista[i]->pos).col) = lista[i]->color;
+		return retorno;
 	}
 
-	//Métodos de inicialización
-	void inicializa(int, int, double lado = { 10 });
-	void inicializa45();
-	void inicializaS();
+	bool mueve (Posicion inicial, Posicion objetivo) {
+		Pieza* p_in = (*this)(inicial);
+		Pieza* p_fin = (*this) (objetivo);
+		if (p_in == nullptr) return false;
+		if (p_in->check (objetivo, get_ocupacion())) {
+			if (p_fin == nullptr) {
+				eliminar_pieza (p_fin);
+				p_in->pos = objetivo;
+			}
+			else { p_in->pos = objetivo; }
+			return true;
+		}
+		return false;
+	}
 
-	//Métodos 
-	Vector2D get_centro (Vector2D) const;									//Devuelve el centro con el nombre de la celda
-	Vector2D get_nombre(Vector2D) const;
-	void dibuja() const;													//Dibuja las celdas y las piezas blancas y negras
-	void destruir_contenido();
-	int indice_pieza (Vector2D, Colores);
-
-	//Métodos inline
-	int size() const { return (int)celdas.size(); }							//Devuelve la cantidad de celdas en el tablero
-	int get_columnas() const { return columnas; }
-	int get_filas() const { return filas; }
-
-
-	//Métodos para la agregacion de piezas
-	void agregar_pieza(Peon*, Lista_Piezas&, const Vector2D);
-	void agregar_pieza(Torre*, Lista_Piezas&, const Vector2D);
-	void agregar_pieza(Alfil*, Lista_Piezas&, const Vector2D);
-	void agregar_pieza(Caballo*, Lista_Piezas&, const Vector2D);
-	void agregar_pieza(Dama*, Lista_Piezas&, const Vector2D);
-	void agregar_pieza(Rey*, Lista_Piezas&, const Vector2D);
-	
-	//void recalcula_jugadas();
-
-	//Amistades
-	friend class Movimientos;
+	void eliminar_pieza (Pieza* p) {
+		for (int i = 0; i < lista.size(); i++)
+			if (lista[i] == p) {
+				delete lista[i];
+				lista.erase (lista.begin() + i);
+				return;
+			}
+	}
+	~Tablero() {
+		for (int i = 0; i < num; i++) delete lista[i];
+		lista.clear();
+	}
 };
 
