@@ -1,14 +1,17 @@
 #include <iostream>
-
 #include "ETSIDI.h"
 #include "freeglut.h"
 
 #include "Coordinador.h"
+#include"Tablero.h"
 
 
 
 Coordinador ajedrez; //centralizamos la información en este objeto
 
+static Clicks numero_click = CERO;
+static Posicion celdaClickada1;
+static Posicion celdaClickada2;
 
 //los callback, funciones que seran llamadas automaticamente por la glut
 //cuando sucedan eventos
@@ -16,6 +19,8 @@ Coordinador ajedrez; //centralizamos la información en este objeto
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+void OnMouse(int button, int state, int x, int y);
+void ScreenToWorld(int screenX, int screenY, int& worldX, int& worldY);
 
 
 
@@ -85,10 +90,55 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 void OnTimer(int value)
 {
 	//poner aqui el código de animacion
-	//mundo.mueve();
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);
 	glutPostRedisplay();
 }
+
+
+/*
+void ScreenToWorld(int screenX, int screenY, int& worldX, int& worldY) {
+	GLint viewport[4];								//area de la pantalla en la que dibuja
+	GLdouble modelview[16], projection[16];
+	GLfloat winX, winY, winZ;						//coordenadas pantalla
+	GLdouble posX, posY, posZ;						//coordenadas mundo
+
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);		//matriz que combina donde esta la camara y como estan los objetos
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	winX = (float)screenX;
+	winY = (float)(viewport[3] - screenY);				//se "invierte" Y pq el origen en OpenGL esta abajo izq y en nuestro sistema arriba izq
+	glReadPixels(screenX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+
+	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);//toma coordenadas de la pantalla y devuelve las del mundo 3D
+
+	worldX = (int)posX;								//copia las coord del mundo 3D en nuestros parametros de salida
+	worldY = (int)posY;
+}
+
+
+
+void OnMouse(int button, int state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+		int worldX, worldY;
+
+		ScreenToWorld(x, y, worldX, worldY);
+
+		switch (numero_click) {
+		case CERO:
+			celdaClickada1 = mitablero.get_centro((double)worldX, (double)worldY);
+			if (mitablero.get_turno() == BLANCAS && mitablero.get_ocupacion().operator()(celdaClickada1)) {}
+			break;
+		case UNO:
+
+			break;
+		case DOS:
+			numero_click = CERO;
+			break;
+		}
+
+	}
+
+}*/
 

@@ -38,6 +38,13 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	return false;
 }
 
+
+Posicion Tablero::get_centro(double x, double y) {
+	int aux1 = (int)(x + 0.5);
+	int aux2 = (int)(y + 0.5);
+	return Posicion(aux1, aux2);
+}
+
 bool Tablero::eliminar_pieza(Pieza* p) {
 	for (int i = 0; i < lista.size(); i++)
 		if (lista[i] == p) {

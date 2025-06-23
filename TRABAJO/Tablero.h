@@ -22,10 +22,16 @@ class Tablero
 	int max = 0;
 	vector <Pieza*> lista;
 	int filas = 0, columnas = 0;
+	Color turno = BLANCAS;
 
 public:
 	//constructor
 	Tablero(int fil = 0, int col = 0, int max = 0) : filas{ fil }, columnas{ col }, max{ max } {}
+
+
+	Color get_turno() { return turno; }
+	void set_turno(Color t) { turno = t; }
+	void set(int, int, int);
 
 	//operator
 	Pieza* operator()(const Posicion&);													//retorna una pieza o nullptr
@@ -35,12 +41,12 @@ public:
 	//metodos
 	TablaInfo get_ocupacion();															//retorna una matriz FxC con NONE, BLANCAS, NEGRAS
 	bool mueve(Posicion inicial, Posicion objetivo);									//retorna true si en p_inicial hay una pieza y entre p_inicial 
-	//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
-	// pieza se la come y la borra de la lista y mueve la pieza deseada
+																						//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
+																						// pieza se la come y la borra de la lista y mueve la pieza deseada
 
+	Posicion get_centro(double,double);
 	bool eliminar_pieza(Pieza* p);														//elimina una pieza de la lista y desplaza la lista
 	void vaciar();																		//vacia el tablero de piezas
-	void set(int f, int c, int m);
 
 	//dibujo
 	void dibuja();																		//dibuja las celdas y las piezas

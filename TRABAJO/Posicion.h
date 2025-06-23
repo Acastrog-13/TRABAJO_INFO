@@ -1,5 +1,6 @@
 #pragma once
 enum Color { NONE, BLANCAS, NEGRAS };
+enum Clicks { CERO, UNO, DOS };
 
 struct Posicion
 {
