@@ -9,6 +9,8 @@
 
 Coordinador ajedrez; //centralizamos la información en este objeto
 
+Tablero mitablero;
+
 static Clicks numero_click = CERO;
 static Posicion celdaClickada1;
 static Posicion celdaClickada2;

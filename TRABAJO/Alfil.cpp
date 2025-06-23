@@ -16,3 +16,4 @@ void Alfil::dibuja() {
 
     Pieza::dibuja(glComun);
 }
+

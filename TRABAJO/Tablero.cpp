@@ -1,5 +1,13 @@
 #include "Tablero.h"
 
+
+void Tablero::set(int c, int f, int m) {
+	filas = f;
+	columnas = c;
+	max = m;
+}
+
+
 Pieza* Tablero::operator()(const Posicion& pos) {
 	for (int i = 0; i < num; i++)
 		if (pos == (lista[i]->pos))
@@ -18,8 +26,8 @@ bool Tablero :: operator+= (Pieza* p) {
 }
 
 TablaInfo Tablero::get_ocupacion() {
-	TablaInfo retorno(filas, columnas);
-	for (int i = 0; i < num; i++) retorno((lista[i]->pos).fil, (lista[i]->pos).col) = lista[i]->color;
+	TablaInfo retorno(columnas, filas);
+	for (int i = 0; i < num; i++) retorno((lista[i]->pos).col, (lista[i]->pos).fil) = lista[i]->color;
 	return retorno;
 }
 
@@ -37,7 +45,6 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	}
 	return false;
 }
-
 
 Posicion Tablero::get_centro(double x, double y) {
 	int aux1 = (int)(x + 0.5);
@@ -66,11 +73,7 @@ void Tablero::dibuja() {
 	for (int i = 0; i < num; i++) lista[i]->dibuja();
 }
 
-void Tablero::set(int f, int c, int m) {
-	filas = f;
-	columnas = c;
-	max = m;
-}
+
 
 void Tablero::dibuja_tablero() {
 	for (int f = 1; f <= filas; ++f) {

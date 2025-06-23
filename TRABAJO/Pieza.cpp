@@ -2,7 +2,7 @@
 
 bool Pieza::check(Posicion objetivo, const TablaInfo& info) {
 	if ((objetivo.col == pos.col) && (objetivo.fil == pos.fil)) return false;
-	if (!objetivo.check(info.filas, info.columnas)) return false;
+	if (!objetivo.check(info.columnas, info.filas)) return false;
 	return check_recorrido(objetivo, info);
 }
 

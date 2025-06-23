@@ -1,6 +1,8 @@
 #include "Caballo.h"
 #include"ETSIDI.h"
 
+#include <iostream>
+
 using namespace std;
 
 bool Caballo::check(Posicion objetivo, const TablaInfo& info) {

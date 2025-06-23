@@ -1,13 +1,13 @@
 #pragma once
 enum Color { NONE, BLANCAS, NEGRAS };
-enum Clicks { CERO, UNO, DOS };
+enum Clicks { CERO = 0, UNO };
 
 struct Posicion
 {
 	int fil = 0, col = 0;
 
 	//constructor
-	Posicion(int fil = 0, int col = 0) : fil{ fil }, col{ col } {}
+	Posicion(int col = 0, int fil = 0) : fil{ fil }, col{ col } {}
 
 	//metodos
 	bool check(int, int);									//verifica que la posicion esta dentro del tablero
@@ -18,3 +18,4 @@ struct Posicion
 	Posicion operator - (const Posicion&)const;				//resta posiciones
 
 };
+

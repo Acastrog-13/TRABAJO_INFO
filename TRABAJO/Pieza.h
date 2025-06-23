@@ -31,4 +31,3 @@ public:
 	friend class Tablero;
 	friend class Coordinador;
 };
-

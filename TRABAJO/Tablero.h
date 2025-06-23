@@ -12,7 +12,6 @@
 #include "Torre.h"
 #include "Rey.h"
 
-
 using namespace std;
 
 class Tablero
@@ -26,25 +25,25 @@ class Tablero
 
 public:
 	//constructor
-	Tablero(int fil = 0, int col = 0, int max = 0) : filas{ fil }, columnas{ col }, max{ max } {}
-
+	Tablero(int col = 0, int fil = 0, int max = 0) : filas{ fil }, columnas{ col }, max{ max } {}
 
 	Color get_turno() { return turno; }
 	void set_turno(Color t) { turno = t; }
 	void set(int, int, int);
+	void cambio_turno() { turno == BLANCAS ? turno = NEGRAS : turno = BLANCAS; }
 
 	//operator
 	Pieza* operator()(const Posicion&);													//retorna una pieza o nullptr
 	bool operator += (Pieza* p);														//añade una pieza a la lista
-	Pieza* operator () (int fil, int col) { return operator ()(Posicion(fil, col)); }
+	Pieza* operator () (int col, int fil) { return operator ()(Posicion(col, fil)); }
 
 	//metodos
 	TablaInfo get_ocupacion();															//retorna una matriz FxC con NONE, BLANCAS, NEGRAS
 	bool mueve(Posicion inicial, Posicion objetivo);									//retorna true si en p_inicial hay una pieza y entre p_inicial 
-																						//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
-																						// pieza se la come y la borra de la lista y mueve la pieza deseada
+	//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
+	// pieza se la come y la borra de la lista y mueve la pieza deseada
 
-	Posicion get_centro(double,double);
+	Posicion get_centro(double, double);
 	bool eliminar_pieza(Pieza* p);														//elimina una pieza de la lista y desplaza la lista
 	void vaciar();																		//vacia el tablero de piezas
 

@@ -13,3 +13,5 @@ struct Caballo : Pieza
     bool check(Posicion objetivo, const TablaInfo& info);
     void dibuja() override;
 };
+
+

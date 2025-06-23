@@ -2,10 +2,10 @@
 #include <iostream>
 #include "Tablero.h"
 using namespace std;
+extern Tablero mitablero;
 
 class Coordinador
 {
-	Tablero mitablero;
 	enum Estado { INICIO, CUATRO_CINCO, SPEED, JAQUE_MATE, FIN } estado{};
 
 	void inicializa_45();									//set de filas y columnas y piezas de 4x5
@@ -18,5 +18,3 @@ public:
 	void mueve();
 
 };
-
-
