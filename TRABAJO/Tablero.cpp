@@ -36,11 +36,17 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	Pieza* p_fin = (*this) (objetivo);
 	if (p_in == nullptr) return false;
 	if (p_in->check(objetivo, get_ocupacion())) {
-		if (p_fin == nullptr) {
+		if (p_fin != nullptr) {
 			eliminar_pieza(p_fin);
 			p_in->pos = objetivo;
 		}
-		else { p_in->pos = objetivo; }
+		else {
+			p_in->pos = objetivo;
+			if (p_in->nombre == "Peon") {
+				Peon* p = (Peon*)p_in;
+				p->primer_mov = false;
+			}
+		}
 		return true;
 	}
 	return false;
@@ -57,6 +63,7 @@ bool Tablero::eliminar_pieza(Pieza* p) {
 		if (lista[i] == p) {
 			delete lista[i];
 			lista.erase(lista.begin() + i);
+			num--;
 			return true;
 		}
 	return false;
@@ -66,14 +73,13 @@ void Tablero::vaciar() {
 	for (int i = 0; i < num; i++) delete lista[i];
 	lista.clear();
 	num = 0;
+	turno = BLANCAS;
 }
 
 void Tablero::dibuja() {
 	dibuja_tablero();
 	for (int i = 0; i < num; i++) lista[i]->dibuja();
 }
-
-
 
 void Tablero::dibuja_tablero() {
 	for (int f = 1; f <= filas; ++f) {

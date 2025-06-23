@@ -18,6 +18,7 @@ struct TablaInfo
 		}
 	}
 
+	//destructor
 	~TablaInfo() {
 		for (int i = 0; i < columnas; ++i)
 			delete[] data[i];
@@ -28,4 +29,3 @@ struct TablaInfo
 	Color& operator () (int i, int j) { return data[i - 1][j - 1]; }
 	Color operator () (const Posicion& p)const { return data[p.col - 1][p.fil - 1]; }
 };
-

@@ -1,36 +1,32 @@
 #include <iostream>
+
 #include "ETSIDI.h"
 #include "freeglut.h"
+
 #include "Coordinador.h"
 #include "Tablero.h"
 
-Coordinador ajedrez; //centralizamos la información en este objeto
+Coordinador ajedrez;
 Tablero mitablero;
 
-static Clicks numero_click = CERO;
-static Posicion celdaClickada1;
-static Posicion celdaClickada2;
+Clicks numero_click = NON;
+Posicion celdaClickada1;
+Posicion celdaClickada2;
 
-//los callback, funciones que seran llamadas automaticamente por la glut
-//cuando sucedan eventos
-//NO HACE FALTA LLAMARLAS EXPLICITAMENTE
-void OnDraw(void); //esta funcion sera llamada para dibujar
-void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
-void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+
+void OnDraw(void);
+void OnTimer(int value);
+void OnKeyboardDown(unsigned char key, int x, int y);
 void OnMouse(int button, int state, int x, int y);
-void ScreenToWorld(int screenX, int screenY, int& worldX, int& worldY);
+void ScreenToWorld(int screenX, int screenY, double& worldX, double& worldY);
 
 
 int main(int argc, char* argv[])
 {
-	//Inicializar el gestor de ventanas GLUT
-	//y crear la ventana
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 600);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutCreateWindow("Juego de Ajedrez");
-
-	//habilitar luces y definir perspectiva
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
@@ -38,14 +34,11 @@ int main(int argc, char* argv[])
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 
-	//Registrar los callbacks
 	glutDisplayFunc(OnDraw);
-	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
+	glutTimerFunc(25, OnTimer, 0);
 	glutKeyboardFunc(OnKeyboardDown);
 	glutMouseFunc(OnMouse);
 
-
-	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();
 
 	return 0;
@@ -53,61 +46,45 @@ int main(int argc, char* argv[])
 
 void OnDraw(void)
 {
-	//Borrado de la pantalla	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//Para definir el punto de vista
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-
-
 	ajedrez.dibuja();
 
-
-
-
-	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
 }
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
-	//poner aqui el código de teclado
-
 	ajedrez.tecla(key);
-
-	//ajedrez.tecla_especial(key);
 
 	glutPostRedisplay();
 }
 
 void OnTimer(int value)
 {
-	//poner aqui el código de animacion
 
-
-	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);
 	glutPostRedisplay();
 }
 
 
 void ScreenToWorld(int screenX, int screenY, double& worldX, double& worldY) {
-	GLint viewport[4];								//area de la pantalla en la que dibuja
+	GLint viewport[4];
 	GLdouble modelview[16], projection[16];
-	GLfloat winX, winY, winZ;						//coordenadas pantalla
-	GLdouble posX, posY, posZ;						//coordenadas mundo
+	GLfloat winX, winY, winZ;
+	GLdouble posX, posY, posZ;
 
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);		//matriz que combina donde esta la camara y como estan los objetos
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
 	glGetDoublev(GL_PROJECTION_MATRIX, projection);
 	glGetIntegerv(GL_VIEWPORT, viewport);
 	winX = (float)screenX;
-	winY = (float)(viewport[3] - screenY);				//se "invierte" Y pq el origen en OpenGL esta abajo izq y en nuestro sistema arriba izq
+	winY = (float)(viewport[3] - screenY);
 	glReadPixels(screenX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
 
-	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);//toma coordenadas de la pantalla y devuelve las del mundo 3D
+	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
 
-	worldX = posX;								//copia las coord del mundo 3D en nuestros parametros de salida
+	worldX = posX;
 	worldY = posY;
 }
 
@@ -118,24 +95,31 @@ void OnMouse(int button, int state, int x, int y) {
 		double worldX, worldY;
 
 		ScreenToWorld(x, y, worldX, worldY);
+
 		switch (numero_click) {
 		case CERO:
+			if (mitablero.get_turno() == NEGRAS) cout << "Turno de las negras" << endl;
+			if (mitablero.get_turno() == BLANCAS) cout << "Turno de las blancas" << endl;
+
+			cout << "Click uno" << endl;
 			celdaClickada1 = mitablero.get_centro(worldX, worldY);
-			cout << celdaClickada1.fil << celdaClickada1.col << endl;
-			cout << mitablero.get_turno();
-			if (mitablero.get_turno() == mitablero.get_ocupacion().operator()(celdaClickada1)) numero_click = UNO;
+
+			if (mitablero.get_turno() == mitablero.get_ocupacion().operator()(celdaClickada1)) {
+				cout << "Celda clickada1: " << celdaClickada1.fil << celdaClickada1.col << "\n" << endl;
+				numero_click = UNO;
+			}
+			else cout << "Click no permitido \n" << endl;
 			break;
 
 		case UNO:
+			cout << "Click dos" << endl;
 			celdaClickada2 = mitablero.get_centro((double)worldX, (double)worldY);
-			cout << mitablero.get_turno();
+			cout << "Celda clickada2: " << celdaClickada2.fil << celdaClickada2.col << endl;
+			cout << endl;
 			if (mitablero.mueve(celdaClickada1, celdaClickada2)) mitablero.cambio_turno();
-			cout << "No permitido" << endl;
+			else cout << "No permitido, no hay cambio de turno \n" << endl;
 			numero_click = CERO;
 			break;
 		}
-
 	}
-
 }
-

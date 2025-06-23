@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
+#include <iostream>
+
+#include "freeglut.h"
+#include"ETSIDI.h"
+
 #include "Posicion.h"
 #include "TablaInfo.h"
-#include "freeglut.h"
-#include <iostream>
 
 using namespace std;
 

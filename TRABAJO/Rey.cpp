@@ -1,6 +1,4 @@
 #include "Rey.h"
-#include "ETSIDI.h"
-#include <iostream>
 
 using namespace std;
 

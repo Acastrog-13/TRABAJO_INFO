@@ -1,7 +1,5 @@
 #pragma once
 #include "Pieza.h"
-#include"ETSIDI.h"
-#include <iostream>
 
 
 struct Torre : Pieza

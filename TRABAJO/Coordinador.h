@@ -1,8 +1,12 @@
 #pragma once
 #include <iostream>
+
 #include "Tablero.h"
+
 using namespace std;
+
 extern Tablero mitablero;
+extern Clicks numero_click;
 
 class Coordinador
 {
@@ -13,8 +17,8 @@ class Coordinador
 
 public:
 	void dibuja();
-	void tecla_especial(unsigned char key);
 	void tecla(unsigned char key);
-	void mueve();
 
+	//void tecla_especial(unsigned char key);
+	//void mueve();
 };

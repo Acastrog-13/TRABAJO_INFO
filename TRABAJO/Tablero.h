@@ -31,6 +31,7 @@ public:
 	void set_turno(Color t) { turno = t; }
 	void set(int, int, int);
 	void cambio_turno() { turno == BLANCAS ? turno = NEGRAS : turno = BLANCAS; }
+	string get_modo() { return filas > 5 ? "45" : "S"; }
 
 	//operator
 	Pieza* operator()(const Posicion&);													//retorna una pieza o nullptr

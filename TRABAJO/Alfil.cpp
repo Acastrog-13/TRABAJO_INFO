@@ -1,6 +1,4 @@
 #include "Alfil.h"
-#include "ETSIDI.h"
-#include <iostream>
 
 using namespace std;
 
@@ -16,4 +14,3 @@ void Alfil::dibuja() {
 
     Pieza::dibuja(glComun);
 }
-

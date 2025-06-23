@@ -7,17 +7,15 @@ void Coordinador::tecla(unsigned char key) {
 	switch (estado) {
 	case INICIO:
 		if (key == '0') exit(0);
-		if (key != '1' && key != '2') return;
 		if (key == '1') {
-
-			//se inicializa el juego 45
 			inicializa_45();
+			numero_click = CERO;
 			estado = CUATRO_CINCO;
 			break;
 		}
 		if (key == '2') {
-			//inicializa el juego speed
 			inicializa_S();
+			numero_click = CERO;
 			estado = SPEED;
 			break;
 		}
@@ -26,18 +24,21 @@ void Coordinador::tecla(unsigned char key) {
 		dibuja();
 		if (key == 'i' || key == 'I') {
 			mitablero.vaciar();
+			numero_click = NON;
 			estado = INICIO;
 			break;
 		}
-
+		if (key == '0') exit(0);
 
 	case SPEED:
 		dibuja();
 		if (key == 'i' || key == 'I') {
 			mitablero.vaciar();
+			numero_click = NON;
 			estado = INICIO;
 			break;
 		}
+		if (key == '0') exit(0);
 	}
 }
 
@@ -80,13 +81,13 @@ void Coordinador::dibuja()
 
 void Coordinador::inicializa_45() {
 	mitablero.set(4, 5, 10);
-	mitablero += new Peon({ 4,2 }, BLANCAS);
+	mitablero += new Peon({ 4, 2 }, BLANCAS, false);
 	mitablero += new Torre({ 1,1 }, BLANCAS);
 	mitablero += new Alfil({ 2,1 }, BLANCAS);
 	mitablero += new Caballo({ 3,1 }, BLANCAS);
 	mitablero += new Rey({ 4,1 }, BLANCAS);
 
-	mitablero += new Peon({ 1,4 }, NEGRAS);
+	mitablero += new Peon({ 1,4 }, NEGRAS, false);
 	mitablero += new Torre({ 4,5 }, NEGRAS);
 	mitablero += new Alfil({ 3,5 }, NEGRAS);
 	mitablero += new Caballo({ 2,5 }, NEGRAS);
@@ -101,7 +102,7 @@ void Coordinador::inicializa_S() {
 	mitablero += new Rey({ 4,1 }, BLANCAS);
 	mitablero += new Dama({ 5,1 }, BLANCAS);
 	for (int i = 1; i < 6; i++)
-		mitablero += new Peon({ i,2 }, BLANCAS);
+		mitablero += new Peon({ i,2 }, BLANCAS, true);
 
 	mitablero += new Torre({ 5,6 }, NEGRAS);
 	mitablero += new Alfil({ 4,6 }, NEGRAS);
@@ -109,5 +110,5 @@ void Coordinador::inicializa_S() {
 	mitablero += new Rey({ 2,6 }, NEGRAS);
 	mitablero += new Dama({ 1,6 }, NEGRAS);
 	for (int i = 1; i < 6; i++)
-		mitablero += new Peon({ i,5 }, NEGRAS);
+		mitablero += new Peon({ i,5 }, NEGRAS, true);
 }

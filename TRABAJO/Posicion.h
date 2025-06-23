@@ -1,6 +1,7 @@
 #pragma once
+
 enum Color { NONE, BLANCAS, NEGRAS };
-enum Clicks { CERO = 0, UNO };
+enum Clicks { NON, CERO, UNO };
 
 struct Posicion
 {
@@ -16,6 +17,4 @@ struct Posicion
 	bool operator ==(const Posicion&)const;					//verifica que la posicion es igual
 	Posicion operator + (const Posicion&)const;				//suma posiciones
 	Posicion operator - (const Posicion&)const;				//resta posiciones
-
 };
-

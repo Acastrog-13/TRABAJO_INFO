@@ -8,7 +8,7 @@ bool Pieza::check(Posicion objetivo, const TablaInfo& info) {
 
 bool Pieza::check_recorrido(Posicion objetivo, const TablaInfo& info) {
 	Posicion dif = objetivo - pos,
-		inc = Posicion((dif.fil >= 0 ? 1 : (dif.fil < 0 ? -1 : 0)), (dif.col > 0 ? 1 : (dif.col < 0 ? -1 : 0))),
+		inc = Posicion((dif.col > 0 ? 1 : (dif.col < 0 ? -1 : 0)), (dif.fil > 0 ? 1 : (dif.fil < 0 ? -1 : 0))),
 		npos = pos + inc;
 	while (!(npos == objetivo)) {
 		if (info(npos) != NONE) return false;
