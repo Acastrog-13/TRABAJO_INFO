@@ -1,14 +1,10 @@
 #include <iostream>
 #include "ETSIDI.h"
 #include "freeglut.h"
-
 #include "Coordinador.h"
-#include"Tablero.h"
-
-
+#include "Tablero.h"
 
 Coordinador ajedrez; //centralizamos la información en este objeto
-
 Tablero mitablero;
 
 static Clicks numero_click = CERO;
@@ -23,7 +19,6 @@ void OnTimer(int value); //esta funcion sera llamada cuando transcurra una tempo
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
 void OnMouse(int button, int state, int x, int y);
 void ScreenToWorld(int screenX, int screenY, int& worldX, int& worldY);
-
 
 
 int main(int argc, char* argv[])
@@ -47,7 +42,7 @@ int main(int argc, char* argv[])
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
-
+	glutMouseFunc(OnMouse);
 
 
 	//pasarle el control a GLUT,que llamara a los callbacks
@@ -79,10 +74,7 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
 
-
 	ajedrez.tecla(key);
-
-
 
 	//ajedrez.tecla_especial(key);
 
@@ -93,14 +85,14 @@ void OnTimer(int value)
 {
 	//poner aqui el código de animacion
 
+
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);
 	glutPostRedisplay();
 }
 
 
-/*
-void ScreenToWorld(int screenX, int screenY, int& worldX, int& worldY) {
+void ScreenToWorld(int screenX, int screenY, double& worldX, double& worldY) {
 	GLint viewport[4];								//area de la pantalla en la que dibuja
 	GLdouble modelview[16], projection[16];
 	GLfloat winX, winY, winZ;						//coordenadas pantalla
@@ -115,32 +107,35 @@ void ScreenToWorld(int screenX, int screenY, int& worldX, int& worldY) {
 
 	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);//toma coordenadas de la pantalla y devuelve las del mundo 3D
 
-	worldX = (int)posX;								//copia las coord del mundo 3D en nuestros parametros de salida
-	worldY = (int)posY;
+	worldX = posX;								//copia las coord del mundo 3D en nuestros parametros de salida
+	worldY = posY;
 }
 
 
 
 void OnMouse(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		int worldX, worldY;
+		double worldX, worldY;
 
 		ScreenToWorld(x, y, worldX, worldY);
-
 		switch (numero_click) {
 		case CERO:
-			celdaClickada1 = mitablero.get_centro((double)worldX, (double)worldY);
-			if (mitablero.get_turno() == BLANCAS && mitablero.get_ocupacion().operator()(celdaClickada1)) {}
+			celdaClickada1 = mitablero.get_centro(worldX, worldY);
+			cout << celdaClickada1.fil << celdaClickada1.col << endl;
+			cout << mitablero.get_turno();
+			if (mitablero.get_turno() == mitablero.get_ocupacion().operator()(celdaClickada1)) numero_click = UNO;
 			break;
-		case UNO:
 
-			break;
-		case DOS:
+		case UNO:
+			celdaClickada2 = mitablero.get_centro((double)worldX, (double)worldY);
+			cout << mitablero.get_turno();
+			if (mitablero.mueve(celdaClickada1, celdaClickada2)) mitablero.cambio_turno();
+			cout << "No permitido" << endl;
 			numero_click = CERO;
 			break;
 		}
 
 	}
 
-}*/
+}
 
