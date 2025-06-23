@@ -1,60 +1,58 @@
 #pragma once
 #include <vector>
 
-#include "Pieza.h"
 #include "Posicion.h"
 #include "TablaInfo.h"
+
+#include "Pieza.h"
+#include "Peon.h"
+#include "Dama.h"
+#include "Alfil.h"
+#include "Caballo.h"
+#include "Torre.h"
+#include "Rey.h"
 
 
 using namespace std;
 
 class Tablero
 {
+	//atributos
 	int num = 0; //numero de piezas vivas
-	const int max = 0;
+	int max = 0;
 	vector <Pieza*> lista;
-	const int filas = 0, columnas = 0;
+	int filas = 0, columnas = 0;
 
 public:
+	//constructor
+	Tablero(int fil = 0, int col = 0, int max = 0) : filas{ fil }, columnas{ col }, max{ max } {}
 
-	Tablero(int fil, int col, int max) : filas{ fil }, columnas{ col }, max{ max } {}
-
-	Pieza* operator()(const Posicion&); //retorna una pieza o nullptr
-	bool operator += (Pieza* p); //añade una pieza a la lista
+	//operator
+	Pieza* operator()(const Posicion&);													//retorna una pieza o nullptr
+	bool operator += (Pieza* p);														//añade una pieza a la lista
 	Pieza* operator () (int fil, int col) { return operator ()(Posicion(fil, col)); }
 
-	TablaInfo get_ocupacion () {
-		TablaInfo retorno(filas, columnas);
-		for (int i = 0; i < num; i++) retorno ((lista[i]->pos).fil, (lista[i]->pos).col) = lista[i]->color;
-		return retorno;
-	}
+	//metodos
+	TablaInfo get_ocupacion();															//retorna una matriz FxC con NONE, BLANCAS, NEGRAS
+	bool mueve(Posicion inicial, Posicion objetivo);									//retorna true si en p_inicial hay una pieza y entre p_inicial 
+	//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
+	// pieza se la come y la borra de la lista y mueve la pieza deseada
 
-	bool mueve (Posicion inicial, Posicion objetivo) {
-		Pieza* p_in = (*this)(inicial);
-		Pieza* p_fin = (*this) (objetivo);
-		if (p_in == nullptr) return false;
-		if (p_in->check (objetivo, get_ocupacion())) {
-			if (p_fin == nullptr) {
-				eliminar_pieza (p_fin);
-				p_in->pos = objetivo;
-			}
-			else { p_in->pos = objetivo; }
-			return true;
-		}
-		return false;
-	}
+	bool eliminar_pieza(Pieza* p);														//elimina una pieza de la lista y desplaza la lista
+	void vaciar();																		//vacia el tablero de piezas
+	void set(int f, int c, int m);
 
-	void eliminar_pieza (Pieza* p) {
-		for (int i = 0; i < lista.size(); i++)
-			if (lista[i] == p) {
-				delete lista[i];
-				lista.erase (lista.begin() + i);
-				return;
-			}
-	}
+	//dibujo
+	void dibuja();																		//dibuja las celdas y las piezas
+	void dibuja_tablero();																//dibuja el tablero con for anidado de celdas
+	void dibujarFondoCelda(const Posicion&, double, double,
+		unsigned char, unsigned char, unsigned char);									//dibuja las celdas
+
+	//destructor
 	~Tablero() {
-		for (int i = 0; i < num; i++) delete lista[i];
-		lista.clear();
+		vaciar();
 	}
-};
 
+	//amistades
+	friend class Coordinador;
+};

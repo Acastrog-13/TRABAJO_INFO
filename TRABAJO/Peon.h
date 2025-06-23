@@ -3,26 +3,13 @@
 
 struct Peon : Pieza
 {
+    //atributos
     bool primer_mov = true;
-    //Constructor
-    Peon(Posicion pos, Color col) :Pieza ("Peon", pos, col) { }
 
-    bool check(Posicion objetivo, const TablaInfo& info) {
-        auto dif = objetivo - pos;
-        if (color == BLANCAS) {
-            if (primer_mov == true) if (dif.fil != 2 || dif.col != 0) return false;
-            else if (primer_mov == false) if (dif.fil != 1 || dif.col != 0) return false;
-            return Pieza::check (objetivo, info);
-        }
-        else if (color == NEGRAS) {
-            if (primer_mov == true) if (dif.fil != -2 || dif.col != 0) return false;
-            if (primer_mov == false) if (dif.fil != -1 || dif.col != 0) return false;
-            return Pieza::check (objetivo, info);
-        }
-        return false;
-    }
+    //constructor
+    Peon(Posicion pos, Color col) :Pieza("Peon", pos, col) {}
 
-    //Metodos
-    //void dibuja();
-    //void mueve(Vector2D);
+    //metodos
+    bool check(Posicion objetivo, const TablaInfo& info);
+    void dibuja() override;
 };

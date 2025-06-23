@@ -1,7 +1,7 @@
 #include "Posicion.h"
 
-bool Posicion::check(int f,int c) {
-	if ((col < 0) || (col > c - 1) || (fil < 0) || (fil > f - 1)) return false;
+bool Posicion::check(int f, int c) {
+	if ((col < 1) || (col > c) || (fil < 1) || (fil > f)) return false;
 }
 
 

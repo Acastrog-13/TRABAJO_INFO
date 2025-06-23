@@ -2,35 +2,33 @@
 #include <string>
 #include "Posicion.h"
 #include "TablaInfo.h"
+#include "freeglut.h"
+#include <iostream>
 
 using namespace std;
 
 class Pieza
 {
 protected:
+	//atributos
 	string nombre;
 	Posicion pos{};
 	Color color{};
-	Pieza (const string& n, const Posicion& p, Color c) : nombre{ n }, pos{ p }, color{ c } {}
+	Pieza(const string& n, const Posicion& p, Color c) : nombre{ n }, pos{ p }, color{ c } {}
 
 public:
-	virtual bool check(Posicion objetivo, const TablaInfo& info) {
-		if ((objetivo.col == pos.col) && (objetivo.fil == pos.fil)) return false;
-		if (!objetivo.check(info.filas,info.columnas)) return false;
-		return check_recorrido (objetivo, info);
-	}
-	virtual bool check_recorrido(Posicion objetivo, const TablaInfo& info) {
-		Posicion dif = objetivo - pos,
-			inc = Posicion ((dif.fil >= 0 ? 1 : (dif.fil < 0 ? -1 : 0)), (dif.col > 0 ? 1 : (dif.col < 0 ? -1 : 0))),
-			npos = pos + inc;
-		while (!(npos == objetivo)) {
-			if (info(npos) != NONE) return false; 
-			npos = npos + inc;
-		}
-		return true;
-	}
+	//movimientos
+	virtual bool check(Posicion objetivo, const TablaInfo& info);
+	virtual bool check_recorrido(Posicion objetivo, const TablaInfo& info);
+	//comprueban si entre inicio y final no hay nadie entre medias y que la p_objetivo esta en el tablero
+
+	//dibujo
+	void dibuja(unsigned int glComun)const;						//dibuja cada pieza
+	virtual void dibuja() = 0;									//png especifico de cada pieza
+
+
+	//amistades
 	friend class Tablero;
+	friend class Coordinador;
 };
-
-
 

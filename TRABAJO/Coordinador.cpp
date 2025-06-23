@@ -6,32 +6,35 @@ void Coordinador::tecla(unsigned char key) {
 
 	switch (estado) {
 	case INICIO:
-
 		if (key == '0') exit(0);
 		if (key != '1' && key != '2') return;
 		if (key == '1') {
 
 			//se inicializa el juego 45
-			mitablero.inicializa45();
+			inicializa_45();
 			estado = CUATRO_CINCO;
 			break;
 		}
 		if (key == '2') {
 			//inicializa el juego speed
-			mitablero.inicializaS();
+			inicializa_S();
 			estado = SPEED;
 			break;
 		}
 
 	case CUATRO_CINCO:
+		dibuja();
 		if (key == 'i' || key == 'I') {
-			mitablero.destruir_contenido();
+			mitablero.vaciar();
 			estado = INICIO;
 			break;
 		}
+
+
 	case SPEED:
+		dibuja();
 		if (key == 'i' || key == 'I') {
-			mitablero.destruir_contenido();
+			mitablero.vaciar();
 			estado = INICIO;
 			break;
 		}
@@ -56,14 +59,20 @@ void Coordinador::dibuja()
 		ETSIDI::printxy("PULSE TECLA -2- PARA JUGAR SPEED", -5, 50);
 		ETSIDI::printxy("PULSE TECLA -0- PARA SALIR", -5, 40);
 		ETSIDI::printxy("PULSE TECLA -i- PARA VOLVER A INICIO", -5, 10);
-
 		break;
 
 	case CUATRO_CINCO:
+		gluLookAt(2.5, 3, 8,
+			2.5, 3, 0,
+			0.0, 1.0, 0.0);
 		mitablero.dibuja();
+
 		break;
 
 	case SPEED:
+		gluLookAt(3, 3.5, 9,
+			3, 3.5, 0,
+			0.0, 1.0, 0.0);
 		mitablero.dibuja();
 		break;
 	}

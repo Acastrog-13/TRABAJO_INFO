@@ -3,21 +3,10 @@
 
 struct Rey : Pieza
 {
-	//Constructor
-   Rey (Posicion pos, Color col): Pieza("Rey", pos, col){}
-
-
-   bool check (Posicion objetivo, const TablaInfo& info) {
-       auto dif = pos - objetivo;
-       if ((abs(dif.col) == 1) && (dif.fil == 0) ||
-           (abs(dif.fil) == 1) && (dif.col == 0) ||
-           (abs(dif.fil) == 1) && (abs(dif.col) == 1))
-           return Pieza::check (objetivo, info);
-       return false;      
-   }
-
+    //Constructor
+    Rey(Posicion pos, Color col) : Pieza("Rey", pos, col) {}
 
     //Metodos
-   // void dibuja();
-    //void mueve(Vector2D);
+    bool check(Posicion objetivo, const TablaInfo& info);
+    void dibuja() override;
 };

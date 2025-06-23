@@ -1,19 +1,15 @@
 #pragma once
 #include "Pieza.h"
+#include"ETSIDI.h"
+#include <iostream>
 
 
 struct Torre : Pieza
 {
-	//Constructor
+    //Constructor
     Torre(Posicion pos, Color col) : Pieza("Torre", pos, col) {}
 
-    bool check (Posicion objetivo, const TablaInfo& info) {
-        auto dif = pos - objetivo;
-        if ((dif.col != 0) && (dif.fil != 0)) return false;
-        return Pieza::check (objetivo, info);
-    }
     //Metodos
-    //void dibuja();
-    //void mueve(Vector2D);
-    //void set_jugadas() {}
+    bool check(Posicion objetivo, const TablaInfo& info);
+    void dibuja() override;
 };
