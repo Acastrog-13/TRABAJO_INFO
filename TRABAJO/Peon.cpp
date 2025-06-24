@@ -6,7 +6,7 @@ bool Peon::check(Posicion objetivo, const TablaInfo& info) {
     auto dif = objetivo - pos;
     if (color == BLANCAS) {
         if (primer_mov == true)
-            if ((dif.fil != 2 && dif.fil != 1) || dif.col != 0) return false;
+            if ((dif.fil != 2 && dif.fil != 1) || (dif.col != 0 && dif.col != 1 && dif.col != -1)) return false;
         if (primer_mov == false)
             if (dif.fil != 1 || (dif.col != 0 && dif.col != 1 && dif.col != -1)) return false;
 
@@ -14,7 +14,7 @@ bool Peon::check(Posicion objetivo, const TablaInfo& info) {
     }
     else if (color == NEGRAS) {
         if (primer_mov == true)
-            if ((dif.fil != -2 && dif.fil != -1) || dif.col != 0) return false;
+            if ((dif.fil != -2 && dif.fil != -1) || (dif.col != 0 && dif.col != 1 && dif.col != -1)) return false;
         if (primer_mov == false)
             if (dif.fil != -1 || (dif.col != 0 && dif.col != 1 && dif.col != -1)) return false;
 

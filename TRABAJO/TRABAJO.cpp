@@ -13,7 +13,7 @@ Clicks numero_click = NON;
 Posicion celdaClickada1;
 Posicion celdaClickada2;
 
-int tiempo = 10;
+int tiempo = 100;
 
 int contador_blancas = tiempo;
 int contador_negras = tiempo;
