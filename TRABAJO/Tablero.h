@@ -30,6 +30,7 @@ class Tablero
 	vector <Pieza*> lista;
 	vector <Pieza*> piezas_jaque;
 	Color turno = NONE;
+	Estado estado_tablero;
 
 public:
 	//constructor

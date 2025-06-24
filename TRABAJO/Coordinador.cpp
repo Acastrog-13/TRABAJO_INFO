@@ -223,6 +223,7 @@ void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el c
 
 void Coordinador::inicializa_45() {
 	mitablero.set(4, 5, 11);
+	mitablero.estado_tablero = CUATRO_CINCO;
 	mitablero += new Peon({ 4, 2 }, BLANCAS, true);
 	mitablero += new Torre({ 1,1 }, BLANCAS);
 	mitablero += new Alfil({ 2,1 }, BLANCAS);
@@ -238,6 +239,7 @@ void Coordinador::inicializa_45() {
 
 void Coordinador::inicializa_S() {
 	mitablero.set(5, 6, 20);
+	mitablero.estado_tablero = SPEED;
 	mitablero += new Torre({ 1,1 }, BLANCAS);
 	mitablero += new Alfil({ 2,1 }, BLANCAS);
 	mitablero += new Caballo({ 3,1 }, BLANCAS);
