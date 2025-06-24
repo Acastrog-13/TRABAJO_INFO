@@ -40,21 +40,31 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	Pieza* p_in = (*this)(inicial);
 	Pieza* p_fin = (*this) (objetivo);
 	if (p_in == nullptr) return false;
-	if (p_in->check(objetivo, get_ocupacion())) {
-		if (p_fin != nullptr) {
-			eliminar_pieza(p_fin);
-			p_in->pos = objetivo;
-		}
+	if (p_fin != nullptr && p_fin->nombre == "Rey") return false;
+	if (p_in->check (objetivo, (get_ocupacion()))) {
+		if (p_fin != nullptr) eliminar_pieza(p_fin);
 		else {
-			p_in->pos = objetivo;
 			if (p_in->nombre == "Peon") {
 				Peon* p = (Peon*)p_in;
 				p->primer_mov = false;
 			}
 		}
+		p_in->pos = objetivo;
+		for (int i = 0; i < num; i++) lista[i]->set_jugadas(get_ocupacion());
+		jaque(get_ocupacion());
 		return true;
 	}
 	return false;
+}
+
+void Tablero::jaque(TablaInfo info) {
+	piezas_jaque.clear();
+	for (int i = 0; i < lista.size(); i++) 
+		for (int j = 0; j < (lista[i]->jugadas_ofensivas).size(); j++) 
+			if ((*this)(lista[i]->jugadas_ofensivas[j])->nombre == "Rey") {
+				cout << "Hay Jaque" << endl;
+				piezas_jaque.push_back(lista[i]);
+			}
 }
 
 Posicion Tablero::get_centro(double x, double y) {

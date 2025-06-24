@@ -42,3 +42,18 @@ void Pieza::dibuja(unsigned int glComun)const {
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 }
+
+
+void Pieza::set_jugadas(TablaInfo info) {
+	jugadas_ofensivas.clear();
+	jugadas_posibles.clear();
+	for (int c = 1; c <= info.columnas; c++) {
+		for (int f = 1; f <= info.filas; f++) {
+			if (check(Posicion(c, f), info)) {
+				if (color == BLANCAS && info(Posicion(c, f)) == NEGRAS) jugadas_ofensivas.push_back(Posicion(c, f));
+				if (color == NEGRAS && info(Posicion(c, f)) == BLANCAS) jugadas_ofensivas.push_back(Posicion(c, f));
+				jugadas_posibles.push_back(Posicion(c, f));
+			}
+		}
+	}
+}

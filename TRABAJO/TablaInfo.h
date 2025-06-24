@@ -7,6 +7,7 @@ struct TablaInfo
 	const int filas = 0, columnas = 0;
 	Color** data;
 
+
 	//constructor
 	TablaInfo(int c, int f) : filas{ f }, columnas{ c } {
 		data = new Color * [columnas];
@@ -17,11 +18,19 @@ struct TablaInfo
 			}
 		}
 	}
+	TablaInfo(const TablaInfo& other) : filas(other.filas), columnas(other.columnas) {
+		data = new Color * [columnas];
+		for (int i = 0; i < columnas; ++i) {
+			data[i] = new Color[filas];
+			for (int j = 0; j < filas; ++j) {
+				data[i][j] = other.data[i][j];
+			}
+		}
+	}
 
 	//destructor
 	~TablaInfo() {
-		for (int i = 0; i < columnas; ++i)
-			delete[] data[i];
+		for (int i = 0; i < columnas; ++i) delete[] data[i];
 		delete[] data;
 	}
 
