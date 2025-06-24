@@ -1,12 +1,17 @@
 #include "Tablero.h"
 
+void Tablero::set_t(Color t) {
+	turno = t;
+	contador_blancas = contador_negras = tiempo;
+	if (t != NONE) numero_click = CERO;
+	else numero_click = NON;
+}
 
 void Tablero::set(int c, int f, int m) {
 	filas = f;
 	columnas = c;
 	max = m;
 }
-
 
 Pieza* Tablero::operator()(const Posicion& pos) {
 	for (int i = 0; i < num; i++)

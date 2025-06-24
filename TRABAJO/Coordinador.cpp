@@ -1,6 +1,9 @@
 #include "Coordinador.h"
 #include "ETSIDI.h"
 
+unsigned char gB = 255, bB = 255, gN = 255, bN = 255;
+
+void DrawText(const char* text, float x, float y, unsigned char, unsigned char, unsigned char);
 
 void Coordinador::tecla(unsigned char key) {
 
@@ -8,14 +11,14 @@ void Coordinador::tecla(unsigned char key) {
 	case INICIO:
 		if (key == '0') exit(0);
 		if (key == '1') {
-			inicializa_45();
-			numero_click = CERO;
+			inicializa_45();								//llena el tablero de piezas 45 y lo pone 4x5
+			mitablero.set_t(BLANCAS);					//pone el turno de las blancas e inicializa el contador y los clicks
 			estado = CUATRO_CINCO;
 			break;
 		}
 		if (key == '2') {
-			inicializa_S();
-			numero_click = CERO;
+			inicializa_S();									//llena el tablero de piezas S y lo pone 5x6
+			mitablero.set_t(BLANCAS);
 			estado = SPEED;
 			break;
 		}
@@ -23,8 +26,8 @@ void Coordinador::tecla(unsigned char key) {
 	case CUATRO_CINCO:
 		dibuja();
 		if (key == 'i' || key == 'I') {
-			mitablero.vaciar();
-			numero_click = NON;
+			mitablero.vaciar();									//vacia las piezas del tablero
+			mitablero.set_t(NONE);
 			estado = INICIO;
 			break;
 		}
@@ -35,6 +38,7 @@ void Coordinador::tecla(unsigned char key) {
 		if (key == 'i' || key == 'I') {
 			mitablero.vaciar();
 			numero_click = NON;
+			mitablero.set_t(NONE);
 			estado = INICIO;
 			break;
 		}
@@ -44,6 +48,12 @@ void Coordinador::tecla(unsigned char key) {
 
 void Coordinador::dibuja()
 {
+	char contador_b[15];
+	sprintf_s(contador_b, "Blancas: %d", contador_blancas);
+	char contador_n[15];
+	sprintf_s(contador_n, "Negras: %d", contador_negras);
+
+
 	switch (estado) {
 	case INICIO:
 
@@ -66,7 +76,10 @@ void Coordinador::dibuja()
 		gluLookAt(2.5, 3, 8,
 			2.5, 3, 0,
 			0.0, 1.0, 0.0);
+
 		mitablero.dibuja();
+		DrawText(contador_b, 10, 570, 255, gB, bB);
+		DrawText(contador_n, 650, 570, 255, gN, bN);
 
 		break;
 
@@ -74,8 +87,43 @@ void Coordinador::dibuja()
 		gluLookAt(3, 3.5, 9,
 			3, 3.5, 0,
 			0.0, 1.0, 0.0);
+
 		mitablero.dibuja();
+		DrawText(contador_b, 10, 570, 255, gB, bB);
+		DrawText(contador_n, 650, 570, 255, gN, bN);
+
 		break;
+	}
+}
+
+void Coordinador::OnTimer(int value) {
+	static bool primer_tick = true;
+	if (primer_tick) primer_tick = false;
+	else {
+		if (mitablero.get_turno() == BLANCAS) {
+			contador_blancas--;
+
+			if (contador_blancas <= 5) gB = bB = 0;
+			if (contador_blancas <= 0) {
+				cout << "¡Fin del tiempo para las blancas!" << endl;
+				estado = FIN_TIEMPO_BLANCAS;
+				exit(0);                                              /////////se tendra que quitar cuando hagamos la pantalla de FIN_TIEMPO_BLANCAS
+			}
+		}
+		else if (mitablero.get_turno() == NEGRAS) {
+			contador_negras--;
+
+			if (contador_negras <= 5) gN = bN = 0;
+			if (contador_negras <= 0) {
+				cout << "¡Fin del tiempo para las negras!" << endl;
+				estado = FIN_TIEMPO_NEGRAS;
+				exit(0);											 /////////se tendra que quitar cuando hagamos la pantalla de FIN_TIEMPO_NEGRAS
+			}
+		}
+		else {
+			contador_negras = tiempo;
+			contador_blancas = tiempo;
+		}
 	}
 }
 
@@ -111,4 +159,31 @@ void Coordinador::inicializa_S() {
 	mitablero += new Dama({ 1,6 }, NEGRAS);
 	for (int i = 1; i < 6; i++)
 		mitablero += new Peon({ i,5 }, NEGRAS, true);
+}
+
+
+void DrawText(const char* text, float x, float y, unsigned char r, unsigned char g, unsigned char b) {
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, 800, 0, 600); 
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	glDisable(GL_LIGHTING); 
+	glColor3ub(r, g, b);
+
+	glRasterPos2f(x, y);
+	for (const char* c = text; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
+	}
+
+	glEnable(GL_LIGHTING);  // Vuelve a activar iluminación
+
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
 }

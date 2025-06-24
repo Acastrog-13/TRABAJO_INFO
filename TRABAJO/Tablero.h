@@ -14,6 +14,12 @@
 
 using namespace std;
 
+
+extern int tiempo;
+extern int contador_blancas;
+extern int contador_negras;
+extern Clicks numero_click;
+
 class Tablero
 {
 	//atributos
@@ -21,15 +27,16 @@ class Tablero
 	int max = 0;
 	vector <Pieza*> lista;
 	int filas = 0, columnas = 0;
-	Color turno = BLANCAS;
+	Color turno = NONE;
 
 public:
 	//constructor
 	Tablero(int col = 0, int fil = 0, int max = 0) : filas{ fil }, columnas{ col }, max{ max } {}
 
 	Color get_turno() { return turno; }
-	void set_turno(Color t) { turno = t; }
-	void set(int, int, int);
+	void set_t(Color t);																	//set turno, click y contadores
+
+	void set(int, int, int);																//set filas, columnas y numero max de piezas
 	void cambio_turno() { turno == BLANCAS ? turno = NEGRAS : turno = BLANCAS; }
 	string get_modo() { return filas > 5 ? "45" : "S"; }
 

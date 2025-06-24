@@ -2,6 +2,7 @@
 
 enum Color { NONE, BLANCAS, NEGRAS };
 enum Clicks { NON, CERO, UNO };
+enum Estado { INICIO, CUATRO_CINCO, SPEED, JAQUE_MATE, FIN_TIEMPO_BLANCAS, FIN_TIEMPO_NEGRAS };
 
 struct Posicion
 {

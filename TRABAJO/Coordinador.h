@@ -10,15 +10,14 @@ extern Clicks numero_click;
 
 class Coordinador
 {
-	enum Estado { INICIO, CUATRO_CINCO, SPEED, JAQUE_MATE, FIN } estado{};
-
+	Estado estado;
 	void inicializa_45();									//set de filas y columnas y piezas de 4x5
 	void inicializa_S();									//set de filas y columnas y piezas de Speed
 
 public:
+	
+	void OnTimer(int value);
 	void dibuja();
 	void tecla(unsigned char key);
 
-	//void tecla_especial(unsigned char key);
-	//void mueve();
 };
