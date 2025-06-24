@@ -194,11 +194,11 @@ void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el c
 
 			contador--;
 
-			parpadeo = !parpadeo;  
+			parpadeo = !parpadeo;
 
-			bool parpadea = (contador <= Tiempo(0,10));				
+			bool parpadea = (contador <= Tiempo(0, 10));
 
-			r = parpadea ? (parpadeo ? 255 : 255) : 255;  
+			r = parpadea ? (parpadeo ? 255 : 255) : 255;
 			g = parpadea ? (parpadeo ? 0 : 255) : 255;
 			b = parpadea ? (parpadeo ? 0 : 255) : 255;
 
@@ -256,13 +256,13 @@ void DrawText(const char* text, float x, float y, unsigned char r, unsigned char
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-	gluOrtho2D(0, 800, 0, 600); 
+	gluOrtho2D(0, 800, 0, 600);
 
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
 
-	glDisable(GL_LIGHTING); 
+	glDisable(GL_LIGHTING);
 	glColor3ub(r, g, b);
 
 	glRasterPos2f(x, y);
