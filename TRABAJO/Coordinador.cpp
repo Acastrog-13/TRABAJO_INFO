@@ -157,6 +157,7 @@ void Coordinador::dibuja()
 		gluLookAt(3, 3.5, 9,			//desde donde
 			3, 3.5, 0,		//hacia donde
 			0.0, 1.0, 0.0);
+	
 
 		ETSIDI::setTextColor(255, 0, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
@@ -172,11 +173,14 @@ void Coordinador::dibuja()
 		break;
 
 	case OBSERVACION:
-		gluLookAt(3, 3.5, 9,
-			3, 3.5, 0,
+		gluLookAt(2.5, 3.5, 10,
+			2.5, 3.5, 0,
 			0.0, 1.0, 0.0);
 
 		mitablero.dibuja();
+
+		dibujaImagenPantalla("imagenes/imagen_observacion.png", -1, 6, 2.0, 1);	//0.5,5.5
+
 		break;
 	}
 }
@@ -276,4 +280,29 @@ void DrawText(const char* text, float x, float y, unsigned char r, unsigned char
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
+}
+
+
+void Coordinador::dibujaImagenPantalla(const string& imagen, double x, double y, double ancho, double alto) {
+	unsigned int glComun = ETSIDI::getTexture(imagen.c_str()).id;
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, glComun);
+	glDisable(GL_LIGHTING);
+
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+
+	glTexCoord2f(1, 1); glVertex3d(x + ancho / 2, y - alto / 2, 0.1);
+	glTexCoord2f(0, 1); glVertex3d(x - ancho / 2, y - alto / 2, 0.1);
+	glTexCoord2f(0, 0); glVertex3d(x - ancho / 2, y + alto / 2, 0.1);
+	glTexCoord2f(1, 0); glVertex3d(x + ancho / 2, y + alto / 2, 0.1);
+
+	glEnd();
+
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
 }
