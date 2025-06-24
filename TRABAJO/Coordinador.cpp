@@ -1,7 +1,8 @@
 #include "Coordinador.h"
 #include "ETSIDI.h"
 
-unsigned char rB = 50, gB = 50, bB = 50, rN = 50, gN = 50, bN = 50;
+static unsigned char rB = 255, gB = 255, bB = 255, rN = 50, gN = 50, bN = 50;
+static bool primer_tick = true;
 
 void DrawText(const char* text, float x, float y, unsigned char, unsigned char, unsigned char);
 
@@ -28,6 +29,7 @@ void Coordinador::tecla(unsigned char key) {
 		if (key == 'i' || key == 'I') {
 			mitablero.vaciar();									//vacia las piezas del tablero
 			mitablero.set_t(NONE);
+			primer_tick = true;
 			estado = INICIO;
 			break;
 		}
@@ -39,6 +41,7 @@ void Coordinador::tecla(unsigned char key) {
 			mitablero.vaciar();
 			numero_click = NON;
 			mitablero.set_t(NONE);
+			primer_tick = true;
 			estado = INICIO;
 			break;
 		}
@@ -97,7 +100,6 @@ void Coordinador::dibuja()
 }
 
 void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el color en cada tuno y en los ultimos segundos parpadea
-	static bool primer_tick = true;
 	static bool parpadeo = false;
 
 	if (primer_tick) primer_tick = false;
