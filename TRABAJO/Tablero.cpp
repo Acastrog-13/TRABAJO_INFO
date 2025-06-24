@@ -19,9 +19,19 @@ Pieza* Tablero::operator()(const Posicion& pos) {
 			return lista[i];
 	return nullptr;
 }
+//Para que funcione la promocion he necesitado cambiar este operador a como se muestra debajo del comentado
+/*bool Tablero :: operator+= (Pieza* p) {
+	if (((*this)(p->pos)) || (num == max)) {
+		delete p;
+		return false;
+	}
+	lista.push_back(p);
+	num++;
+	return true;
+}*/
 
 bool Tablero :: operator+= (Pieza* p) {
-	if (((*this)(p->pos)) || (num == max)) {
+	if (num == max) {
 		delete p;
 		return false;
 	}
@@ -50,8 +60,43 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 			}
 		}
 		p_in->pos = objetivo;
+
+		//¿Este for y jaque se deberian hacer despues de la promocion?
 		for (int i = 0; i < num; i++) lista[i]->set_jugadas(get_ocupacion());
 		jaque(get_ocupacion());
+
+		//Evaluacion de si debe haber promocion y su ejecucion
+		if (p_in->nombre == "Peon") {
+			if (p_in->color == NEGRAS && p_in->pos.fil == 1) {
+				cout << "Promocion negras" << endl;
+				char pieza_nueva;
+				cout << "Elige pieza para la promoción: (t) Torre, (a) Alfil, (c) Caballo: ";
+				cin >> pieza_nueva;
+
+				switch (pieza_nueva) {
+				case 't':
+					cout << "Se ha pedido una torre" << endl;
+					(*this) += new Torre({ p_in->pos.col, p_in->pos.fil }, NEGRAS);
+					break;
+				case 'a':
+					cout << "Se ha pedido un alfil" << endl;
+					(*this) += new Alfil({ p_in->pos.col, p_in->pos.fil }, NEGRAS);
+					break;
+				case 'c':
+					cout << "Se ha pedido un caballo" << endl;
+					(*this) += new Caballo({ p_in->pos.col, p_in->pos.fil }, NEGRAS);
+					break;
+				default:
+					cout << "Opción no válida. Se promoverá a torre por defecto." << endl;
+					(*this) += new Torre({ p_in->pos.col, p_in->pos.fil }, NEGRAS);
+					break;
+				}
+
+				// Eliminar el peón después de añadir la nueva pieza
+				eliminar_pieza(p_in);
+			}
+		}
+
 		return true;
 	}
 	return false;
@@ -112,6 +157,7 @@ void Tablero::dibuja_tablero() {
 		}
 	}
 }
+
 void Tablero::dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned char r, unsigned char g, unsigned char b) {
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
@@ -124,3 +170,4 @@ void Tablero::dibujarFondoCelda(const Posicion& pos, double ancho, double alto, 
 	glVertex3d(pos.col + ancho / 2, pos.fil + alto / 2, 0.09);
 	glEnd();
 }
+

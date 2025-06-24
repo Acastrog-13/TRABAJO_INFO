@@ -14,7 +14,7 @@ Clicks numero_click = NON;
 Posicion celdaClickada1;
 Posicion celdaClickada2;
 
-Tiempo tiempo (0,15);
+Tiempo tiempo (1,15);
 
 Tiempo contador_blancas = tiempo;
 Tiempo contador_negras = tiempo;
@@ -101,11 +101,12 @@ void OnMouse(int button, int state, int x, int y) {
 			celdaClickada2 = mitablero.get_centro((double)worldX, (double)worldY);
 			cout << "Celda clickada2: " << celdaClickada2.fil << celdaClickada2.col << endl;
 			cout << endl;
-			if (mitablero.mueve(celdaClickada1, celdaClickada2)) mitablero.cambio_turno();
+			if (mitablero.mueve(celdaClickada1, celdaClickada2)) mitablero.cambio_turno();				
 			else cout << "No permitido, no hay cambio de turno \n" << endl;
 			numero_click = CERO;
 			break;
 		}
+
 	}
 }
 
