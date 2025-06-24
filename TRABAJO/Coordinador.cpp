@@ -46,6 +46,40 @@ void Coordinador::tecla(unsigned char key) {
 			break;
 		}
 		if (key == '0') exit(0);
+
+	case FIN_TIEMPO_BLANCAS:
+		if (key == '0') exit(0);
+		if (key == '1') {
+			estado = INICIO;
+			mitablero.vaciar();
+			break;
+		}
+		if (key == '2') {
+			mitablero.set_t(NONE);  // desactiva el turno para que no se pueda jugar
+			estado = OBSERVACION;
+			break;
+		}
+
+	case FIN_TIEMPO_NEGRAS:
+		if (key == '0') exit(0);
+		if (key == '1') {
+			estado = INICIO;
+			mitablero.vaciar();
+			break;
+		}
+		if (key == '2') {
+			mitablero.set_t(NONE);
+			estado = OBSERVACION;
+			break;
+
+		}
+	case OBSERVACION:
+		if (key == '0') exit(0);
+		if (key == '1') {
+			estado = INICIO;
+			mitablero.vaciar();
+			break;
+		}
 	}
 }
 
@@ -53,6 +87,7 @@ void Coordinador::dibuja()
 {
 	char contador_b[15];
 	char contador_n[15];
+
 	sprintf_s(contador_b, sizeof(contador_b), "Blancas: %02u:%02u", contador_blancas.minutos, contador_blancas.segundos);
 	sprintf_s(contador_n, sizeof(contador_n), "Negras: %02u:%02u", contador_negras.minutos, contador_negras.segundos);
 
@@ -96,6 +131,53 @@ void Coordinador::dibuja()
 		DrawText(contador_n, 650, 570, rN, gN, bN);
 
 		break;
+
+
+	case FIN_TIEMPO_BLANCAS:
+		gluLookAt(3, 3.5, 9,
+			3, 3.5, 0,
+			0.0, 1.0, 0.0);
+
+		ETSIDI::setTextColor(255, 0, 0);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
+		ETSIDI::printxy("LAS PIEZAS BLANCAS SE HAN QUEDADO SIN TIEMPO", -1, 6);
+		ETSIDI::printxy("PARTIDA FINALIZADA. GANAN NEGRAS", 0, 5);
+
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 9);
+		ETSIDI::printxy("PULSE -0- PARA CERRAR EL PROGRAMA.", -1, 3);
+		ETSIDI::printxy("PULSE -1- PARA VOLVER A PANTALLA DE INICIO.", -1, 2);
+		ETSIDI::printxy("PULSE -2- PARA OBSERVAR EL TABLERO.", -1, 1);
+
+
+		break;
+
+
+	case FIN_TIEMPO_NEGRAS:
+		gluLookAt(3, 3.5, 9,			//desde donde
+			3, 3.5, 0,		//hacia donde
+			0.0, 1.0, 0.0);
+
+		ETSIDI::setTextColor(255, 0, 0);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
+		ETSIDI::printxy("LAS PIEZAS NEGRAS SE HAN QUEDADO SIN TIEMPO", -1, 6);
+		ETSIDI::printxy("PARTIDA FINALIZADA. GANAN BLANCAS", 0, 5);
+
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 9);
+		ETSIDI::printxy("PULSE -0- PARA CERRAR EL PROGRAMA.", -1, 3);
+		ETSIDI::printxy("PULSE -1- PARA VOLVER A PANTALLA DE INICIO.", -1, 2);
+		ETSIDI::printxy("PULSE -2- PARA OBSERVAR EL TABLERO.", -1, 1);
+
+		break;
+
+	case OBSERVACION:
+		gluLookAt(3, 3.5, 9,
+			3, 3.5, 0,
+			0.0, 1.0, 0.0);
+
+		mitablero.dibuja();
+		break;
 	}
 }
 
@@ -126,7 +208,6 @@ void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el c
 			if (contador <= 0) {
 				cout << "¡Fin del tiempo para las " << (mitablero.get_turno() == BLANCAS ? "blancas" : "negras") << "!" << endl;
 				estado = (mitablero.get_turno() == BLANCAS) ? FIN_TIEMPO_BLANCAS : FIN_TIEMPO_NEGRAS;
-				exit(0);
 			}
 		}
 		else {
@@ -138,13 +219,13 @@ void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el c
 
 void Coordinador::inicializa_45() {
 	mitablero.set(4, 5, 10);
-	mitablero += new Peon({ 4, 2 }, BLANCAS, false);
+	mitablero += new Peon({ 4, 2 }, BLANCAS, true);
 	mitablero += new Torre({ 1,1 }, BLANCAS);
 	mitablero += new Alfil({ 2,1 }, BLANCAS);
 	mitablero += new Caballo({ 3,1 }, BLANCAS);
 	mitablero += new Rey({ 4,1 }, BLANCAS);
 
-	mitablero += new Peon({ 1,4 }, NEGRAS, false);
+	mitablero += new Peon({ 1,4 }, NEGRAS, true);
 	mitablero += new Torre({ 4,5 }, NEGRAS);
 	mitablero += new Alfil({ 3,5 }, NEGRAS);
 	mitablero += new Caballo({ 2,5 }, NEGRAS);
@@ -159,7 +240,7 @@ void Coordinador::inicializa_S() {
 	mitablero += new Rey({ 4,1 }, BLANCAS);
 	mitablero += new Dama({ 5,1 }, BLANCAS);
 	for (int i = 1; i < 6; i++)
-		mitablero += new Peon({ i,2 }, BLANCAS, true);
+		mitablero += new Peon({ i,2 }, BLANCAS, false);
 
 	mitablero += new Torre({ 5,6 }, NEGRAS);
 	mitablero += new Alfil({ 4,6 }, NEGRAS);
@@ -167,7 +248,7 @@ void Coordinador::inicializa_S() {
 	mitablero += new Rey({ 2,6 }, NEGRAS);
 	mitablero += new Dama({ 1,6 }, NEGRAS);
 	for (int i = 1; i < 6; i++)
-		mitablero += new Peon({ i,5 }, NEGRAS, true);
+		mitablero += new Peon({ i,5 }, NEGRAS, false);
 }
 
 

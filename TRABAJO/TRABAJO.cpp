@@ -14,7 +14,7 @@ Clicks numero_click = NON;
 Posicion celdaClickada1;
 Posicion celdaClickada2;
 
-Tiempo tiempo (1,30);
+Tiempo tiempo (0,15);
 
 Tiempo contador_blancas = tiempo;
 Tiempo contador_negras = tiempo;
