@@ -1,7 +1,7 @@
 #include "Coordinador.h"
 #include "ETSIDI.h"
 
-unsigned char gB = 255, bB = 255, gN = 255, bN = 255;
+unsigned char rB = 50, gB = 50, bB = 50, rN = 50, gN = 50, bN = 50;
 
 void DrawText(const char* text, float x, float y, unsigned char, unsigned char, unsigned char);
 
@@ -49,9 +49,9 @@ void Coordinador::tecla(unsigned char key) {
 void Coordinador::dibuja()
 {
 	char contador_b[15];
-	sprintf_s(contador_b, "Blancas: %d", contador_blancas);
 	char contador_n[15];
-	sprintf_s(contador_n, "Negras: %d", contador_negras);
+	sprintf_s(contador_b, sizeof(contador_b), "Blancas: %02u:%02u", contador_blancas.minutos, contador_blancas.segundos);
+	sprintf_s(contador_n, sizeof(contador_n), "Negras: %02u:%02u", contador_negras.minutos, contador_negras.segundos);
 
 
 	switch (estado) {
@@ -78,8 +78,8 @@ void Coordinador::dibuja()
 			0.0, 1.0, 0.0);
 
 		mitablero.dibuja();
-		DrawText(contador_b, 10, 570, 255, gB, bB);
-		DrawText(contador_n, 650, 570, 255, gN, bN);
+		DrawText(contador_b, 10, 570, rB, gB, bB);
+		DrawText(contador_n, 650, 570, rN, gN, bN);
 
 		break;
 
@@ -89,35 +89,42 @@ void Coordinador::dibuja()
 			0.0, 1.0, 0.0);
 
 		mitablero.dibuja();
-		DrawText(contador_b, 10, 570, 255, gB, bB);
-		DrawText(contador_n, 650, 570, 255, gN, bN);
+		DrawText(contador_b, 10, 570, rB, gB, bB);
+		DrawText(contador_n, 650, 570, rN, gN, bN);
 
 		break;
 	}
 }
 
-void Coordinador::OnTimer(int value) {
+void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el color en cada tuno y en los ultimos segundos parpadea
 	static bool primer_tick = true;
+	static bool parpadeo = false;
+
 	if (primer_tick) primer_tick = false;
 	else {
-		if (mitablero.get_turno() == BLANCAS) {
-			contador_blancas--;
+		if (mitablero.get_turno() == BLANCAS || mitablero.get_turno() == NEGRAS) {
+			Tiempo& contador = (mitablero.get_turno() == BLANCAS) ? contador_blancas : contador_negras;
+			unsigned char& r = (mitablero.get_turno() == BLANCAS) ? rB : rN;
+			unsigned char& g = (mitablero.get_turno() == BLANCAS) ? gB : gN;
+			unsigned char& b = (mitablero.get_turno() == BLANCAS) ? bB : bN;
 
-			if (contador_blancas <= 5) gB = bB = 0;
-			if (contador_blancas <= 0) {
-				cout << "¡Fin del tiempo para las blancas!" << endl;
-				estado = FIN_TIEMPO_BLANCAS;
-				exit(0);                                              /////////se tendra que quitar cuando hagamos la pantalla de FIN_TIEMPO_BLANCAS
-			}
-		}
-		else if (mitablero.get_turno() == NEGRAS) {
-			contador_negras--;
+			contador--;
 
-			if (contador_negras <= 5) gN = bN = 0;
-			if (contador_negras <= 0) {
-				cout << "¡Fin del tiempo para las negras!" << endl;
-				estado = FIN_TIEMPO_NEGRAS;
-				exit(0);											 /////////se tendra que quitar cuando hagamos la pantalla de FIN_TIEMPO_NEGRAS
+			parpadeo = !parpadeo;  
+
+			bool parpadea = (contador <= Tiempo(0,10));				
+
+			r = parpadea ? (parpadeo ? 255 : 255) : 255;  
+			g = parpadea ? (parpadeo ? 0 : 255) : 255;
+			b = parpadea ? (parpadeo ? 0 : 255) : 255;
+
+			if (mitablero.get_turno() == BLANCAS) rN = gN = bN = 50;
+			else rB = gB = bB = 50;
+
+			if (contador <= 0) {
+				cout << "¡Fin del tiempo para las " << (mitablero.get_turno() == BLANCAS ? "blancas" : "negras") << "!" << endl;
+				estado = (mitablero.get_turno() == BLANCAS) ? FIN_TIEMPO_BLANCAS : FIN_TIEMPO_NEGRAS;
+				exit(0);
 			}
 		}
 		else {

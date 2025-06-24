@@ -3,6 +3,7 @@
 #include "ETSIDI.h"
 #include "freeglut.h"
 
+#include "Tiempo.h"
 #include "Coordinador.h"
 #include "Tablero.h"
 
@@ -13,10 +14,10 @@ Clicks numero_click = NON;
 Posicion celdaClickada1;
 Posicion celdaClickada2;
 
-int tiempo = 100;
+Tiempo tiempo (1,30);
 
-int contador_blancas = tiempo;
-int contador_negras = tiempo;
+Tiempo contador_blancas = tiempo;
+Tiempo contador_negras = tiempo;
 
 void OnDraw(void);
 void OnTimer(int value);

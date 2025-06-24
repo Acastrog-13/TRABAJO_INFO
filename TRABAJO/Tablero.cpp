@@ -93,13 +93,12 @@ void Tablero::dibuja_tablero() {
 			pos.fil = f;
 			pos.col = c;
 			int ancho = 1, alto = 1;
-			// Alternar color tipo ajedrez
 			bool esOscura = (f + c) % 2 == 0;
 
 			if (esOscura)
-				dibujarFondoCelda(pos, ancho, alto, 100, 140, 0); // gris
+				dibujarFondoCelda(pos, ancho, alto, 100, 140, 0); 
 			else
-				dibujarFondoCelda(pos, ancho, alto, 213, 186, 152); // blanco
+				dibujarFondoCelda(pos, ancho, alto, 213, 186, 152); 
 		}
 	}
 }

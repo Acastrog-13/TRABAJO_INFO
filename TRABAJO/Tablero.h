@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "Posicion.h"
+#include "Tiempo.h"
 #include "TablaInfo.h"
 
 #include "Pieza.h"
@@ -15,9 +16,9 @@
 using namespace std;
 
 
-extern int tiempo;
-extern int contador_blancas;
-extern int contador_negras;
+extern Tiempo tiempo;
+extern Tiempo contador_blancas;
+extern Tiempo contador_negras;
 extern Clicks numero_click;
 
 class Tablero
