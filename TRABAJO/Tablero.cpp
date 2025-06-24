@@ -67,30 +67,38 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 
 		//Evaluacion de si debe haber promocion y su ejecucion
 		if (p_in->nombre == "Peon") {
-			if (p_in->color == NEGRAS && p_in->pos.fil == 1) {
-				cout << "Promocion negras" << endl;
+			if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
+				cout << "Hay promocion" << endl;
 				char pieza_nueva;
-				cout << "Elige pieza para la promoción: (t) Torre, (a) Alfil, (c) Caballo: ";
-				cin >> pieza_nueva;
+				bool opcion_ok = 0;
+				
+				do{
+					cout << "Elige pieza para la promoción: (t) Torre, (a) Alfil, (c) Caballo: ";
+					cin >> pieza_nueva;
 
-				switch (pieza_nueva) {
-				case 't':
-					cout << "Se ha pedido una torre" << endl;
-					(*this) += new Torre({ p_in->pos.col, p_in->pos.fil }, NEGRAS);
-					break;
-				case 'a':
-					cout << "Se ha pedido un alfil" << endl;
-					(*this) += new Alfil({ p_in->pos.col, p_in->pos.fil }, NEGRAS);
-					break;
-				case 'c':
-					cout << "Se ha pedido un caballo" << endl;
-					(*this) += new Caballo({ p_in->pos.col, p_in->pos.fil }, NEGRAS);
-					break;
-				default:
-					cout << "Opción no válida. Se promoverá a torre por defecto." << endl;
-					(*this) += new Torre({ p_in->pos.col, p_in->pos.fil }, NEGRAS);
-					break;
-				}
+					switch (pieza_nueva) {
+					case 't':
+						cout << "Se ha pedido una torre" << endl;
+						(*this) += new Torre({ p_in->pos.col, p_in->pos.fil }, p_in->color == NEGRAS ? NEGRAS : BLANCAS);
+						opcion_ok = 1;
+						break;
+					case 'a':
+						cout << "Se ha pedido un alfil" << endl;
+						(*this) += new Alfil({ p_in->pos.col, p_in->pos.fil }, p_in->color == NEGRAS ? NEGRAS : BLANCAS);
+						opcion_ok = 1;
+						break;
+					case 'c':
+						cout << "Se ha pedido un caballo" << endl;
+						(*this) += new Caballo({ p_in->pos.col, p_in->pos.fil }, p_in->color == NEGRAS ? NEGRAS : BLANCAS);
+						opcion_ok = 1;
+						break;
+					default:
+						cout << "Opción no válida. Pide de nuevo la pieza" << endl;
+						opcion_ok = 0;
+						break;
+					}
+				} while (opcion_ok == 0);
+				
 
 				// Eliminar el peón después de añadir la nueva pieza
 				eliminar_pieza(p_in);

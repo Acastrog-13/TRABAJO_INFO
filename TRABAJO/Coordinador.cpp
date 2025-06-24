@@ -222,7 +222,7 @@ void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el c
 }
 
 void Coordinador::inicializa_45() {
-	mitablero.set(4, 5, 12);
+	mitablero.set(4, 5, 11);
 	mitablero += new Peon({ 4, 2 }, BLANCAS, true);
 	mitablero += new Torre({ 1,1 }, BLANCAS);
 	mitablero += new Alfil({ 2,1 }, BLANCAS);
