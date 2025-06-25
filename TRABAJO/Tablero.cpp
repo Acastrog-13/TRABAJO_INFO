@@ -57,7 +57,7 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 			}
 		}
 		p_in->pos = objetivo;
-		brillos.clear();
+		
 
 		//¿Este for y jaque se deberian hacer despues de la promocion?
 		for (int i = 0; i < num; i++) lista[i]->set_jugadas(get_ocupacion());
