@@ -67,6 +67,7 @@ public:
 	void brillo_pieza(Posicion, bool);													//busca una pieza y la ilumina o la deja de iluminar, llama a busca_amenaza y marca_movimiento
 	void brillo_amenazada(Pieza*, bool);												//ilumina las piezas amenazadas por sus movimientos
 	void marca_movimiento(Pieza*);														//ilumina las celdas donde se puede mover
+	void borra_brillo() { brillos.clear(); }
 
 	//destructor
 	~Tablero() {

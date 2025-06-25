@@ -108,6 +108,7 @@ void OnMouse(int button, int state, int x, int y) {
 				cout << "No permitido, no hay cambio de turno \n" << endl; 
 			}
 			numero_click = CERO;
+			mitablero.borra_brillo();
 			break;
 		}
 
