@@ -94,7 +94,7 @@ void OnMouse(int button, int state, int x, int y) {
 				mitablero.brillo_pieza(celdaClickada1, true);
 				numero_click = UNO;
 			}
-			else cout << "Click no permitido \n" << endl;
+			else cout << "No es tu turno \n" << endl;
 			break;
 
 		case UNO:
@@ -102,13 +102,10 @@ void OnMouse(int button, int state, int x, int y) {
 			celdaClickada2 = mitablero.get_centro((double)worldX, (double)worldY);
 			cout << "Celda clickada2: " << celdaClickada2.fil << celdaClickada2.col << endl;
 			cout << endl;
-			if (mitablero.mueve(celdaClickada1, celdaClickada2)) {
-				mitablero.cambio_turno();
-				mitablero.brillo_pieza(celdaClickada2, false);
-			}
-			else {
-				cout << "No permitido, no hay cambio de turno \n" << endl;
+			if (mitablero.mueve(celdaClickada1, celdaClickada2)) { mitablero.cambio_turno(); }
+			else { 
 				mitablero.brillo_pieza(celdaClickada1, false);
+				cout << "No permitido, no hay cambio de turno \n" << endl; 
 			}
 			numero_click = CERO;
 			break;

@@ -29,6 +29,7 @@ class Tablero
 	int filas = 0, columnas = 0;
 	vector <Pieza*> lista;
 	vector <Pieza*> piezas_jaque;
+	vector <Posicion> brillos;
 	Color turno = NONE;
 	Estado estado_tablero = INICIO;
 
@@ -55,14 +56,17 @@ public:
 	// pieza se la come y la borra de la lista y mueve la pieza deseada
 
 
-	void jaque(TablaInfo);											//actualiza el vector que se le pasa con las piezas que estan en jaque con el rey opuesto
+	void jaque(TablaInfo);																//actualiza el vector que se le pasa con las piezas que estan en jaque con el rey opuesto
 	Posicion get_centro(double, double);
 	bool eliminar_pieza(Pieza* p);														//elimina una pieza de la lista y desplaza la lista
 	void vaciar();																		//vacia el tablero de piezas
 	
 	//dibujo
 	void dibuja();																		//dibuja las celdas y las piezas
-	void brillo_pieza(Posicion, bool);
+
+	void brillo_pieza(Posicion, bool);													//busca una pieza y la ilumina o la deja de iluminar, llama a busca_amenaza y marca_movimiento
+	void brillo_amenazada(Pieza*, bool);												//ilumina las piezas amenazadas por sus movimientos
+	void marca_movimiento(Pieza*);														//ilumina las celdas donde se puede mover
 
 	//destructor
 	~Tablero() {

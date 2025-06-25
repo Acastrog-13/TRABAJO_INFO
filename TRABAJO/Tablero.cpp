@@ -2,6 +2,7 @@
 
 void dibuja_tablero(int columnas, int filas);
 void dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned char r, unsigned char g, unsigned char b);
+extern void dibuja_brillo(Posicion, unsigned char, unsigned char, unsigned char);
 
 void Tablero::set_t(Color t) {
 	turno = t;
@@ -46,6 +47,7 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	if (p_in == nullptr) return false;
 	if (p_fin != nullptr && p_fin->nombre == "Rey") return false;
 	if (p_in->check (objetivo, (get_ocupacion()))) {
+		brillo_pieza(inicial, false);
 		if (p_fin != nullptr) eliminar_pieza(p_fin);
 		else {
 			if (p_in->nombre == "Peon") {
@@ -54,6 +56,7 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 			}
 		}
 		p_in->pos = objetivo;
+		brillos.clear();
 
 		//¿Este for y jaque se deberian hacer despues de la promocion?
 		for (int i = 0; i < num; i++) lista[i]->set_jugadas(get_ocupacion());
@@ -139,6 +142,7 @@ void Tablero::vaciar() {
 void Tablero::dibuja() {
 	dibuja_tablero(columnas, filas);
 	for (int i = 0; i < num; i++) lista[i]->dibuja();
+	for (int i = 0; i < brillos.size(); i++) dibuja_brillo(brillos[i], 0, 0, 255);
 }
 
 void dibuja_tablero(int columnas, int filas) {
@@ -174,4 +178,17 @@ void dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned 
 void Tablero::brillo_pieza(Posicion pos, bool s) {
 	Pieza* p = (*this)(pos);
 	p->hay_seleccion = s;
+	for (auto pieza : lista) pieza->hay_amenaza = false;
+	brillo_amenazada(p, s);
+	marca_movimiento(p);
+}
+
+void Tablero::brillo_amenazada(Pieza* p, bool s) {
+	for (auto j : p->jugadas_ofensivas) 
+		(*this)(j)->hay_amenaza = s;
+}
+
+void Tablero::marca_movimiento(Pieza* p) {
+	for (auto j : p->jugadas_no_ofensivas)
+		brillos.push_back(j);
 }

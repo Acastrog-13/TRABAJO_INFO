@@ -18,8 +18,10 @@ protected:
 	string nombre;
 	Posicion pos{};
 	Color color{};
-	vector <Posicion> jugadas_posibles, jugadas_ofensivas;
+	vector <Posicion> jugadas_posibles, jugadas_ofensivas, jugadas_no_ofensivas;
 	bool hay_seleccion = false;
+	bool hay_amenaza = false;
+
 	Pieza(const string& n, const Posicion& p, Color c) : nombre{ n }, pos{ p }, color{ c } {}
 
 public:
