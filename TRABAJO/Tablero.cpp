@@ -19,19 +19,9 @@ Pieza* Tablero::operator()(const Posicion& pos) {
 			return lista[i];
 	return nullptr;
 }
-//Para que funcione la promocion he necesitado cambiar este operador a como se muestra debajo del comentado
-/*bool Tablero :: operator+= (Pieza* p) {
-	if (((*this)(p->pos)) || (num == max)) {
-		delete p;
-		return false;
-	}
-	lista.push_back(p);
-	num++;
-	return true;
-}*/
 
 bool Tablero :: operator+= (Pieza* p) {
-	if (num == max) {
+	if (((*this)(p->pos)) || (num == max)) {
 		delete p;
 		return false;
 	}
@@ -48,6 +38,7 @@ TablaInfo Tablero::get_ocupacion() {
 
 bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	Pieza* p_in = (*this)(inicial);
+	Color color = p_in->color;
 	Pieza* p_fin = (*this) (objetivo);
 	if (p_in == nullptr) return false;
 	if (p_fin != nullptr && p_fin->nombre == "Rey") return false;
@@ -66,30 +57,33 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 		jaque(get_ocupacion());
 
 		//Evaluacion de si debe haber promocion y su ejecucion
-		if (p_in->nombre == "Peon" && estado_tablero == CUATRO_CINCO) {
+		if (p_in->nombre == "Peon" && estado_tablero == CUATRO_CINCO)
 			if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
 				cout << "Hay promocion" << endl;
 				char pieza_nueva;
 				bool opcion_ok = 0;
 				
-				do{
+				do {
 					cout << "Elige pieza para la promoción: (t) Torre, (a) Alfil, (c) Caballo: ";
 					cin >> pieza_nueva;
 
 					switch (pieza_nueva) {
 					case 't':
+						eliminar_pieza(p_in);
 						cout << "Se ha pedido una torre" << endl;
-						(*this) += new Torre({ p_in->pos.col, p_in->pos.fil }, p_in->color == NEGRAS ? NEGRAS : BLANCAS);
+						(*this) += new Torre({ objetivo.col, objetivo.fil }, color == NEGRAS ? NEGRAS : BLANCAS);
 						opcion_ok = 1;
 						break;
 					case 'a':
+						eliminar_pieza(p_in);
 						cout << "Se ha pedido un alfil" << endl;
-						(*this) += new Alfil({ p_in->pos.col, p_in->pos.fil }, p_in->color == NEGRAS ? NEGRAS : BLANCAS);
+						(*this) += new Alfil({ objetivo.col, objetivo.fil }, color == NEGRAS ? NEGRAS : BLANCAS);
 						opcion_ok = 1;
 						break;
 					case 'c':
+						eliminar_pieza(p_in);
 						cout << "Se ha pedido un caballo" << endl;
-						(*this) += new Caballo({ p_in->pos.col, p_in->pos.fil }, p_in->color == NEGRAS ? NEGRAS : BLANCAS);
+						(*this) += new Caballo({ objetivo.col, objetivo.fil }, color == NEGRAS ? NEGRAS : BLANCAS);
 						opcion_ok = 1;
 						break;
 					default:
@@ -98,12 +92,7 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 						break;
 					}
 				} while (opcion_ok == 0);
-				
-
-				// Eliminar el peón después de añadir la nueva pieza
-				eliminar_pieza(p_in);
 			}
-		}
 
 		return true;
 	}
