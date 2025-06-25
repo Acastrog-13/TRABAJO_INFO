@@ -179,7 +179,7 @@ void Coordinador::dibuja()
 
 		mitablero.dibuja();
 
-		dibujaImagenPantalla("imagenes/imagen_observacion.png", -1, 6, 2.0, 1);	//0.5,5.5
+		DrawImage("imagenes/imagen_observacion.png", -1, 6, 2.0, 1);	//0.5,5.5
 
 		break;
 	}
@@ -283,7 +283,7 @@ void DrawText(const char* text, float x, float y, unsigned char r, unsigned char
 }
 
 
-void Coordinador::dibujaImagenPantalla(const string& imagen, double x, double y, double ancho, double alto) {
+void Coordinador::DrawImage(const string& imagen, double x, double y, double ancho, double alto) {
 	unsigned int glComun = ETSIDI::getTexture(imagen.c_str()).id;
 
 	glEnable(GL_BLEND);

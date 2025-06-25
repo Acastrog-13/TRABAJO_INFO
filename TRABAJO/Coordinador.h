@@ -19,6 +19,6 @@ public:
 	void OnTimer(int value);
 	void dibuja();
 	void tecla(unsigned char key);
-	void dibujaImagenPantalla(const string& ruta, double x, double y, double ancho, double alto);
+	void DrawImage(const string& ruta, double x, double y, double ancho, double alto);
 
 };
