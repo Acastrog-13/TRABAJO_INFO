@@ -1,5 +1,8 @@
 #include "Tablero.h"
 
+void dibuja_tablero(int columnas, int filas);
+void dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned char r, unsigned char g, unsigned char b);
+
 void Tablero::set_t(Color t) {
 	turno = t;
 	contador_blancas = contador_negras = tiempo;
@@ -134,11 +137,11 @@ void Tablero::vaciar() {
 }
 
 void Tablero::dibuja() {
-	dibuja_tablero();
+	dibuja_tablero(columnas, filas);
 	for (int i = 0; i < num; i++) lista[i]->dibuja();
 }
 
-void Tablero::dibuja_tablero() {
+void dibuja_tablero(int columnas, int filas) {
 	for (int f = 1; f <= filas; ++f) {
 		for (int c = 1; c <= columnas; ++c) {
 			Posicion pos;
@@ -155,16 +158,20 @@ void Tablero::dibuja_tablero() {
 	}
 }
 
-void Tablero::dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned char r, unsigned char g, unsigned char b) {
+void dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned char r, unsigned char g, unsigned char b) {
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
-	glColor3ub(r, g, b); // color pasado como argumento
+	glColor3ub(r, g, b); 
 
 	glBegin(GL_POLYGON);
-	glVertex3d(pos.col + ancho / 2, pos.fil - alto / 2, 0.09); // Z = 0.09 para que esté detrás
-	glVertex3d(pos.col - ancho / 2, pos.fil - alto / 2, 0.09);
-	glVertex3d(pos.col - ancho / 2, pos.fil + alto / 2, 0.09);
-	glVertex3d(pos.col + ancho / 2, pos.fil + alto / 2, 0.09);
+	glVertex3d(pos.col + ancho / 2, pos.fil - alto / 2, 0); 
+	glVertex3d(pos.col - ancho / 2, pos.fil - alto / 2, 0);
+	glVertex3d(pos.col - ancho / 2, pos.fil + alto / 2, 0);
+	glVertex3d(pos.col + ancho / 2, pos.fil + alto / 2, 0);
 	glEnd();
 }
 
+void Tablero::brillo_pieza(Posicion pos, bool s) {
+	Pieza* p = (*this)(pos);
+	p->hay_seleccion = s;
+}

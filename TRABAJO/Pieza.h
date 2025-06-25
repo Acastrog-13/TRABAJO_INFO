@@ -19,6 +19,7 @@ protected:
 	Posicion pos{};
 	Color color{};
 	vector <Posicion> jugadas_posibles, jugadas_ofensivas;
+	bool hay_seleccion = false;
 	Pieza(const string& n, const Posicion& p, Color c) : nombre{ n }, pos{ p }, color{ c } {}
 
 public:

@@ -17,9 +17,37 @@ bool Pieza::check_recorrido(Posicion objetivo, const TablaInfo& info) {
 	return true;
 }
 
+void dibuja_brillo(Posicion pos) {
+	int ancho = 1, alto = 1;
+	unsigned char alpha, r, g, b;
+
+	bool esOscura = ((pos.col + pos.fil) % 2 == 0);
+	if (!esOscura) { r = 230; g = 230; b = 100; alpha = 153; }
+	else { r = 230; g = 210; b = 140; alpha = 102; }
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+
+	glColor4ub(r, g, b, alpha);
+
+	glBegin(GL_POLYGON);
+	glVertex3d(pos.col + 0.5, pos.fil - 0.5, 0.001);
+	glVertex3d(pos.col - 0.5, pos.fil - 0.5, 0.001);
+	glVertex3d(pos.col - 0.5, pos.fil + 0.5, 0.001);
+	glVertex3d(pos.col + 0.5, pos.fil + 0.5, 0.001);
+	glEnd();
+
+	glDisable(GL_BLEND);
+}
+
 void Pieza::dibuja(unsigned int glComun)const {
-	double ancho = 1; //tamaño imagen
+	double ancho = 1; 
 	double alto = 1;
+	
+	if (hay_seleccion) dibuja_brillo(pos);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -31,13 +59,12 @@ void Pieza::dibuja(unsigned int glComun)const {
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
 
-	glTexCoord2f(1, 1); glVertex3d(pos.col + ancho / 2, pos.fil - alto / 2, 0.1);
-	glTexCoord2f(0, 1); glVertex3d(pos.col - ancho / 2, pos.fil - alto / 2, 0.1);
-	glTexCoord2f(0, 0); glVertex3d(pos.col - ancho / 2, pos.fil + alto / 2, 0.1);
-	glTexCoord2f(1, 0); glVertex3d(pos.col + ancho / 2, pos.fil + alto / 2, 0.1);
-
+	glTexCoord2f(1, 1); glVertex3d(pos.col + ancho / 2, pos.fil - alto / 2, 0.002);
+	glTexCoord2f(0, 1); glVertex3d(pos.col - ancho / 2, pos.fil - alto / 2, 0.002);
+	glTexCoord2f(0, 0); glVertex3d(pos.col - ancho / 2, pos.fil + alto / 2, 0.002);
+	glTexCoord2f(1, 0); glVertex3d(pos.col + ancho / 2, pos.fil + alto / 2, 0.002);
+	
 	glEnd();
-
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
