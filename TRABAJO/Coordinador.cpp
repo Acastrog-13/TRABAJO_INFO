@@ -241,16 +241,16 @@ void Coordinador::inicializa_S() {
 	mitablero.set(5, 6, 20);
 	mitablero.estado_tablero = SPEED;
 	mitablero += new Torre({ 1,1 }, BLANCAS);
-	mitablero += new Alfil({ 2,1 }, BLANCAS);
-	mitablero += new Caballo({ 3,1 }, BLANCAS);
+	mitablero += new Alfil({ 3,1 }, BLANCAS);
+	mitablero += new Caballo({ 2,1 }, BLANCAS);
 	mitablero += new Rey({ 4,1 }, BLANCAS);
 	mitablero += new Dama({ 5,1 }, BLANCAS);
 	for (int i = 1; i < 6; i++)
 		mitablero += new Peon({ i,2 }, BLANCAS, false);
 
 	mitablero += new Torre({ 5,6 }, NEGRAS);
-	mitablero += new Alfil({ 4,6 }, NEGRAS);
-	mitablero += new Caballo({ 3,6 }, NEGRAS);
+	mitablero += new Alfil({ 3,6 }, NEGRAS);
+	mitablero += new Caballo({ 4,6 }, NEGRAS);
 	mitablero += new Rey({ 2,6 }, NEGRAS);
 	mitablero += new Dama({ 1,6 }, NEGRAS);
 	for (int i = 1; i < 6; i++)
