@@ -33,6 +33,8 @@ class Tablero
 	vector <Pieza*> piezas_jaque;
 	vector <Posicion> brillos;
 	Color turno = NONE;
+	Posicion posicion_promocion;
+	Color color_promocion;
 
 public:
 	//constructor

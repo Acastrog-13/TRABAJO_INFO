@@ -82,20 +82,23 @@ void Coordinador::tecla(unsigned char key) {
 		}
 	case PROMOCION:
 		if (key == 't') {
-			mitablero.eliminar_pieza(mitablero(posicion_promocion));
-			mitablero += new Torre(posicion_promocion, color_promocion);
+			cout << "Se promociona por una torre" << endl;
+			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
+			mitablero += new Torre(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
 			break;
 		}
 		if (key == 'a') {
-			mitablero.eliminar_pieza(mitablero(posicion_promocion));
-			mitablero += new Alfil(posicion_promocion, color_promocion);
+			cout << "Se promociona por un alfil" << endl;
+			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
+			mitablero += new Alfil(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
 			break;
 		}
 		if (key == 'c') {
-			mitablero.eliminar_pieza(mitablero(posicion_promocion));
-			mitablero += new Caballo(posicion_promocion, color_promocion);
+			cout << "Se promociona por un caballo" << endl;
+			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
+			mitablero += new Caballo(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
 			break;
 		}

@@ -67,9 +67,9 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 		if (p_in->nombre == "Peon" && ajedrez.estado == CUATRO_CINCO)
 			if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
 				ajedrez.estado = PROMOCION;
-				ajedrez.color_promocion = p_in->color;
-				ajedrez.posicion_promocion = objetivo;
-				cout << "Hay promocion" << endl;
+				color_promocion = p_in->color;
+				posicion_promocion = objetivo;
+				cout << "Hay promocion del peon " << (p_in->color == BLANCAS? "blanco":"negro") << endl;
 			}
 
 		return true;
