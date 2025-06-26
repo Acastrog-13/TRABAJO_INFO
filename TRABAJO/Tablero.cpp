@@ -2,9 +2,10 @@
 
 void dibuja_tablero(int columnas, int filas);
 void dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned char r, unsigned char g, unsigned char b);
-extern void dibuja_brillo(Posicion, unsigned char, unsigned char, unsigned char);
+extern void dibuja_brillo(Posicion pos, unsigned char alpha = 255, unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, float lado = 1, double fondo = 0.001);
 
 void Tablero::set_t(Color t) {
+	for (auto p : lista) p->set_jugadas(get_ocupacion());
 	turno = t;
 	contador_blancas = contador_negras = tiempo;
 	if (t != NONE) numero_click = CERO;
@@ -133,7 +134,8 @@ bool Tablero::eliminar_pieza(Pieza* p) {
 }
 
 void Tablero::vaciar() {
-	for (int i = 0; i < num; i++) delete lista[i];
+	for (auto p : lista) delete p;
+	brillos.clear();
 	lista.clear();
 	num = 0;
 	turno = BLANCAS;
@@ -141,8 +143,8 @@ void Tablero::vaciar() {
 
 void Tablero::dibuja() {
 	dibuja_tablero(columnas, filas);
-	for (int i = 0; i < num; i++) lista[i]->dibuja();
-	for (int i = 0; i < brillos.size(); i++) dibuja_brillo(brillos[i], 0, 0, 255);
+	for (auto b : brillos) dibuja_brillo(b, 255, 0, 255, 255, (float)0.1, 0.01);
+	for (auto p : lista) p->dibuja();
 }
 
 void dibuja_tablero(int columnas, int filas) {

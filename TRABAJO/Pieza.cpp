@@ -1,6 +1,6 @@
 #include "Pieza.h"
 
-void dibuja_brillo(Posicion pos, unsigned char r = 0, unsigned char g = 0, unsigned char b = 0);
+void dibuja_brillo(Posicion pos, unsigned char alpha = 255, unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, float lado = 1, double fondo = 0.001);
 
 bool Pieza::check(Posicion objetivo, const TablaInfo& info) {
 	if ((objetivo.col == pos.col) && (objetivo.fil == pos.fil)) return false;
@@ -22,9 +22,18 @@ bool Pieza::check_recorrido(Posicion objetivo, const TablaInfo& info) {
 void Pieza::dibuja(unsigned int glComun)const {
 	double ancho = 1; 
 	double alto = 1;
+	unsigned char r, g, b, alpha;
+	bool esOscura = ((pos.col + pos.fil) % 2 == 0);
 	
-	if (hay_seleccion) dibuja_brillo(pos);
-	if (hay_amenaza) dibuja_brillo(pos, 255, 0, 0);
+	if (hay_seleccion) {
+		if (!esOscura) { r = 230; g = 230; b = 100; alpha = 153; }
+		else { r = 230; g = 210; b = 140; alpha = 102; }
+		dibuja_brillo(pos, alpha, r, g, b);
+	}
+	if (hay_amenaza) {
+		alpha = esOscura ? 130 : 200;
+		dibuja_brillo(pos, alpha, 255, 0, 0);
+	}
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -62,16 +71,8 @@ void Pieza::set_jugadas(TablaInfo info) {
 			}
 }
 
-void dibuja_brillo(Posicion pos, unsigned char r, unsigned char g, unsigned char b) {
-	int ancho = 1, alto = 1;
-	unsigned char alpha = 100;
-	bool esOscura = ((pos.col + pos.fil) % 2 == 0);
-
-	if (r == b == g == 0) {
-		if (!esOscura) { r = 230; g = 230; b = 100; alpha = 153; }
-		else { r = 230; g = 210; b = 140; alpha = 102; }
-	}
-	else alpha != esOscura ? 200 : 130;
+void dibuja_brillo(Posicion pos, unsigned char alpha, unsigned char r, unsigned char g, unsigned char b, float lado, double fondo) {
+	float ancho = lado, alto = lado;
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -82,10 +83,10 @@ void dibuja_brillo(Posicion pos, unsigned char r, unsigned char g, unsigned char
 	glColor4ub(r, g, b, alpha);
 
 	glBegin(GL_POLYGON);
-	glVertex3d(pos.col + 0.5, pos.fil - 0.5, 0.001);
-	glVertex3d(pos.col - 0.5, pos.fil - 0.5, 0.001);
-	glVertex3d(pos.col - 0.5, pos.fil + 0.5, 0.001);
-	glVertex3d(pos.col + 0.5, pos.fil + 0.5, 0.001);
+	glVertex3d(pos.col + lado / 2, pos.fil - lado / 2, fondo);
+	glVertex3d(pos.col - lado / 2, pos.fil - lado / 2, fondo);
+	glVertex3d(pos.col - lado / 2, pos.fil + lado / 2, fondo);
+	glVertex3d(pos.col + lado / 2, pos.fil + lado / 2, fondo);
 	glEnd();
 
 	glDisable(GL_BLEND);

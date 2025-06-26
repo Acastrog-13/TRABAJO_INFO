@@ -14,7 +14,7 @@ Clicks numero_click = NON;
 Posicion celdaClickada1;
 Posicion celdaClickada2;
 
-Tiempo tiempo (1,15);
+Tiempo tiempo (1,30);
 
 Tiempo contador_blancas = tiempo;
 Tiempo contador_negras = tiempo;
@@ -39,11 +39,11 @@ int main(int argc, char* argv[])
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 
-	glutDisplayFunc(OnDraw);
 	glutMouseFunc(OnMouse);
 	glutTimerFunc(1000, OnTimer, 0);
 	glutKeyboardFunc(OnKeyboardDown);
-
+	glutDisplayFunc(OnDraw);
+	
 	glutMainLoop();
 
 	return 0;
