@@ -64,7 +64,7 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 		jaque(get_ocupacion());
 
 		//Evaluacion de si debe haber promocion y su ejecucion
-		if (p_in->nombre == "Peon" && estado_tablero == CUATRO_CINCO)
+		if (p_in->nombre == "Peon" && ajedrez.estado == CUATRO_CINCO)
 			if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
 				ajedrez.estado = PROMOCION;
 				ajedrez.color_promocion = p_in->color;

@@ -33,7 +33,6 @@ class Tablero
 	vector <Pieza*> piezas_jaque;
 	vector <Posicion> brillos;
 	Color turno = NONE;
-	Estado estado_tablero = INICIO;
 
 public:
 	//constructor
