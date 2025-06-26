@@ -80,6 +80,26 @@ void Coordinador::tecla(unsigned char key) {
 			mitablero.vaciar();
 			break;
 		}
+	case PROMOCION:
+		if (key == 't') {
+			mitablero.eliminar_pieza(mitablero(posicion_promocion));
+			mitablero += new Torre(posicion_promocion, color_promocion);
+			estado = CUATRO_CINCO;
+			break;
+		}
+		if (key == 'a') {
+			mitablero.eliminar_pieza(mitablero(posicion_promocion));
+			mitablero += new Alfil(posicion_promocion, color_promocion);
+			estado = CUATRO_CINCO;
+			break;
+		}
+		if (key == 'c') {
+			mitablero.eliminar_pieza(mitablero(posicion_promocion));
+			mitablero += new Caballo(posicion_promocion, color_promocion);
+			estado = CUATRO_CINCO;
+			break;
+		}
+		
 	}
 }
 
@@ -182,7 +202,25 @@ void Coordinador::dibuja()
 		DrawImage("imagenes/imagen_observacion.png", -1, 6, 2.0, 1);	//0.5,5.5
 
 		break;
+	case PROMOCION:
+		gluLookAt(25, 25, 50,			//desde donde
+			25, 25, 0,		//hacia donde
+			0.0, 1.0, 0.0);
+
+		ETSIDI::setTextColor(255, 180, 0);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
+		ETSIDI::printxy("Hay promocion", 20, 33);
+		ETSIDI::printxy("Elige pieza por la que quieres promocionar", 10, 30);
+
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
+		ETSIDI::printxy("Pulse -A- para alfil", 18, 25);
+		ETSIDI::printxy("Pulse -T- para torre", 18, 22);
+		ETSIDI::printxy("Pulse -C- para caballo", 18, 19);
+
+		break;
 	}
+
 }
 
 void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el color en cada tuno y en los ultimos segundos parpadea

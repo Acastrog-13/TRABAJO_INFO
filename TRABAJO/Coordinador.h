@@ -11,6 +11,8 @@ extern Clicks numero_click;
 class Coordinador
 {
 	Estado estado;
+	Posicion posicion_promocion;
+	Color color_promocion;
 	void inicializa_45();									//set de filas y columnas y piezas de 4x5
 	void inicializa_S();									//set de filas y columnas y piezas de Speed
 
@@ -21,4 +23,5 @@ public:
 	void tecla(unsigned char key);
 	void DrawImage(const string& ruta, double x, double y, double ancho, double alto);
 
+	friend class Tablero;
 };

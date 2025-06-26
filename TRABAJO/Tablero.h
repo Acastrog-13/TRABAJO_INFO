@@ -12,6 +12,7 @@
 #include "Caballo.h"
 #include "Torre.h"
 #include "Rey.h"
+#include "Coordinador.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ extern Tiempo tiempo;
 extern Tiempo contador_blancas;
 extern Tiempo contador_negras;
 extern Clicks numero_click;
+extern Coordinador ajedrez;
 
 class Tablero
 {
