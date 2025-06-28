@@ -4,11 +4,8 @@
 
 struct Peon : Pieza
 {
-    //atributos
-    bool primer_mov;
-
     //constructor
-    Peon(Posicion pos, Color col, bool p) : Pieza("Peon", pos, col), primer_mov(p) {}
+    Peon(Posicion pos, Color col) : Pieza("Peon", pos, col){}
 
     //metodos
     bool check(Posicion objetivo, const TablaInfo& info);

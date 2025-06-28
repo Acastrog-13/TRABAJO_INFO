@@ -9,6 +9,8 @@
 #include "Posicion.h"
 #include "TablaInfo.h"
 
+class Tablero; //lo pongo para evitar inclusiones cruzadas
+
 using namespace std;
 
 class Pieza
@@ -18,11 +20,13 @@ protected:
 	string nombre;
 	Posicion pos{};
 	Color color{};
-	vector <Posicion> jugadas_posibles, jugadas_ofensivas, jugadas_no_ofensivas;
+	bool primer_mov;
+	vector <Posicion> jugadas_posibles{}, jugadas_ofensivas{}, jugadas_no_ofensivas{};
 	bool hay_seleccion = false;
 	bool hay_amenaza = false;
 
-	Pieza(const string& n, const Posicion& p, Color c) : nombre{ n }, pos{ p }, color{ c } {}
+	Pieza(const string& n, const Posicion& p, Color c, bool p_mov = true) : 
+		nombre{ n }, pos{ p }, color{ c }, primer_mov{p_mov} {}
 
 public:
 	//movimientos
@@ -33,7 +37,7 @@ public:
 	//dibujo
 	void dibuja(unsigned int glComun)const;						//dibuja cada pieza
 	virtual void dibuja() = 0;									//png especifico de cada pieza
-	void set_jugadas(TablaInfo);
+	void set_jugadas(Tablero&);
 
 	//amistades
 	friend class Tablero;

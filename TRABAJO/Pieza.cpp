@@ -1,4 +1,5 @@
 #include "Pieza.h"
+#include "Tablero.h"
 
 void dibuja_brillo(Posicion pos, unsigned char alpha = 255, unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, float lado = 1, double fondo = 0.001);
 
@@ -57,10 +58,17 @@ void Pieza::dibuja(unsigned int glComun)const {
 }
 
 
-void Pieza::set_jugadas(TablaInfo info) {
+void Pieza::set_jugadas(Tablero& tablero) {
+	TablaInfo info = tablero.get_ocupacion();
 	jugadas_ofensivas.clear();
 	jugadas_posibles.clear();
 	jugadas_no_ofensivas.clear();
+
+	if (nombre == "Rey") {
+		Rey* rey = dynamic_cast<Rey*>(this);
+		if (rey) tablero.enroque(rey);
+	}
+	
 	for (int c = 1; c <= info.columnas; c++)
 		for (int f = 1; f <= info.filas; f++)
 			if (check(Posicion(c, f), info)) {

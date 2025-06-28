@@ -264,13 +264,13 @@ void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el c
 
 void Coordinador::inicializa_45() {
 	mitablero.set(4, 5, 11);
-	mitablero += new Peon({ 4, 2 }, BLANCAS, true);
+	mitablero += new Peon({ 4, 2 }, BLANCAS);
 	mitablero += new Torre({ 1,1 }, BLANCAS);
 	mitablero += new Alfil({ 2,1 }, BLANCAS);
 	mitablero += new Caballo({ 3,1 }, BLANCAS);
 	mitablero += new Rey({ 4,1 }, BLANCAS);
 
-	mitablero += new Peon({ 1,4 }, NEGRAS, true);
+	mitablero += new Peon({ 1,4 }, NEGRAS);
 	mitablero += new Torre({ 4,5 }, NEGRAS);
 	mitablero += new Alfil({ 3,5 }, NEGRAS);
 	mitablero += new Caballo({ 2,5 }, NEGRAS);
@@ -285,7 +285,7 @@ void Coordinador::inicializa_S() {
 	mitablero += new Rey({ 4,1 }, BLANCAS);
 	mitablero += new Dama({ 5,1 }, BLANCAS);
 	for (int i = 1; i < 6; i++)
-		mitablero += new Peon({ i,2 }, BLANCAS, false);
+		mitablero += new Peon({ i,2 }, BLANCAS);
 
 	mitablero += new Torre({ 5,6 }, NEGRAS);
 	mitablero += new Alfil({ 3,6 }, NEGRAS);
@@ -293,7 +293,7 @@ void Coordinador::inicializa_S() {
 	mitablero += new Rey({ 2,6 }, NEGRAS);
 	mitablero += new Dama({ 1,6 }, NEGRAS);
 	for (int i = 1; i < 6; i++)
-		mitablero += new Peon({ i,5 }, NEGRAS, false);
+		mitablero += new Peon({ i,5 }, NEGRAS);
 }
 
 

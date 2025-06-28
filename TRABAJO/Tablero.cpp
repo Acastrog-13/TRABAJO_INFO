@@ -5,7 +5,7 @@ void dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned 
 extern void dibuja_brillo(Posicion pos, unsigned char alpha = 255, unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, float lado = 1, double fondo = 0.001);
 
 void Tablero::set_t(Color t) {
-	for (auto p : lista) p->set_jugadas(get_ocupacion());
+	for (auto p : lista) p->set_jugadas(*this);
 	turno = t;
 	contador_blancas = contador_negras = tiempo;
 	if (t != NONE) numero_click = CERO;
@@ -41,36 +41,62 @@ TablaInfo Tablero::get_ocupacion() {
 	return retorno;
 }
 
+Posicion Tablero::get_centro(double x, double y) {
+	int aux1 = (int)(x + 0.5);
+	int aux2 = (int)(y + 0.5);
+	return Posicion(aux1, aux2);
+}
+
 bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	Pieza* p_in = (*this)(inicial);
-	Color color = p_in->color;
-	Pieza* p_fin = (*this) (objetivo);
 	if (p_in == nullptr) return false;
+
+	Pieza* p_fin = (*this) (objetivo);
+
 	if (p_fin != nullptr && p_fin->nombre == "Rey") return false;
-	if (p_in->check (objetivo, (get_ocupacion()))) {
-		brillo_pieza(inicial, false);
-		if (p_fin != nullptr) eliminar_pieza(p_fin);
-		else {
-			if (p_in->nombre == "Peon") {
-				Peon* p = (Peon*)p_in;
-				p->primer_mov = false;
+	if (p_in->nombre == "Rey")	{
+		Rey* rey = dynamic_cast <Rey*>(p_in);
+		Posicion pos_torre;
+		if (rey->enroque_posible && rey->check(objetivo, get_ocupacion())) {
+			if (objetivo == pos_enroque(rey)) {
+				pos_torre = (rey->color == BLANCAS) ?
+					Posicion(rey->pos.col - 1, rey->pos.fil) : Posicion(rey->pos.col + 1, rey->pos.fil);
+				
+				auto torre = torre_enroque(rey);
+				if (torre == nullptr) return false;
+
+				p_in->pos = pos_enroque(rey);
+				torre->pos = pos_torre;
+				p_in->primer_mov = false;
+				torre->primer_mov = false;
+				return true;
 			}
 		}
-		p_in->pos = objetivo;
-		
+	}
 
-		//¿Este for y jaque se deberian hacer despues de la promocion?
-		for (int i = 0; i < num; i++) lista[i]->set_jugadas(get_ocupacion());
-		jaque(get_ocupacion());
+	if (p_in->check (objetivo, get_ocupacion())) {
+
+		brillo_pieza(inicial, false);
+		
+		if (p_fin != nullptr) eliminar_pieza(p_fin);
+
+		//Cambio estado pieza
+		p_in->pos = objetivo;
+		p_in->primer_mov = false;
 
 		//Evaluacion de si debe haber promocion y su ejecucion
-		if (p_in->nombre == "Peon" && ajedrez.estado == CUATRO_CINCO)
+		if (p_in->nombre == "Peon" && ajedrez.estado == CUATRO_CINCO) {
 			if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
 				ajedrez.estado = PROMOCION;
 				color_promocion = p_in->color;
 				posicion_promocion = objetivo;
-				cout << "Hay promocion del peon " << (p_in->color == BLANCAS? "blanco":"negro") << endl;
+				cout << "Hay promocion del peon " << (p_in->color == BLANCAS ? "blanco" : "negro") << endl;
 			}
+		}
+
+		//Actualiza las jugadas
+		for (int i = 0; i < num; i++) lista[i]->set_jugadas(*this);
+		jaque(get_ocupacion());
 
 		return true;
 	}
@@ -87,10 +113,49 @@ void Tablero::jaque(TablaInfo info) {
 			}
 }
 
-Posicion Tablero::get_centro(double x, double y) {
-	int aux1 = (int)(x + 0.5);
-	int aux2 = (int)(y + 0.5);
-	return Posicion(aux1, aux2);
+void Tablero::enroque(Rey* rey) {
+    if (!rey || !rey->primer_mov) {
+        rey->enroque_posible = false;
+        return;
+    }
+	    
+    if (!rey->check_recorrido(pos_enroque(rey), get_ocupacion())) {
+        rey->enroque_posible = false;
+        return;
+    }
+
+	if (torre_enroque(rey)) {
+        cout << "Enroque posible" << endl;
+        rey->jugadas_posibles.push_back(pos_enroque(rey));
+        rey->jugadas_no_ofensivas.push_back(pos_enroque(rey));
+        rey->enroque_posible = true;
+    } 
+	else {
+        rey->enroque_posible = false;
+    }
+}
+Posicion Tablero::pos_enroque(const Rey*rey) {
+	return (rey->color == BLANCAS) ?
+		Posicion(rey->pos.col - 2, rey->pos.fil) : Posicion(rey->pos.col + 2, rey->pos.fil);
+}
+
+Pieza* Tablero::torre_enroque(const Rey* rey) {    
+    if (!rey) return nullptr;
+
+    Posicion pos_torre = (rey->color == BLANCAS) ?
+        Posicion(1, rey->pos.fil) : Posicion(columnas, rey->pos.fil);
+
+    Pieza* p_torre = (*this)(pos_torre);
+    if (!p_torre) return nullptr;
+
+    if (p_torre->nombre != "Torre" || p_torre->color != rey->color) return nullptr;
+
+    Torre* torre = dynamic_cast<Torre*>(p_torre);
+    if (!torre) return nullptr;
+
+    if (!torre->primer_mov) return nullptr;
+
+    return torre;
 }
 
 bool Tablero::eliminar_pieza(Pieza* p) {
@@ -150,18 +215,22 @@ void dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned 
 
 void Tablero::brillo_pieza(Posicion pos, bool s) {
 	Pieza* p = (*this)(pos);
-	p->hay_seleccion = s;
+	if (p) p->hay_seleccion = s;
 	for (auto pieza : lista) pieza->hay_amenaza = false;
-	brillo_amenazada(p, s);
-	marca_movimiento(p);
+	if (p) brillo_amenazada(p, s);
+	if (p) marca_movimiento(p);
 }
 
 void Tablero::brillo_amenazada(Pieza* p, bool s) {
-	for (auto j : p->jugadas_ofensivas) 
-		(*this)(j)->hay_amenaza = s;
+	if (!p) return;
+	for (auto j : p->jugadas_ofensivas) {
+		Pieza* objetivo = (*this) (j);
+		if (objetivo) objetivo->hay_amenaza = s;
+	}
 }
 
 void Tablero::marca_movimiento(Pieza* p) {
+	if (!p) return;
 	for (auto j : p->jugadas_no_ofensivas)
 		brillos.push_back(j);
 }
