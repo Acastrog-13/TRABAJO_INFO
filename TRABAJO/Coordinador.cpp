@@ -5,6 +5,7 @@ static unsigned char rB = 255, gB = 255, bB = 255, rN = 50, gN = 50, bN = 50;
 static bool primer_tick = true;
 
 void DrawText(const char* text, float x, float y, unsigned char, unsigned char, unsigned char);
+void DrawImage(const string& imagen, double x, double y, double ancho, double alto);
 
 void Coordinador::tecla(unsigned char key) {
 
@@ -324,7 +325,7 @@ void DrawText(const char* text, float x, float y, unsigned char r, unsigned char
 }
 
 
-void Coordinador::DrawImage(const string& imagen, double x, double y, double ancho, double alto) {
+void DrawImage(const string& imagen, double x, double y, double ancho, double alto) {
 	unsigned int glComun = ETSIDI::getTexture(imagen.c_str()).id;
 
 	glEnable(GL_BLEND);

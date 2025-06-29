@@ -19,7 +19,6 @@ public:
 	void OnTimer(int value);
 	void dibuja();
 	void tecla(unsigned char key);
-	void DrawImage(const string& ruta, double x, double y, double ancho, double alto);
 
 	friend class Tablero;
 };
