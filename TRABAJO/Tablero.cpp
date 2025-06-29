@@ -54,13 +54,12 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	Pieza* p_fin = (*this) (objetivo);
 	if (p_fin != nullptr && p_fin->nombre == "Rey") return false;
 
+	brillo_pieza(inicial, false);
 	//Enroque
 	if (enroque_mueve(p_in, objetivo)) return true;
 
 	//Movimiento normal
 	if (p_in->check (objetivo, get_ocupacion())) {
-
-		brillo_pieza(inicial, false);
 		
 		if (p_fin != nullptr) eliminar_pieza(p_fin);
 
