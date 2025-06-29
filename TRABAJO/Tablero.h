@@ -34,7 +34,7 @@ class Tablero
 	vector <Posicion> brillos;
 	Color turno = NONE;
 	Posicion posicion_promocion;
-	Color color_promocion;
+	Color color_promocion = NONE;
 
 public:
 	//constructor
@@ -60,11 +60,12 @@ public:
 	//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
 	// pieza se la come y la borra de la lista y mueve la pieza deseada
 
-
+	void promociona(Pieza*,Posicion);
 	void jaque(TablaInfo);																//actualiza el vector que se le pasa con las piezas que estan en jaque con el rey opuesto
 	void enroque(Rey*);
 	Pieza* torre_enroque(const Rey*);
 	Posicion pos_enroque(const Rey* rey);
+	bool enroque_mueve(Pieza*, Posicion);
 
 	bool eliminar_pieza(Pieza* p);														//elimina una pieza de la lista y desplaza la lista
 	void vaciar();																		//vacia el tablero de piezas

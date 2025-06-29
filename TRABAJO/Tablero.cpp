@@ -52,28 +52,12 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	if (p_in == nullptr) return false;
 
 	Pieza* p_fin = (*this) (objetivo);
-
 	if (p_fin != nullptr && p_fin->nombre == "Rey") return false;
-	if (p_in->nombre == "Rey")	{
-		Rey* rey = dynamic_cast <Rey*>(p_in);
-		Posicion pos_torre;
-		if (rey->enroque_posible && rey->check(objetivo, get_ocupacion())) {
-			if (objetivo == pos_enroque(rey)) {
-				pos_torre = (rey->color == BLANCAS) ?
-					Posicion(rey->pos.col - 1, rey->pos.fil) : Posicion(rey->pos.col + 1, rey->pos.fil);
-				
-				auto torre = torre_enroque(rey);
-				if (torre == nullptr) return false;
 
-				p_in->pos = pos_enroque(rey);
-				torre->pos = pos_torre;
-				p_in->primer_mov = false;
-				torre->primer_mov = false;
-				return true;
-			}
-		}
-	}
+	//Enroque
+	if (enroque_mueve(p_in, objetivo)) return true;
 
+	//Movimiento normal
 	if (p_in->check (objetivo, get_ocupacion())) {
 
 		brillo_pieza(inicial, false);
@@ -85,14 +69,7 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 		p_in->primer_mov = false;
 
 		//Evaluacion de si debe haber promocion y su ejecucion
-		if (p_in->nombre == "Peon" && ajedrez.estado == CUATRO_CINCO) {
-			if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
-				ajedrez.estado = PROMOCION;
-				color_promocion = p_in->color;
-				posicion_promocion = objetivo;
-				cout << "Hay promocion del peon " << (p_in->color == BLANCAS ? "blanco" : "negro") << endl;
-			}
-		}
+		promociona(p_in, objetivo);
 
 		//Actualiza las jugadas
 		for (int i = 0; i < num; i++) lista[i]->set_jugadas(*this);
@@ -101,6 +78,17 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 		return true;
 	}
 	return false;
+}
+
+void Tablero::promociona(Pieza* p_in, Posicion objetivo) {
+	if (!(p_in->nombre == "Peon")) return;
+	if (ajedrez.estado != CUATRO_CINCO) return;
+	if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
+		ajedrez.estado = PROMOCION;
+		color_promocion = p_in->color;
+		posicion_promocion = objetivo;
+		cout << "Hay promocion del peon " << (p_in->color == BLANCAS ? "blanco" : "negro") << endl;
+	}
 }
 
 void Tablero::jaque(TablaInfo info) {
@@ -114,7 +102,9 @@ void Tablero::jaque(TablaInfo info) {
 }
 
 void Tablero::enroque(Rey* rey) {
-    if (!rey || !rey->primer_mov) {
+	if (!rey) return;
+
+    if (!rey->primer_mov) {
         rey->enroque_posible = false;
         return;
     }
@@ -130,10 +120,9 @@ void Tablero::enroque(Rey* rey) {
         rey->jugadas_no_ofensivas.push_back(pos_enroque(rey));
         rey->enroque_posible = true;
     } 
-	else {
-        rey->enroque_posible = false;
-    }
+	else rey->enroque_posible = false;
 }
+
 Posicion Tablero::pos_enroque(const Rey*rey) {
 	return (rey->color == BLANCAS) ?
 		Posicion(rey->pos.col - 2, rey->pos.fil) : Posicion(rey->pos.col + 2, rey->pos.fil);
@@ -156,6 +145,27 @@ Pieza* Tablero::torre_enroque(const Rey* rey) {
     if (!torre->primer_mov) return nullptr;
 
     return torre;
+}
+
+bool Tablero::enroque_mueve(Pieza* p_in, Posicion objetivo) {
+	if (!(p_in->nombre == "Rey")) return false;
+	Rey* rey = dynamic_cast <Rey*>(p_in);
+	Posicion pos_torre;
+	if (rey->enroque_posible && rey->check(objetivo, get_ocupacion())&&objetivo == pos_enroque(rey)) {
+
+		pos_torre = (rey->color == BLANCAS) ?
+			Posicion(rey->pos.col - 1, rey->pos.fil) : Posicion(rey->pos.col + 1, rey->pos.fil);
+				
+		auto torre = torre_enroque(rey);
+		if (torre == nullptr) return false;
+
+		p_in->pos = pos_enroque(rey);
+		torre->pos = pos_torre;
+		p_in->primer_mov = false;
+		torre->primer_mov = false;
+		return true;
+	}
+	return false;
 }
 
 bool Tablero::eliminar_pieza(Pieza* p) {
