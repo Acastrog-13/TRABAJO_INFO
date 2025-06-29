@@ -55,12 +55,11 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	if (p_fin != nullptr && p_fin->nombre == "Rey") return false;
 
 	brillo_pieza(inicial, false);
-	//Enroque
-	if (enroque_mueve(p_in, objetivo)) return true;
 
 	//Movimiento normal
 	if (p_in->check (objetivo, get_ocupacion())) {
-		
+		enroque_mueve(p_in, objetivo);
+
 		if (p_fin != nullptr) eliminar_pieza(p_fin);
 
 		//Cambio estado pieza
@@ -150,7 +149,7 @@ bool Tablero::enroque_mueve(Pieza* p_in, Posicion objetivo) {
 	if (!(p_in->nombre == "Rey")) return false;
 	Rey* rey = dynamic_cast <Rey*>(p_in);
 	Posicion pos_torre;
-	if (rey->enroque_posible && rey->check(objetivo, get_ocupacion())&&objetivo == pos_enroque(rey)) {
+	if (rey->enroque_posible && objetivo == pos_enroque(rey)) {
 
 		pos_torre = (rey->color == BLANCAS) ?
 			Posicion(rey->pos.col - 1, rey->pos.fil) : Posicion(rey->pos.col + 1, rey->pos.fil);
