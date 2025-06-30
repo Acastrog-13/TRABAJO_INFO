@@ -29,12 +29,11 @@ class Tablero
 	int num = 0; //numero de piezas vivas
 	int max = 0;
 	int filas = 0, columnas = 0;
-	vector <Pieza*> lista;
-	vector <Pieza*> piezas_jaque;
-	vector <Posicion> brillos;
-	Color turno = NONE;
+	vector <Pieza*> lista, piezas_blancas, piezas_negras;
+	vector<Posicion> trayectoria_enroque, brillos;
+	Color turno = NONE,
+		color_promocion = NONE;
 	Posicion posicion_promocion;
-	Color color_promocion = NONE;
 
 public:
 	//constructor
@@ -56,12 +55,19 @@ public:
 	TablaInfo get_ocupacion();
 	Posicion get_centro(double, double);
 
+	void filtro_piezas (vector <Pieza*>& blancas, vector <Pieza*>& negras); //Filta las piezas por colores
+
+	bool check_mueve(Posicion inicial, Posicion objetivo);
 	bool mueve(Posicion inicial, Posicion objetivo);									//retorna true si en p_inicial hay una pieza y entre p_inicial 
 	//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
 	// pieza se la come y la borra de la lista y mueve la pieza deseada
 
 	void promociona(Pieza*,Posicion);
-	void jaque(TablaInfo);																//actualiza el vector que se le pasa con las piezas que estan en jaque con el rey opuesto
+
+	Rey* busca_rey(const vector<Pieza*>&);
+	bool jaque(Rey*rey, vector<Pieza*>piezas);
+	//void evitar_jaque(Rey*, const vector<Pieza*>&);
+
 	void enroque(Rey*);
 	Pieza* torre_enroque(const Rey*);
 	Posicion pos_enroque(const Rey* rey);

@@ -276,6 +276,8 @@ void Coordinador::inicializa_45() {
 	mitablero += new Alfil({ 3,5 }, NEGRAS);
 	mitablero += new Caballo({ 2,5 }, NEGRAS);
 	mitablero += new Rey({ 1,5 }, NEGRAS);
+
+	mitablero.filtro_piezas(mitablero.piezas_blancas, mitablero.piezas_negras);
 }
 
 void Coordinador::inicializa_S() {
@@ -295,6 +297,8 @@ void Coordinador::inicializa_S() {
 	mitablero += new Dama({ 1,6 }, NEGRAS);
 	for (int i = 1; i < 6; i++)
 		mitablero += new Peon({ i,5 }, NEGRAS);
+
+	mitablero.filtro_piezas(mitablero.piezas_blancas, mitablero.piezas_negras);
 }
 
 
