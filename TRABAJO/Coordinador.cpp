@@ -103,6 +103,12 @@ void Coordinador::tecla(unsigned char key) {
 			estado = CUATRO_CINCO;
 			break;
 		}
+	case JAQUE_MATE:
+		if (key == 'i') estado = INICIO;
+		if (key == '1') estado = OBSERVACION;
+		if (key == '0') exit(0);
+		
+		break;
 		
 	}
 }
@@ -221,6 +227,21 @@ void Coordinador::dibuja()
 		ETSIDI::printxy("Pulse -A- para alfil", 18, 25);
 		ETSIDI::printxy("Pulse -T- para torre", 18, 22);
 		ETSIDI::printxy("Pulse -C- para caballo", 18, 19);
+
+		break;
+	case JAQUE_MATE:
+		gluLookAt(25, 25, 50,			//desde donde
+			25, 25, 0,		//hacia donde
+			0.0, 1.0, 0.0);
+
+		ETSIDI::setTextColor(255, 180, 0);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 30);
+		ETSIDI::printxy(" Jaque Mate", 15, 31);
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
+		ETSIDI::printxy("Pulse i para volver a inicio", 16, 25);
+		ETSIDI::printxy("Pulse 1 para observacion", 16, 22);
+		ETSIDI::printxy("Pulse 0 para salir", 16, 19);
 
 		break;
 	}
