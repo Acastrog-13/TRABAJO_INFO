@@ -13,12 +13,14 @@ void Coordinador::tecla(unsigned char key) {
 	case INICIO:
 		if (key == '0') exit(0);
 		if (key == '1') {
+			ETSIDI::play("sonidos/comienzo_partida.wav");
 			inicializa_45();								//llena el tablero de piezas 45 y lo pone 4x5
 			mitablero.set_t(BLANCAS);					//pone el turno de las blancas e inicializa el contador y los clicks
 			estado = CUATRO_CINCO;
 		
 		}
 		if (key == '2') {
+			ETSIDI::play("sonidos/comienzo_partida.wav");
 			inicializa_S();									//llena el tablero de piezas S y lo pone 5x6
 			mitablero.set_t(BLANCAS);
 			estado = SPEED;
@@ -247,9 +249,12 @@ void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el c
 			if (mitablero.get_turno() == BLANCAS) rN = gN = bN = 50;
 			else rB = gB = bB = 50;
 
+			if (contador <= 10 && contador>=1 && estado != JAQUE_MATE) ETSIDI::play("sonidos/reloj.wav");
+			
 			if (contador <= 0) {
 				cout << "¡Fin del tiempo para las " << (mitablero.get_turno() == BLANCAS ? "blancas" : "negras") << "!" << endl;
 				mitablero.ganador = mitablero.get_turno() == BLANCAS ? NEGRAS : BLANCAS;
+				ETSIDI::play("sonidos/fin_tiempo.wav");
 				estado = FIN_TIEMPO;
 			}
 		}

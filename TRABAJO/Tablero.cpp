@@ -95,18 +95,25 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	Pieza* p_in = (*this)(inicial);
 	Pieza* p_fin = (*this)(objetivo);
 
-	if (!p_in || !(p_in->check(objetivo, get_ocupacion()))) return false;
-	if (!check_mueve(inicial, objetivo)) return false;
+	if (!p_in || !(p_in->check(objetivo, get_ocupacion()))) {
+		ETSIDI::play("sonidos/error.wav");
+		return false;
+	}
+	if (!check_mueve(inicial, objetivo)) {
+		ETSIDI::play("sonidos/error.wav");
+		return false;
+	}
 
 	//enroque o movimiento normal
 	if (enroque_mueve(p_in, objetivo)){}
 	else {
 		p_in->pos = objetivo;
 		p_in->primer_mov = false;
+		
 		if (p_fin != nullptr) {
 			eliminar_pieza(p_fin);
 			ETSIDI::play("sonidos/comerpou.wav");
-		}
+		}else ETSIDI::play("sonidos/movimiento.wav");
 	}
 
 	//promocion
@@ -133,13 +140,19 @@ void Tablero::promociona(Pieza* p_in, Posicion objetivo) {
 
 void Tablero::comprobacion_jaque_mate() {
 	if ((turno == NEGRAS)) {
-		if (jaque(busca_rey(piezas_negras), piezas_blancas)) cout << "Rey negro en jaque" << endl;
-		jaque_mate(piezas_negras, piezas_blancas);
+		if (jaque(busca_rey(piezas_negras), piezas_blancas)) {
+			cout << "Rey negro en jaque" << endl;
+			ETSIDI::play("sonidos/jaque.wav");
+			jaque_mate(piezas_negras, piezas_blancas);
+		}
 	}
 	else if ((turno == BLANCAS)) {
-		if (jaque(busca_rey(piezas_blancas), piezas_negras)) cout << "Rey blanco en jaque" << endl;
-		jaque_mate(piezas_blancas, piezas_negras);
-	}
+		if (jaque(busca_rey(piezas_blancas), piezas_negras)) {
+			cout << "Rey blanco en jaque" << endl;
+			ETSIDI::play("sonidos/jaque.wav");
+			jaque_mate(piezas_blancas, piezas_negras);
+		}
+	}	
 }
 Rey* Tablero::busca_rey(const vector<Pieza*>& piezas) {
 
@@ -189,6 +202,7 @@ void Tablero::jaque_mate(vector <Pieza*> &defensoras, vector<Pieza*>&atacantes) 
 	}
 	if (c == false) {
 		ajedrez.estado = JAQUE_MATE;
+		ETSIDI::play("sonidos/victoria.wav");
 		ganador == atacantes[0]->color;
 	}
 }
