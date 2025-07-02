@@ -1,11 +1,7 @@
-#include <iostream>
-
-#include "ETSIDI.h"
 #include "freeglut.h"
-
-#include "Tiempo.h"
-#include "Coordinador.h"
 #include "Tablero.h"
+
+
 
 Coordinador ajedrez;
 Tablero mitablero;

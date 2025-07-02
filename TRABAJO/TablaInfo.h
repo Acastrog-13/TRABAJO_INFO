@@ -1,5 +1,4 @@
 #pragma once
-#include "Posicion.h"
 
 struct TablaInfo
 {

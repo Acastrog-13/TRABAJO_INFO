@@ -1,9 +1,7 @@
 #pragma once
-#include <iostream>
-
 #include "Tablero.h"
 
-using namespace std;
+
 
 extern Tablero mitablero;
 extern Clicks numero_click;

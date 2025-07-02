@@ -9,7 +9,7 @@
 #include "Posicion.h"
 #include "TablaInfo.h"
 
-class Tablero; //lo pongo para evitar inclusiones cruzadas
+class Tablero; //Para que funcione la amistad
 
 using namespace std;
 

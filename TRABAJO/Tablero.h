@@ -1,9 +1,5 @@
 #pragma once
-#include <vector>
-
-#include "Posicion.h"
 #include "Tiempo.h"
-#include "TablaInfo.h"
 
 #include "Pieza.h"
 #include "Peon.h"
@@ -12,7 +8,10 @@
 #include "Caballo.h"
 #include "Torre.h"
 #include "Rey.h"
+
 #include "Coordinador.h"
+
+
 
 using namespace std;
 
