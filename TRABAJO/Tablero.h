@@ -30,7 +30,7 @@ class Tablero
 	int max = 0;
 	int filas = 0, columnas = 0;
 	vector <Pieza*> lista, piezas_blancas, piezas_negras;
-	vector<Posicion> trayectoria_enroque, brillos;
+	vector<Posicion> brillos;
 	Color turno = NONE,
 		color_promocion = NONE;
 	Posicion posicion_promocion;

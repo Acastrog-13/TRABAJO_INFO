@@ -20,7 +20,7 @@ protected:
 	string nombre;
 	Posicion pos{};
 	Color color{};
-	bool primer_mov;
+	bool primer_mov=true;
 	vector <Posicion> jugadas_posibles{}, jugadas_ofensivas{}, jugadas_no_ofensivas{};
 	bool hay_seleccion = false;
 	bool hay_amenaza = false;
@@ -38,6 +38,7 @@ public:
 	void dibuja(unsigned int glComun)const;						//dibuja cada pieza
 	virtual void dibuja() = 0;									//png especifico de cada pieza
 	void set_jugadas(Tablero&);
+	vector<Posicion>& set_amenazas(Tablero& tablero);
 	void eliminar_jugada(Posicion);
 
 	//amistades

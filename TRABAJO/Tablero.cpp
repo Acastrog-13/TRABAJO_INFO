@@ -71,7 +71,6 @@ bool Tablero::check_mueve(Posicion inicial, Posicion objetivo) {
 	brillo_pieza(inicial, false);
 		
 	//enroque
-	//enroque_mueve(p_in, objetivo);
 
 	if ((turno == BLANCAS) && jaque(busca_rey(piezas_blancas), piezas_negras, inicial, objetivo) ||
 		(turno == NEGRAS) && jaque(busca_rey(piezas_negras), piezas_blancas, inicial, objetivo))
@@ -91,16 +90,20 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	if (!p_in || !(p_in->check(objetivo, get_ocupacion()))) return false;
 	if (!check_mueve(inicial, objetivo)) return false;
 
-	p_in->pos = objetivo;
-	p_in->primer_mov = false;
-	if (p_fin != nullptr) eliminar_pieza(p_fin);
+	//enroque o movimiento normal
+	if (enroque_mueve(p_in, objetivo)){}
+	else {
+		p_in->pos = objetivo;
+		p_in->primer_mov = false;
+		if (p_fin != nullptr) eliminar_pieza(p_fin);
+	}
 
 	//promocion
 	promociona(p_in, objetivo);
 
 	//actualiza las jugadas
 	filtro_piezas(piezas_blancas, piezas_negras);
-	for (int i = 0; i < num; i++) lista[i]->set_jugadas(*this);
+	for (auto p : lista) p->set_jugadas(*this); cout << "set_jugadas" << endl;
 
 	return true;
 }
@@ -137,7 +140,7 @@ Rey* Tablero::busca_rey(const vector<Pieza*>& piezas) {
 
 bool Tablero::jaque(Rey* rey, vector<Pieza*>& piezas) {
 	for (auto pieza : piezas) {
-		pieza->set_jugadas(*this);
+		pieza->set_amenazas(*this);
 		for (auto jugada : pieza->jugadas_ofensivas)
 			if ((*this)(jugada)->nombre == "Rey")
 				return true;
@@ -177,41 +180,36 @@ void Tablero::jaque_mate(vector <Pieza*> &defensoras, vector<Pieza*>&atacantes) 
 }
 
 void Tablero::enroque(Rey* rey) {
+	
+	if (!rey || !rey->primer_mov) return;
 
-	trayectoria_enroque.clear();
+	rey->enroque_posible = false;	
+	Posicion objetivo = pos_enroque(rey);
+	Pieza* pieza_obstaculo = (*this)(objetivo);
 
-	if (!rey) return;
+	if ((pieza_obstaculo != nullptr && pieza_obstaculo->color != NONE)) return;
+	
+	if (!(rey->check_recorrido(objetivo, get_ocupacion()))) return;
 
-	if (!rey->primer_mov) {
-		rey->enroque_posible = false;
-		return;
-	}
+	if (!torre_enroque(rey)) return;
 
-	Pieza* pieza_obstaculo = (*this)(pos_enroque(rey));
-	if ((pieza_obstaculo != nullptr && pieza_obstaculo->color != NONE) ||
-		!(rey->check_recorrido(pos_enroque(rey), get_ocupacion()))) {
-		rey->enroque_posible = false;
-		return;
-	}
-
-	int direccion = (rey->color == BLANCAS) ? -1 : 1;
-	int col_rey = rey->pos.col;
-	int col_enroque = pos_enroque(rey).col;
-
-	for (int i = col_rey + direccion; i != col_enroque + direccion; i += direccion)
-		trayectoria_enroque.push_back(Posicion(i, rey->pos.fil));
+	Posicion intermedia;
+	intermedia = (rey->color == BLANCAS) ? Posicion(rey->pos.col - 1, rey->pos.fil) : Posicion(rey->pos.col + 1, rey->pos.fil);
 
 	vector<Pieza*> piezas_contrarias;
 	piezas_contrarias = rey->color == BLANCAS ? piezas_negras : piezas_blancas;
 
-	if (torre_enroque(rey)) {
-		rey->jugadas_posibles.push_back(pos_enroque(rey));
-		rey->jugadas_no_ofensivas.push_back(pos_enroque(rey));
-		rey->enroque_posible = true;
+	if (jaque(rey, piezas_contrarias)) return;
+
+	Posicion pos = rey->pos;
+	rey->pos = intermedia;
+	if (jaque(rey, piezas_contrarias)) {
+		rey->pos = pos;
+		return;
 	}
+	rey->pos=pos;
 
-	else rey->enroque_posible = false;
-
+	rey->enroque_posible = true;
 	if (rey->enroque_posible) cout << "Enroque posible" << endl;
 }
 
