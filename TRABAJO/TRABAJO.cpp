@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 	glutTimerFunc(1000, OnTimer, 0);
 	glutKeyboardFunc(OnKeyboardDown);
 	glutDisplayFunc(OnDraw);
-	
+
 	glutMainLoop();
 
 	return 0;
@@ -86,26 +86,25 @@ void OnMouse(int button, int state, int x, int y) {
 			if (mitablero.get_turno() == NEGRAS) cout << "Turno de las negras" << endl;
 			if (mitablero.get_turno() == BLANCAS) cout << "Turno de las blancas" << endl;
 
-			cout << "Click uno" << endl;
 			celdaClickada1 = mitablero.get_centro(worldX, worldY);
 
-			if (mitablero.get_turno() == mitablero.get_ocupacion().operator()(celdaClickada1)) {
-				cout << "Celda clickada1: " << celdaClickada1.fil << celdaClickada1.col << "\n" << endl;
+			if (celdaClickada1.check(mitablero.get()) && mitablero.get_turno() == mitablero.get_ocupacion().operator()(celdaClickada1)) {
 				mitablero.brillo_pieza(celdaClickada1, true);
 				numero_click = UNO;
 			}
-			else cout << "No es tu turno \n" << endl;
+			else cout << "No es tu turno, vuelve a intentarlo \n" << endl;
 			break;
 
 		case UNO:
-			cout << "Click dos" << endl;
 			celdaClickada2 = mitablero.get_centro((double)worldX, (double)worldY);
-			cout << "Celda clickada2: " << celdaClickada2.fil << celdaClickada2.col << endl;
-			cout << endl;
-			if (mitablero.mueve(celdaClickada1, celdaClickada2)) { mitablero.cambio_turno(); }
+
+			if (mitablero.mueve(celdaClickada1, celdaClickada2)) { 
+				mitablero.cambio_turno(); 
+				mitablero.comprobacion_jaque_mate();
+			}
 			else { 
 				mitablero.brillo_pieza(celdaClickada1, false);
-				cout << "No permitido, no hay cambio de turno \n" << endl; 
+				cout << "No permitido, no hay cambio de turno" << endl; 
 			}
 			numero_click = CERO;
 			mitablero.borra_brillo();

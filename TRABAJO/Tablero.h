@@ -21,7 +21,7 @@ extern Tiempo tiempo;
 extern Tiempo contador_blancas;
 extern Tiempo contador_negras;
 extern Clicks numero_click;
-extern Coordinador ajedrez;
+//extern Coordinador ajedrez;
 
 class Tablero
 {
@@ -45,6 +45,7 @@ public:
 	void set(int, int, int);																//set filas, columnas y numero max de piezas
 	void cambio_turno() { turno == BLANCAS ? turno = NEGRAS : turno = BLANCAS; }
 	string get_modo() { return filas > 5 ? "45" : "S"; }
+	Posicion get() { return Posicion(columnas, filas); }
 
 	//operator
 	Pieza* operator()(const Posicion&);													//retorna una pieza o nullptr
@@ -57,15 +58,17 @@ public:
 
 	void filtro_piezas (vector <Pieza*>& blancas, vector <Pieza*>& negras); //Filta las piezas por colores
 
-	bool check_mueve(Posicion inicial, Posicion objetivo);
+	bool check_mueve(Posicion inicial, Posicion objetivo);								
 	bool mueve(Posicion inicial, Posicion objetivo);									//retorna true si en p_inicial hay una pieza y entre p_inicial 
 	//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
 	// pieza se la come y la borra de la lista y mueve la pieza deseada
 
 	void promociona(Pieza*,Posicion);
 
+	void comprobacion_jaque_mate();
 	Rey* busca_rey(const vector<Pieza*>&);
-	bool jaque(Rey*, vector<Pieza*>&);
+	bool jaque(Rey*, vector<Pieza*>&);														//jaque actual
+	bool jaque(Rey*, vector<Pieza*>&, Posicion, Posicion);									//jaque futuro, comrpueba jaque con un rey, una lista de piezas atacantes, posicion inicial y final. Si esta pieza se mueve aquí habra jaque?
 	void jaque_mate(vector <Pieza*>&, vector<Pieza*>&);
 
 	void enroque(Rey*);

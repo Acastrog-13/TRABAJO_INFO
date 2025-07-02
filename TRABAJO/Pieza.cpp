@@ -32,7 +32,7 @@ void Pieza::dibuja(unsigned int glComun)const {
 		dibuja_brillo(pos, alpha, r, g, b);
 	}
 	if (hay_amenaza) {
-		alpha = esOscura ? 130 : 200;
+		alpha = 255;
 		dibuja_brillo(pos, alpha, 255, 0, 0);
 	}
 
@@ -76,6 +76,7 @@ void Pieza::set_jugadas(Tablero& tablero) {
 				else if (color == NEGRAS && info(Posicion(c, f)) == BLANCAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
 				else { jugadas_no_ofensivas.push_back(Posicion(c, f)); }
 				jugadas_posibles.push_back(Posicion(c, f));
+				if (color == info(Posicion(c, f)) && tablero.operator()(Posicion(c, f))->nombre == "Rey") eliminar_jugada(Posicion(c, f));
 			}
 		}
 }
@@ -105,17 +106,17 @@ void Pieza::eliminar_jugada(Posicion jugada) {
 	for (int i = 0; i < jugadas_posibles.size(); i++)
 		if (jugadas_posibles[i] == jugada) {
 			jugadas_posibles.erase(jugadas_posibles.begin() + i);
-			i = jugadas_posibles.size();
+			i = (int)jugadas_posibles.size();
 		}
 	for (int i = 0; i < jugadas_ofensivas.size(); i++)
 		if (jugadas_ofensivas[i] == jugada) {
 			jugadas_ofensivas.erase(jugadas_ofensivas.begin() + i);
-			i = jugadas_ofensivas.size();
+			i = (int)jugadas_ofensivas.size();
 		}
 	for (int i = 0; i < jugadas_no_ofensivas.size(); i++)
 		if (jugadas_no_ofensivas[i] == jugada) {
 			jugadas_no_ofensivas.erase(jugadas_no_ofensivas.begin() + i);
-			i = jugadas_no_ofensivas.size();
+			i = (int)jugadas_no_ofensivas.size();
 		}
 	
 }

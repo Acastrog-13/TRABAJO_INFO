@@ -13,6 +13,7 @@ struct Posicion
 
 	//metodos
 	bool check(int, int);									//verifica que la posicion esta dentro del tablero
+	bool check(Posicion);
 
 	//operadores
 	bool operator ==(const Posicion&)const;					//verifica que la posicion es igual

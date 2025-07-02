@@ -5,6 +5,9 @@ bool Posicion::check(int c, int f) {
 	return true;
 }
 
+bool Posicion::check(Posicion i) {
+	return check(i.col, i.fil);
+}
 
 Posicion Posicion::operator + (const Posicion& pos)const {
 	return Posicion(col + pos.col, fil + pos.fil);
