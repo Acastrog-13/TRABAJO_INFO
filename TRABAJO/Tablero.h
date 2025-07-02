@@ -65,8 +65,8 @@ public:
 	void promociona(Pieza*,Posicion);
 
 	Rey* busca_rey(const vector<Pieza*>&);
-	bool jaque(Rey*rey, vector<Pieza*>piezas);
-	//void evitar_jaque(Rey*, const vector<Pieza*>&);
+	bool jaque(Rey*, vector<Pieza*>&);
+	void jaque_mate(vector <Pieza*>&, vector<Pieza*>&);
 
 	void enroque(Rey*);
 	Pieza* torre_enroque(const Rey*);

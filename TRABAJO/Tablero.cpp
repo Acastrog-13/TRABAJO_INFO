@@ -50,7 +50,7 @@ Posicion Tablero::get_centro(double x, double y) {
 	return Posicion(aux1, aux2);
 }
 
-void Tablero::filtro_piezas (vector <Pieza*>& blancas, vector <Pieza*>& negras) {
+void Tablero::filtro_piezas(vector <Pieza*>& blancas, vector <Pieza*>& negras) {
 
 	blancas.clear();
 	negras.clear();
@@ -84,8 +84,6 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	//Enroque
 	enroque_mueve(p_in, objetivo);
 
-	
-
 	//Cambio estado pieza
 	p_in->pos = objetivo;
 
@@ -96,10 +94,10 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	if ((turno == BLANCAS) && jaque(busca_rey(piezas_blancas), piezas_negras) ||
 		(turno == NEGRAS) && jaque(busca_rey(piezas_negras), piezas_blancas)) {
 		p_in->pos = inicial;
-		if (p_fin != nullptr)p_fin->pos = objetivo;
+		if (p_fin != nullptr) p_fin->pos = objetivo;
 		return false;
 	}
-	
+
 	p_in->primer_mov = false;
 	if (p_fin != nullptr) eliminar_pieza(p_fin);
 	//Promocion
@@ -107,15 +105,21 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 
 	//Actualiza las jugadas
 	filtro_piezas(piezas_blancas, piezas_negras);
-	for (int i = 0; i < num; i++) lista[i]->set_jugadas(*this);
+	for (int i = 0; i < lista.size(); i++) lista[i]->set_jugadas(*this);
 
 	//Comprueba el jaque ofensivo
-	if ((turno == BLANCAS) && jaque(busca_rey(piezas_negras), piezas_blancas))
-		cout << "Rey negro en jaque" << endl;
-	else if ((turno == NEGRAS) && jaque(busca_rey(piezas_blancas), piezas_negras))
-		cout << "Rey blanco en jaque" << endl;
-		
-		return true;
+	if ((turno == BLANCAS)) {
+		if (jaque(busca_rey(piezas_negras), piezas_blancas))
+			cout << "Rey negro en jaque" << endl;
+		jaque_mate(piezas_negras, piezas_blancas);
+	}
+	else if ((turno == NEGRAS)) {
+		if (jaque(busca_rey(piezas_blancas), piezas_negras))
+			cout << "Rey blanco en jaque" << endl;
+		jaque_mate(piezas_blancas, piezas_negras);
+	}
+
+	return true;
 }
 
 void Tablero::promociona(Pieza* p_in, Posicion objetivo) {
@@ -130,16 +134,15 @@ void Tablero::promociona(Pieza* p_in, Posicion objetivo) {
 }
 
 Rey* Tablero::busca_rey(const vector<Pieza*>& piezas) {
-	
+
 	for (auto p : piezas)
 		if (p && p->nombre == "Rey") return (dynamic_cast<Rey*>(p));
-	
+
 	return nullptr;
 }
 
-bool Tablero::jaque(Rey*rey, vector<Pieza*>piezas) {
-	for(auto pieza:piezas){	
-		if (!pieza) continue;
+bool Tablero::jaque(Rey* rey, vector<Pieza*>&piezas) {
+	for (auto pieza : piezas) {
 		pieza->set_jugadas(*this);
 		for (auto jugada : pieza->jugadas_ofensivas)
 			if ((*this)(jugada)->nombre == "Rey") return true;
@@ -148,47 +151,30 @@ bool Tablero::jaque(Rey*rey, vector<Pieza*>piezas) {
 	return false;
 }
 
-/*void Tablero::set_piezas_jaque(const Color color_rey, vector<Pieza*>& piezas_jaque) {
-	for (auto pieza : lista){
-		if (pieza == nullptr) continue;
-		if (pieza->color == color_rey || pieza->color==NONE) continue;
-		for (auto jugada : pieza->jugadas_ofensivas) {
-			Pieza* p_ataca = (*this)(jugada);
-			if (p_ataca==nullptr) continue;
-			if (p_ataca->nombre == "Rey" && p_ataca->color != color_rey) {
-				piezas_jaque.push_back(pieza);
-				break;
+void Tablero::jaque_mate(vector <Pieza*> &defensoras, vector<Pieza*>&atacantes) {
+	Posicion inicial, temporal;
+	Pieza* p = nullptr;
+	bool c = false;
+
+	for (auto defensora : defensoras) {
+		inicial = defensora->pos;
+		for (int i = 0; i < defensora->jugadas_posibles.size(); i++) {
+			if ((*this)(defensora->jugadas_posibles[i]) != nullptr) {
+				p = (*this)(defensora->jugadas_posibles[i]);
+				temporal = p->pos;
+				p->pos = Posicion(0, 0);
 			}
+			defensora->pos = defensora->jugadas_posibles[i];
+			if (!(jaque(busca_rey(defensoras), atacantes))) { c = true; cout << "HOLA"; }
+			if (jaque(busca_rey(defensoras), atacantes)) { defensora->eliminar_jugada(defensora->jugadas_posibles[i]); i--;
+			}
+			if (p != nullptr) p->pos = temporal;
+			defensora->pos = inicial;
+			p = nullptr;
 		}
 	}
-}*/
-
-/*void Tablero::evitar_jaque(Rey*rey, const vector<Pieza*>& piezas_contrarias) {
-	if (rey == nullptr) return;
-
-	for (auto p : piezas_contrarias)
-		if (p) p->set_jugadas(*this);
-
-	auto i = rey->jugadas_posibles.begin();
-	while (i != rey->jugadas_posibles.end()) {
-		bool posible_jaque = false;
-
-		for (auto p : piezas_contrarias){
-			if (!p) continue;
-			for (auto jugada : p->jugadas_posibles)
-				if (*i == jugada) {
-					posible_jaque = true;
-					break;
-				}
-			if (posible_jaque) break;
-		}
-
-		if (posible_jaque)
-			i = rey->jugadas_posibles.erase(i);
-
-		else ++i;
-	}
-}*/
+	if (c == false) ajedrez.estado = JAQUE_MATE;
+}
 
 void Tablero::enroque(Rey* rey) {
 
@@ -202,7 +188,7 @@ void Tablero::enroque(Rey* rey) {
 	}
 
 	Pieza* pieza_obstaculo = (*this)(pos_enroque(rey));
-	if ((pieza_obstaculo != nullptr && pieza_obstaculo->color != NONE) || 
+	if ((pieza_obstaculo != nullptr && pieza_obstaculo->color != NONE) ||
 		!(rey->check_recorrido(pos_enroque(rey), get_ocupacion()))) {
 		rey->enroque_posible = false;
 		return;
@@ -218,39 +204,39 @@ void Tablero::enroque(Rey* rey) {
 	vector<Pieza*> piezas_contrarias;
 	piezas_contrarias = rey->color == BLANCAS ? piezas_negras : piezas_blancas;
 
-	if (torre_enroque(rey)) {        
+	if (torre_enroque(rey)) {
 		rey->jugadas_posibles.push_back(pos_enroque(rey));
 		rey->jugadas_no_ofensivas.push_back(pos_enroque(rey));
-        rey->enroque_posible = true;
+		rey->enroque_posible = true;
 	}
-	
+
 	else rey->enroque_posible = false;
 
-	if (rey->enroque_posible) cout << "Enroque posible" << endl;	
+	if (rey->enroque_posible) cout << "Enroque posible" << endl;
 }
 
-Posicion Tablero::pos_enroque(const Rey*rey) {
+Posicion Tablero::pos_enroque(const Rey* rey) {
 	return (rey->color == BLANCAS) ?
 		Posicion(rey->pos.col - 2, rey->pos.fil) : Posicion(rey->pos.col + 2, rey->pos.fil);
 }
 
-Pieza* Tablero::torre_enroque(const Rey* rey) {    
-    if (!rey) return nullptr;
+Pieza* Tablero::torre_enroque(const Rey* rey) {
+	if (!rey) return nullptr;
 
-    Posicion pos_torre = (rey->color == BLANCAS) ?
-        Posicion(1, rey->pos.fil) : Posicion(columnas, rey->pos.fil);
+	Posicion pos_torre = (rey->color == BLANCAS) ?
+		Posicion(1, rey->pos.fil) : Posicion(columnas, rey->pos.fil);
 
-    Pieza* p_torre = (*this)(pos_torre);
-    if (!p_torre) return nullptr;
+	Pieza* p_torre = (*this)(pos_torre);
+	if (!p_torre) return nullptr;
 
-    if (p_torre->nombre != "Torre" || p_torre->color != rey->color) return nullptr;
+	if (p_torre->nombre != "Torre" || p_torre->color != rey->color) return nullptr;
 
-    Torre* torre = dynamic_cast<Torre*>(p_torre);
-    if (!torre) return nullptr;
+	Torre* torre = dynamic_cast<Torre*>(p_torre);
+	if (!torre) return nullptr;
 
-    if (!torre->primer_mov) return nullptr;
+	if (!torre->primer_mov) return nullptr;
 
-    return torre;
+	return torre;
 }
 
 bool Tablero::enroque_mueve(Pieza* p_in, Posicion objetivo) {
@@ -262,7 +248,7 @@ bool Tablero::enroque_mueve(Pieza* p_in, Posicion objetivo) {
 
 		pos_torre = (rey->color == BLANCAS) ?
 			Posicion(rey->pos.col - 1, rey->pos.fil) : Posicion(rey->pos.col + 1, rey->pos.fil);
-				
+
 		auto torre = torre_enroque(rey);
 		if (torre == nullptr) return false;
 
@@ -311,9 +297,9 @@ void dibuja_tablero(int columnas, int filas) {
 			bool esOscura = (f + c) % 2 == 0;
 
 			if (esOscura)
-				dibujarFondoCelda(pos, ancho, alto, 100, 140, 0); 
+				dibujarFondoCelda(pos, ancho, alto, 100, 140, 0);
 			else
-				dibujarFondoCelda(pos, ancho, alto, 213, 186, 152); 
+				dibujarFondoCelda(pos, ancho, alto, 213, 186, 152);
 		}
 	}
 }
@@ -321,10 +307,10 @@ void dibuja_tablero(int columnas, int filas) {
 void dibujarFondoCelda(const Posicion& pos, double ancho, double alto, unsigned char r, unsigned char g, unsigned char b) {
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
-	glColor3ub(r, g, b); 
+	glColor3ub(r, g, b);
 
 	glBegin(GL_POLYGON);
-	glVertex3d(pos.col + ancho / 2, pos.fil - alto / 2, 0); 
+	glVertex3d(pos.col + ancho / 2, pos.fil - alto / 2, 0);
 	glVertex3d(pos.col - ancho / 2, pos.fil - alto / 2, 0);
 	glVertex3d(pos.col - ancho / 2, pos.fil + alto / 2, 0);
 	glVertex3d(pos.col + ancho / 2, pos.fil + alto / 2, 0);
@@ -338,7 +324,6 @@ void Tablero::brillo_pieza(Posicion pos, bool s) {
 	if (p) brillo_amenazada(p, s);
 	if (p) marca_movimiento(p);
 }
-
 void Tablero::brillo_amenazada(Pieza* p, bool s) {
 	if (!p) return;
 	for (auto j : p->jugadas_ofensivas) {
