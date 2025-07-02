@@ -31,8 +31,10 @@ class Tablero
 	vector <Pieza*> lista, piezas_blancas, piezas_negras;
 	vector<Posicion> brillos;
 	Color turno = NONE,
-		color_promocion = NONE;
+		color_promocion = NONE,
+		ganador = NONE;
 	Posicion posicion_promocion;
+
 
 public:
 	//constructor

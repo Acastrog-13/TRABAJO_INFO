@@ -51,7 +51,7 @@ void Coordinador::tecla(unsigned char key) {
 		if (key == '0') exit(0);
 		break;
 
-	case FIN_TIEMPO_BLANCAS:
+	case FIN_TIEMPO:
 		if (key == '0') exit(0);
 		if (key == 'i') {
 			estado = INICIO;
@@ -62,21 +62,6 @@ void Coordinador::tecla(unsigned char key) {
 			mitablero.set_t(NONE);  // desactiva el turno para que no se pueda jugar
 			estado = OBSERVACION;
 		
-		}
-		break;
-
-	case FIN_TIEMPO_NEGRAS:
-		if (key == '0') exit(0);
-		if (key == 'i') {
-			estado = INICIO;
-			mitablero.vaciar();
-	
-		}
-		if (key == '1') {
-			mitablero.set_t(NONE);
-			estado = OBSERVACION;
-		
-
 		}
 		break;
 
@@ -173,34 +158,16 @@ void Coordinador::dibuja()
 		break;
 
 
-	case FIN_TIEMPO_BLANCAS:
+	case FIN_TIEMPO:
 		gluLookAt(25, 25, 50,			//desde donde
 			25, 25, 0,		//hacia donde
 			0.0, 1.0, 0.0);
 
 		ETSIDI::setTextColor(255, 180, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
-		ETSIDI::printxy("LAS PIEZAS BLANCAS SE HAN QUEDADO SIN TIEMPO", 4, 33);
-		ETSIDI::printxy("PARTIDA FINALIZADA. GANAN NEGRAS", 9, 30);
-
-		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
-		ETSIDI::printxy("PULSE  0  PARA CERRAR EL PROGRAMA.", 10, 25);
-		ETSIDI::printxy("PULSE  i  PARA VOLVER A PANTALLA DE INICIO.", 10, 22);
-		ETSIDI::printxy("PULSE  1  PARA OBSERVAR EL TABLERO.", 10, 19);
-		break;
-
-
-	case FIN_TIEMPO_NEGRAS:
-		gluLookAt(25, 25, 50,			//desde donde
-			25, 25, 0,		//hacia donde
-			0.0, 1.0, 0.0);
-
-		ETSIDI::setTextColor(255, 180, 0);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
-		ETSIDI::printxy("LAS PIEZAS NEGRAS SE HAN QUEDADO SIN TIEMPO", 4, 33);
-		ETSIDI::printxy("PARTIDA FINALIZADA. GANAN BLANCAS", 9, 30);
-
+		mitablero.ganador == NEGRAS ? ETSIDI::printxy("LAS PIEZAS BLANCAS SE HAN QUEDADO SIN TIEMPO", 4, 33) : ETSIDI::printxy("LAS PIEZAS NEGRAS SE HAN QUEDADO SIN TIEMPO", 4, 33);
+		mitablero.ganador == NEGRAS ? ETSIDI::printxy("PARTIDA FINALIZADA. GANAN NEGRAS", 9, 30) : ETSIDI::printxy("PARTIDA FINALIZADA. GANAN BLANCAS", 9, 30);
+		
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
 		ETSIDI::printxy("PULSE  0  PARA CERRAR EL PROGRAMA.", 10, 25);
@@ -242,12 +209,14 @@ void Coordinador::dibuja()
 
 		ETSIDI::setTextColor(255, 180, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 30);
-		ETSIDI::printxy(" Jaque Mate", 15, 31);
+		ETSIDI::printxy("JAQUE MATE", 15, 31);
+		mitablero.ganador == NEGRAS ? ETSIDI::printxy("Ganan Las Negras", 13, 27) : ETSIDI::printxy("Ganan las Blancas", 13, 27);
+	
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
-		ETSIDI::printxy("Pulse i para volver a inicio", 16, 25);
-		ETSIDI::printxy("Pulse 1 para observacion", 16, 22);
-		ETSIDI::printxy("Pulse 0 para salir", 16, 19);
+		ETSIDI::printxy("Pulse i para volver a inicio", 16, 22);
+		ETSIDI::printxy("Pulse 1 para observacion", 16, 19);
+		ETSIDI::printxy("Pulse 0 para salir", 16, 16);
 
 		break;
 	}
@@ -280,7 +249,8 @@ void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el c
 
 			if (contador <= 0) {
 				cout << "¡Fin del tiempo para las " << (mitablero.get_turno() == BLANCAS ? "blancas" : "negras") << "!" << endl;
-				estado = (mitablero.get_turno() == BLANCAS) ? FIN_TIEMPO_BLANCAS : FIN_TIEMPO_NEGRAS;
+				mitablero.ganador = mitablero.get_turno() == BLANCAS ? NEGRAS : BLANCAS;
+				estado = FIN_TIEMPO;
 			}
 		}
 		else {

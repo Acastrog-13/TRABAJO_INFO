@@ -187,7 +187,10 @@ void Tablero::jaque_mate(vector <Pieza*> &defensoras, vector<Pieza*>&atacantes) 
 			else { defensora->eliminar_jugada(defensora->jugadas_posibles[i]); i--; }
 		}
 	}
-	if (c == false) ajedrez.estado = JAQUE_MATE;
+	if (c == false) {
+		ajedrez.estado = JAQUE_MATE;
+		ganador == atacantes[0]->color;
+	}
 }
 
 void Tablero::enroque(Rey* rey) {
