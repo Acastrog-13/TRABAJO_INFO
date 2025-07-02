@@ -103,7 +103,10 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	else {
 		p_in->pos = objetivo;
 		p_in->primer_mov = false;
-		if (p_fin != nullptr) eliminar_pieza(p_fin);
+		if (p_fin != nullptr) {
+			eliminar_pieza(p_fin);
+			ETSIDI::play("sonidos/comerpou.wav");
+		}
 	}
 
 	//promocion
