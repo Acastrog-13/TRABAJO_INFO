@@ -8,7 +8,7 @@ extern Coordinador ajedrez;
 
 //métodos de la clase Tablero
 void Tablero::set_t(Color t) {
-	for (auto p : lista) p->set_jugadas(*this);
+	for (auto pieza : lista) pieza->set_jugadas(*this);
 	turno = t;
 	contador_blancas = contador_negras = tiempo;
 	if (t != NONE) numero_click = CERO;
@@ -21,10 +21,15 @@ void Tablero::set(int c, int f, int m) {
 	max = m;
 }
 
+void Tablero::cambio_turno() { 
+	turno == BLANCAS ? turno = NEGRAS : turno = BLANCAS; 
+	//set_jugadas();
+}
+
 Pieza* Tablero::operator()(const Posicion& pos) {
-	for (int i = 0; i < num; i++)
-		if (pos == (lista[i]->pos))
-			return lista[i];
+	for (auto pieza: lista)
+		if (pos == pieza->pos)
+			return pieza;
 	return nullptr;
 }
 
@@ -40,9 +45,9 @@ bool Tablero :: operator+= (Pieza* p) {
 
 TablaInfo Tablero::get_ocupacion() {
 	TablaInfo retorno(columnas, filas);
-	for (int i = 0; i < num; i++) {
-		if (lista[i]->pos == Posicion(0,0)) continue;
-		retorno((lista[i]->pos).col, (lista[i]->pos).fil) = lista[i]->color;
+	for (auto pieza:lista) {
+		if (pieza->pos == Posicion(0,0)) continue;
+		retorno((pieza->pos).col, (pieza->pos).fil) = pieza->color;
 	}
 	return retorno;
 }
@@ -51,6 +56,11 @@ Posicion Tablero::get_centro(double x, double y) {
 	int aux1 = (int)(x + 0.5);
 	int aux2 = (int)(y + 0.5);
 	return Posicion(aux1, aux2);
+}
+
+void Tablero::set_jugadas() {
+	for (auto p : lista) 
+		p->set_jugadas(*this);
 }
 
 void Tablero::filtro_piezas(vector <Pieza*>& blancas, vector <Pieza*>& negras) {
@@ -70,8 +80,6 @@ bool Tablero::check_mueve(Posicion inicial, Posicion objetivo) {
 
 	brillo_pieza(inicial, false);
 		
-	//enroque
-
 	if ((turno == BLANCAS) && jaque(busca_rey(piezas_blancas), piezas_negras, inicial, objetivo) ||
 		(turno == NEGRAS) && jaque(busca_rey(piezas_negras), piezas_blancas, inicial, objetivo))
 		return false;
@@ -103,7 +111,7 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 
 	//actualiza las jugadas
 	filtro_piezas(piezas_blancas, piezas_negras);
-	for (auto p : lista) p->set_jugadas(*this); cout << "set_jugadas" << endl;
+	set_jugadas();
 
 	return true;
 }
@@ -238,25 +246,29 @@ Pieza* Tablero::torre_enroque(const Rey* rey) {
 }
 
 bool Tablero::enroque_mueve(Pieza* p_in, Posicion objetivo) {
+
 	if (!(p_in->nombre == "Rey")) return false;
+
 	Rey* rey = dynamic_cast <Rey*>(p_in);
-	if (rey == nullptr) return false;
-	Posicion pos_torre;
-	if (rey->enroque_posible && objetivo == pos_enroque(rey)) {
+	if (rey == nullptr ||!rey->enroque_posible) return false;
 
-		pos_torre = (rey->color == BLANCAS) ?
-			Posicion(rey->pos.col - 1, rey->pos.fil) : Posicion(rey->pos.col + 1, rey->pos.fil);
+	Posicion pos_objetivo = pos_enroque(rey);
+	if (!(objetivo == pos_objetivo)) return false;
 
-		auto torre = torre_enroque(rey);
-		if (torre == nullptr) return false;
+	Pieza* torre = torre_enroque(rey);
+	if (torre == nullptr) return false;
 
-		p_in->pos = pos_enroque(rey);
-		torre->pos = pos_torre;
-		p_in->primer_mov = false;
-		torre->primer_mov = false;
-		return true;
-	}
-	return false;
+	Posicion pos_torre = (rey->color == BLANCAS)
+		? Posicion(rey->pos.col - 1, rey->pos.fil)
+		: Posicion(rey->pos.col + 1, rey->pos.fil);
+		
+	rey->pos = pos_objetivo;
+	torre->pos = pos_torre;
+
+	rey->primer_mov = false;
+	torre->primer_mov = false;
+	return true;
+	
 }
 
 bool Tablero::eliminar_pieza(Pieza* p) {

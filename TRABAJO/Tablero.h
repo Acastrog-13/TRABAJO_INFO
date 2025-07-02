@@ -43,7 +43,7 @@ public:
 	void set_t(Color t);																	//set turno, click y contadores
 
 	void set(int, int, int);																//set filas, columnas y numero max de piezas
-	void cambio_turno() { turno == BLANCAS ? turno = NEGRAS : turno = BLANCAS; }
+	void cambio_turno();
 	string get_modo() { return filas > 5 ? "45" : "S"; }
 	Posicion get() { return Posicion(columnas, filas); }
 
@@ -56,6 +56,7 @@ public:
 	TablaInfo get_ocupacion();
 	Posicion get_centro(double, double);
 
+	void set_jugadas();
 	void filtro_piezas (vector <Pieza*>& blancas, vector <Pieza*>& negras); //Filta las piezas por colores
 
 	bool check_mueve(Posicion inicial, Posicion objetivo);								

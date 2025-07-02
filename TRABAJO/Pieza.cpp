@@ -71,17 +71,18 @@ void Pieza::set_jugadas(Tablero& tablero) {
 	
 	for (int c = 1; c <= info.columnas; c++)
 		for (int f = 1; f <= info.filas; f++) {
-			if (pos.col > 0 && pos.fil > 0 && check(Posicion(c, f), info)) {
-				if (color == BLANCAS && info(Posicion(c, f)) == NEGRAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
-				else if (color == NEGRAS && info(Posicion(c, f)) == BLANCAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
-				else { jugadas_no_ofensivas.push_back(Posicion(c, f)); }
-				jugadas_posibles.push_back(Posicion(c, f));
-				if (color == info(Posicion(c, f)) && tablero.operator()(Posicion(c, f))->nombre == "Rey") eliminar_jugada(Posicion(c, f));
+			Posicion objetivo (c, f);
+			if (pos.col > 0 && pos.fil > 0 && check(objetivo, info)) {
+				if (color == BLANCAS && info(objetivo) == NEGRAS) { jugadas_ofensivas.push_back(objetivo); }
+				else if (color == NEGRAS && info(objetivo) == BLANCAS) { jugadas_ofensivas.push_back(objetivo); }
+				else { jugadas_no_ofensivas.push_back(objetivo); }
+				jugadas_posibles.push_back(objetivo);
+				if (color == info(objetivo) && tablero.operator()(objetivo)->nombre == "Rey") eliminar_jugada(objetivo);
 			}
 		}
 }
 
-vector<Posicion>& Pieza::set_amenazas(Tablero& tablero) {
+void Pieza::set_amenazas(Tablero& tablero) {
 	jugadas_ofensivas.clear();
 	TablaInfo info = tablero.get_ocupacion();
 	for (int c = 1; c <= info.columnas; c++)
@@ -90,7 +91,6 @@ vector<Posicion>& Pieza::set_amenazas(Tablero& tablero) {
 				if (color == BLANCAS && info(Posicion(c, f)) == NEGRAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
 				else if (color == NEGRAS && info(Posicion(c, f)) == BLANCAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
 			}
-	return jugadas_ofensivas;
 }
 
 void dibuja_brillo(Posicion pos, unsigned char alpha, unsigned char r, unsigned char g, unsigned char b, float lado, double fondo) {
