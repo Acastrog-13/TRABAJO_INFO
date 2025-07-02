@@ -16,14 +16,15 @@ void Coordinador::tecla(unsigned char key) {
 			inicializa_45();								//llena el tablero de piezas 45 y lo pone 4x5
 			mitablero.set_t(BLANCAS);					//pone el turno de las blancas e inicializa el contador y los clicks
 			estado = CUATRO_CINCO;
-			break;
+		
 		}
 		if (key == '2') {
 			inicializa_S();									//llena el tablero de piezas S y lo pone 5x6
 			mitablero.set_t(BLANCAS);
 			estado = SPEED;
-			break;
+		
 		}
+		break;
 
 	case CUATRO_CINCO:
 		dibuja();
@@ -32,9 +33,10 @@ void Coordinador::tecla(unsigned char key) {
 			mitablero.set_t(NONE);
 			primer_tick = true;
 			estado = INICIO;
-			break;
+		
 		}
 		if (key == '0') exit(0);
+		break;
 
 	case SPEED:
 		dibuja();
@@ -44,65 +46,73 @@ void Coordinador::tecla(unsigned char key) {
 			mitablero.set_t(NONE);
 			primer_tick = true;
 			estado = INICIO;
-			break;
+			
 		}
 		if (key == '0') exit(0);
+		break;
 
 	case FIN_TIEMPO_BLANCAS:
 		if (key == '0') exit(0);
-		if (key == '1') {
+		if (key == 'i') {
 			estado = INICIO;
 			mitablero.vaciar();
-			break;
+			
 		}
-		if (key == '2') {
+		if (key == '1') {
 			mitablero.set_t(NONE);  // desactiva el turno para que no se pueda jugar
 			estado = OBSERVACION;
-			break;
+		
 		}
+		break;
 
 	case FIN_TIEMPO_NEGRAS:
 		if (key == '0') exit(0);
-		if (key == '1') {
+		if (key == 'i') {
 			estado = INICIO;
 			mitablero.vaciar();
-			break;
+	
 		}
-		if (key == '2') {
+		if (key == '1') {
 			mitablero.set_t(NONE);
 			estado = OBSERVACION;
-			break;
+		
 
 		}
+		break;
+
 	case OBSERVACION:
 		if (key == '0') exit(0);
-		if (key == '1') {
+		if (key == 'i') {
 			estado = INICIO;
 			mitablero.vaciar();
-			break;
+		
 		}
+		break;
+
 	case PROMOCION:
 		if (key == 't') {
 			cout << "Se promociona por una torre" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Torre(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
-			break;
+
 		}
 		if (key == 'a') {
 			cout << "Se promociona por un alfil" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Alfil(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
-			break;
+		
 		}
 		if (key == 'c') {
 			cout << "Se promociona por un caballo" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Caballo(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
-			break;
+		
 		}
+		break;
+
 	case JAQUE_MATE:
 		if (key == 'i') estado = INICIO;
 		if (key == '1') estado = OBSERVACION;
@@ -131,13 +141,13 @@ void Coordinador::dibuja()
 
 		ETSIDI::setTextColor(255, 180, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
-		ETSIDI::printxy("AJEDREZ", -5, 80);
+		ETSIDI::printxy("AJEDREZ", -15, 80);
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
-		ETSIDI::printxy("PULSE TECLA -1- PARA JUGAR 4X5", -5, 60);
-		ETSIDI::printxy("PULSE TECLA -2- PARA JUGAR SPEED", -5, 50);
-		ETSIDI::printxy("PULSE TECLA -0- PARA SALIR", -5, 40);
-		ETSIDI::printxy("PULSE TECLA -i- PARA VOLVER A INICIO", -5, 10);
+		ETSIDI::printxy("PULSE TECLA -1- PARA JUGAR 4X5", -15, 60);
+		ETSIDI::printxy("PULSE TECLA -2- PARA JUGAR SPEED", -15, 50);
+		ETSIDI::printxy("PULSE TECLA  0  EN CUALQUIER MOMENTO PARA SALIR", -15, 40);
+		ETSIDI::printxy("PULSE TECLA  i  EN CUALQUIER MOMENTO PARA VOLVER A INICIO", -15, 10);
 		break;
 
 	case CUATRO_CINCO:
@@ -164,42 +174,38 @@ void Coordinador::dibuja()
 
 
 	case FIN_TIEMPO_BLANCAS:
-		gluLookAt(3, 3.5, 9,
-			3, 3.5, 0,
+		gluLookAt(25, 25, 50,			//desde donde
+			25, 25, 0,		//hacia donde
 			0.0, 1.0, 0.0);
 
-		ETSIDI::setTextColor(255, 0, 0);
+		ETSIDI::setTextColor(255, 180, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
-		ETSIDI::printxy("LAS PIEZAS BLANCAS SE HAN QUEDADO SIN TIEMPO", -1, 6);
-		ETSIDI::printxy("PARTIDA FINALIZADA. GANAN NEGRAS", 0, 5);
+		ETSIDI::printxy("LAS PIEZAS BLANCAS SE HAN QUEDADO SIN TIEMPO", 4, 33);
+		ETSIDI::printxy("PARTIDA FINALIZADA. GANAN NEGRAS", 9, 30);
 
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 9);
-		ETSIDI::printxy("PULSE -0- PARA CERRAR EL PROGRAMA.", -1, 3);
-		ETSIDI::printxy("PULSE -1- PARA VOLVER A PANTALLA DE INICIO.", -1, 2);
-		ETSIDI::printxy("PULSE -2- PARA OBSERVAR EL TABLERO.", -1, 1);
-
-
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
+		ETSIDI::printxy("PULSE  0  PARA CERRAR EL PROGRAMA.", 10, 25);
+		ETSIDI::printxy("PULSE  i  PARA VOLVER A PANTALLA DE INICIO.", 10, 22);
+		ETSIDI::printxy("PULSE  1  PARA OBSERVAR EL TABLERO.", 10, 19);
 		break;
 
 
 	case FIN_TIEMPO_NEGRAS:
-		gluLookAt(3, 3.5, 9,			//desde donde
-			3, 3.5, 0,		//hacia donde
+		gluLookAt(25, 25, 50,			//desde donde
+			25, 25, 0,		//hacia donde
 			0.0, 1.0, 0.0);
-	
 
-		ETSIDI::setTextColor(255, 0, 0);
+		ETSIDI::setTextColor(255, 180, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
-		ETSIDI::printxy("LAS PIEZAS NEGRAS SE HAN QUEDADO SIN TIEMPO", -1, 6);
-		ETSIDI::printxy("PARTIDA FINALIZADA. GANAN BLANCAS", 0, 5);
+		ETSIDI::printxy("LAS PIEZAS NEGRAS SE HAN QUEDADO SIN TIEMPO", 4, 33);
+		ETSIDI::printxy("PARTIDA FINALIZADA. GANAN BLANCAS", 9, 30);
 
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 9);
-		ETSIDI::printxy("PULSE -0- PARA CERRAR EL PROGRAMA.", -1, 3);
-		ETSIDI::printxy("PULSE -1- PARA VOLVER A PANTALLA DE INICIO.", -1, 2);
-		ETSIDI::printxy("PULSE -2- PARA OBSERVAR EL TABLERO.", -1, 1);
-
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
+		ETSIDI::printxy("PULSE  0  PARA CERRAR EL PROGRAMA.", 10, 25);
+		ETSIDI::printxy("PULSE  i  PARA VOLVER A PANTALLA DE INICIO.", 10, 22);
+		ETSIDI::printxy("PULSE 1 PARA OBSERVAR EL TABLERO.", 10, 19);
 		break;
 
 	case OBSERVACION:
@@ -224,9 +230,9 @@ void Coordinador::dibuja()
 
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
-		ETSIDI::printxy("Pulse -A- para alfil", 18, 25);
-		ETSIDI::printxy("Pulse -T- para torre", 18, 22);
-		ETSIDI::printxy("Pulse -C- para caballo", 18, 19);
+		ETSIDI::printxy("Pulse -A- para alfil", 19, 25);
+		ETSIDI::printxy("Pulse -T- para torre", 19, 22);
+		ETSIDI::printxy("Pulse -C- para caballo", 19, 19);
 
 		break;
 	case JAQUE_MATE:
