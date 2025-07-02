@@ -5,7 +5,7 @@
 struct Peon : Pieza
 {
     //constructor
-    Peon(Posicion pos, Color col) : Pieza("Peon", pos, col){}
+    Peon(Posicion pos, Color col, bool mov=true) : Pieza("Peon", pos, col, mov){}
 
     //metodos
     bool check(Posicion objetivo, const TablaInfo& info);

@@ -288,7 +288,7 @@ void Coordinador::inicializa_S() {
 	mitablero += new Rey({ 4,1 }, BLANCAS);
 	mitablero += new Dama({ 5,1 }, BLANCAS);
 	for (int i = 1; i < 6; i++)
-		mitablero += new Peon({ i,2 }, BLANCAS);
+		mitablero += new Peon({ i,2 }, BLANCAS,false);
 
 	mitablero += new Torre({ 5,6 }, NEGRAS);
 	mitablero += new Alfil({ 3,6 }, NEGRAS);
@@ -296,7 +296,7 @@ void Coordinador::inicializa_S() {
 	mitablero += new Rey({ 2,6 }, NEGRAS);
 	mitablero += new Dama({ 1,6 }, NEGRAS);
 	for (int i = 1; i < 6; i++)
-		mitablero += new Peon({ i,5 }, NEGRAS);
+		mitablero += new Peon({ i,5 }, NEGRAS,false);
 
 	mitablero.filtro_piezas(mitablero.piezas_blancas, mitablero.piezas_negras);
 }
