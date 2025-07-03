@@ -210,8 +210,8 @@ void Coordinador::dibuja() const{
 		ETSIDI::printxy("Pulse -A- para alfil", 19, 25);
 		ETSIDI::printxy("Pulse -T- para torre", 19, 22);
 		ETSIDI::printxy("Pulse -C- para caballo", 19, 19);
-		ETSIDI::printxy("Pulse -D- para dama", 19, 16);
-		ETSIDI::printxy("(Dama solo disponible en la modalidad SPEED CHESS)", 10, 13);
+		if (mitablero.variante == SPEED) ETSIDI::printxy("Pulse -D- para dama", 19, 16);
+		
 
 		break;
 
