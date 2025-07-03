@@ -8,8 +8,9 @@ extern Coordinador ajedrez;
 
 //métodos de la clase Tablero
 void Tablero::set_t(Color t) {
-	turno = t;
-	set_jugadas();	
+	filtro_piezas();
+	turno = t;	
+	set_jugadas();
 	contador_blancas = contador_negras = tiempo;
 	if (t != NONE) numero_click = CERO;
 	else numero_click = NON;
@@ -22,8 +23,10 @@ void Tablero::set(int c, int f, int m) {
 }
 
 void Tablero::cambio_turno() { 
+	filtro_piezas();
 	turno == BLANCAS ? turno = NEGRAS : turno = BLANCAS; 
 	set_jugadas();
+	
 }
 
 Pieza* Tablero::operator()(const Posicion& pos) {
@@ -66,7 +69,9 @@ void Tablero::set_jugadas() {
 	for (auto defensora : turno == BLANCAS ? piezas_blancas : piezas_negras) {
 		inicial = defensora->pos;
 		for (int i = 0; i < defensora->jugadas_posibles.size(); i++)
-			if ((jaque(busca_rey(turno == BLANCAS ? piezas_blancas : piezas_negras), turno == BLANCAS ? piezas_negras : piezas_blancas, inicial, defensora->jugadas_posibles[i]))) {
+			if ((jaque(busca_rey(turno == BLANCAS ? piezas_blancas : piezas_negras), 
+				turno == BLANCAS ? piezas_negras : piezas_blancas, 
+				inicial, defensora->jugadas_posibles[i]))) {
 				defensora->eliminar_jugada(defensora->jugadas_posibles[i]);
 				i--;
 			}
@@ -163,9 +168,6 @@ bool Tablero::mueve(const Posicion& inicial, const Posicion& objetivo) {
 	//promocion
 	promociona(p_in, objetivo);
 
-	//actualiza las jugadas
-	filtro_piezas();
-
 	return true;
 }
 
@@ -242,8 +244,8 @@ bool Tablero::jaque(Rey* rey, const vector<Pieza*>& piezas) {
 		for (auto jugada : pieza->jugadas_ofensivas)
 			if ((*this)(jugada)->nombre == "Rey")
 				return true;
-	}
 
+	}
 	return false;
 }
 

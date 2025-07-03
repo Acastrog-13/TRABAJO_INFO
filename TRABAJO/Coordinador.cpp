@@ -60,18 +60,24 @@ void Coordinador::tecla(unsigned char key) {
 			cout << "Se promociona por una torre" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Torre(mitablero.posicion_promocion, mitablero.color_promocion);
+			mitablero.filtro_piezas();
+			mitablero.set_jugadas();
 			estado = mitablero.variante;
 		}
 		if (key == 'a') {
 			cout << "Se promociona por un alfil" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Alfil(mitablero.posicion_promocion, mitablero.color_promocion);
+			mitablero.filtro_piezas();
+			mitablero.set_jugadas();
 			estado = mitablero.variante;
 		}
 		if (key == 'c') {
 			cout << "Se promociona por un caballo" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Caballo(mitablero.posicion_promocion, mitablero.color_promocion);
+			mitablero.filtro_piezas();
+			mitablero.set_jugadas();
 			estado = mitablero.variante;
 		}
 		break;
@@ -308,7 +314,6 @@ void Coordinador::inicializa_45() {
 	mitablero += new Caballo({ 2,5 }, NEGRAS);
 	mitablero += new Rey({ 1,5 }, NEGRAS);
 
-	mitablero.filtro_piezas();
 	mitablero.set_t(BLANCAS);
 }
 
@@ -331,7 +336,6 @@ void Coordinador::inicializa_S() {
 	for (int i = 1; i < 6; i++)
 		mitablero += new Peon({ i,5 }, NEGRAS,false);
 
-	mitablero.filtro_piezas();
 	mitablero.set_t(BLANCAS);
 }
 

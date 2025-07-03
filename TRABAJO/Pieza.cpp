@@ -4,8 +4,9 @@
 void dibuja_brillo(Posicion pos, unsigned char alpha = 255, unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, float lado = 1, double fondo = 0.001);
 
 bool Pieza::check(const Posicion& objetivo, const TablaInfo& info)const {
-	if ((objetivo.col == pos.col) && (objetivo.fil == pos.fil)) return false;
 	if (!objetivo.check(info.columnas, info.filas)) return false;
+	if ((objetivo.col == pos.col) && (objetivo.fil == pos.fil)) return false;
+	
 	return check_recorrido(objetivo, info);
 }
 
@@ -91,7 +92,7 @@ void Pieza::set_amenazas(const TablaInfo &info) {
 			if (pos.col > 0 && pos.fil > 0 && check(Posicion(c, f), info)) {
 				if (color == BLANCAS && info(Posicion(c, f)) == NEGRAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
 				else if (color == NEGRAS && info(Posicion(c, f)) == BLANCAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
-			}
+		}
 }
 
 void Pieza::eliminar_jugada(Posicion jugada) {
