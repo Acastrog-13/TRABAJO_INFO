@@ -78,7 +78,7 @@ void Pieza::set_jugadas(Tablero& tablero) {
 				else if (color == NEGRAS && info(objetivo) == BLANCAS) { jugadas_ofensivas.push_back(objetivo); }
 				else { jugadas_no_ofensivas.push_back(objetivo); }
 				jugadas_posibles.push_back(objetivo);
-				if (color == info(objetivo) && tablero.operator()(objetivo)->nombre == "Rey") eliminar_jugada(objetivo);
+				if (tablero(objetivo) != nullptr && tablero.operator()(objetivo)->nombre == "Rey") eliminar_jugada(objetivo);
 			}
 		}
 }

@@ -60,19 +60,19 @@ void Coordinador::tecla(unsigned char key) {
 			cout << "Se promociona por una torre" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Torre(mitablero.posicion_promocion, mitablero.color_promocion);
-			estado = CUATRO_CINCO;
+			estado = mitablero.variante;
 		}
 		if (key == 'a') {
 			cout << "Se promociona por un alfil" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Alfil(mitablero.posicion_promocion, mitablero.color_promocion);
-			estado = CUATRO_CINCO;
+			estado = mitablero.variante;
 		}
 		if (key == 'c') {
 			cout << "Se promociona por un caballo" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Caballo(mitablero.posicion_promocion, mitablero.color_promocion);
-			estado = CUATRO_CINCO;
+			estado = mitablero.variante;
 		}
 		break;
 
@@ -295,6 +295,7 @@ void Coordinador::OnTimer(int value) {
 
 void Coordinador::inicializa_45() {
 	mitablero.set(4, 5, 11);
+	mitablero.variante = CUATRO_CINCO;
 	mitablero += new Peon({ 4, 2 }, BLANCAS);
 	mitablero += new Torre({ 1,1 }, BLANCAS);
 	mitablero += new Alfil({ 2,1 }, BLANCAS);
@@ -313,6 +314,7 @@ void Coordinador::inicializa_45() {
 
 void Coordinador::inicializa_S() {
 	mitablero.set(5, 6, 20);
+	mitablero.variante = SPEED;
 	mitablero += new Torre({ 1,1 }, BLANCAS);
 	mitablero += new Alfil({ 3,1 }, BLANCAS);
 	mitablero += new Caballo({ 2,1 }, BLANCAS);

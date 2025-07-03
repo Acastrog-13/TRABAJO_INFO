@@ -31,6 +31,7 @@ class Tablero
 	Posicion posicion_promocion;
 	Clicks numero_click = NON;
 	Posicion celdaClickada1, celdaClickada2;
+	Estado variante;
 
 public:
 	//constructor

@@ -171,7 +171,6 @@ bool Tablero::mueve(const Posicion& inicial, const Posicion& objetivo) {
 
 void Tablero::promociona(Pieza* p_in, const Posicion& objetivo) {
 	if (!(p_in->nombre == "Peon")) return;
-	if (ajedrez.estado != CUATRO_CINCO) return;
 	if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
 		ajedrez.estado = PROMOCION;
 		color_promocion = p_in->color;
