@@ -30,15 +30,14 @@ protected:
 
 public:
 	//movimientos
-	virtual bool check(Posicion objetivo, const TablaInfo& info) = 0;
-	virtual bool check_recorrido(Posicion objetivo, const TablaInfo& info);
-	//comprueban si entre inicio y final no hay nadie entre medias y que la p_objetivo esta en el tablero
+	virtual bool check(const Posicion &, const TablaInfo&)const = 0;
+	virtual bool check_recorrido(const Posicion&, const TablaInfo&)const ; //comprueban si entre inicio y final no hay nadie entre medias y que la p_objetivo esta en el tablero
 
 	//dibujo
-	void dibuja(unsigned int glComun)const;						//dibuja cada pieza
-	virtual void dibuja() = 0;									//png especifico de cada pieza
+	void dibuja(const unsigned int&)const;						//dibuja cada pieza
+	virtual void dibuja()const = 0;									//png especifico de cada pieza
 	void set_jugadas(Tablero&);
-	void set_amenazas(TablaInfo info);
+	void set_amenazas(const TablaInfo&);
 	void eliminar_jugada(Posicion);
 
 	//amistades

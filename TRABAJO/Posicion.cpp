@@ -1,11 +1,11 @@
 #include "Posicion.h"
 
-bool Posicion::check(int c, int f) {
+bool Posicion::check(const int& c, const int& f) const{
 	if ((col < 1) || (col > c) || (fil < 1) || (fil > f)) return false;
 	return true;
 }
 
-bool Posicion::check(Posicion i) {
+bool Posicion::check(const Posicion &i)const {
 	return check(i.col, i.fil);
 }
 

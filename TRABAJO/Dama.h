@@ -7,6 +7,6 @@ struct Dama : Pieza
     Dama(Posicion pos, Color  col) : Pieza("Dama", pos, col) {}
 
     //metodos
-    bool check(Posicion objetivo, const TablaInfo& info);
-    void dibuja() override;
+    bool check(const Posicion& objetivo, const TablaInfo& info)const;
+    void dibuja()const override;
 };

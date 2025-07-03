@@ -7,6 +7,6 @@ struct Alfil : Pieza {
     Alfil(Posicion pos, Color col) : Pieza("Alfil", pos, col) {}
 
     //metodos
-    bool check(Posicion objetivo, const TablaInfo& info);
-    void dibuja() override;
+    bool check(const Posicion& objetivo, const TablaInfo& info)const;
+    void dibuja()const override;
 };

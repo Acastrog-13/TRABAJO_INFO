@@ -8,6 +8,6 @@ struct Torre : Pieza
     Torre(Posicion pos, Color col) : Pieza("Torre", pos, col) {}
 
     //Metodos
-    bool check(Posicion objetivo, const TablaInfo& info);
-    void dibuja() override;
+    bool check(const Posicion& objetivo, const TablaInfo& info)const;
+    void dibuja()const override;
 };

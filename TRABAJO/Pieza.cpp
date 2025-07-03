@@ -3,13 +3,13 @@
 
 void dibuja_brillo(Posicion pos, unsigned char alpha = 255, unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, float lado = 1, double fondo = 0.001);
 
-bool Pieza::check(Posicion objetivo, const TablaInfo& info) {
+bool Pieza::check(const Posicion& objetivo, const TablaInfo& info)const {
 	if ((objetivo.col == pos.col) && (objetivo.fil == pos.fil)) return false;
 	if (!objetivo.check(info.columnas, info.filas)) return false;
 	return check_recorrido(objetivo, info);
 }
 
-bool Pieza::check_recorrido(Posicion objetivo, const TablaInfo& info) {
+bool Pieza::check_recorrido(const Posicion &objetivo, const TablaInfo& info)const  {
 	Posicion dif = objetivo - pos,
 		inc = Posicion((dif.col > 0 ? 1 : (dif.col < 0 ? -1 : 0)), (dif.fil > 0 ? 1 : (dif.fil < 0 ? -1 : 0))),
 		npos = pos + inc;
@@ -20,7 +20,7 @@ bool Pieza::check_recorrido(Posicion objetivo, const TablaInfo& info) {
 	return true;
 }
 
-void Pieza::dibuja(unsigned int glComun)const {
+void Pieza::dibuja(const unsigned int &glComun)const {
 	double ancho = 1; 
 	double alto = 1;
 	unsigned char r, g, b, alpha;
@@ -82,7 +82,7 @@ void Pieza::set_jugadas(Tablero& tablero) {
 		}
 }
 
-void Pieza::set_amenazas(TablaInfo info) {
+void Pieza::set_amenazas(const TablaInfo &info) {
 	jugadas_ofensivas.clear();
 	
 	for (int c = 1; c <= info.columnas; c++)

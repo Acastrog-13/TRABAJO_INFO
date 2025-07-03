@@ -9,6 +9,6 @@ struct Rey : Pieza
     Rey(Posicion pos, Color col) : Pieza("Rey", pos, col) {}
 
     //Metodos
-    bool check(Posicion objetivo, const TablaInfo& info);
-    void dibuja() override;
+    bool check(const Posicion& objetivo, const TablaInfo& info)const;
+    void dibuja()const override;
 };

@@ -12,8 +12,8 @@ struct Posicion
 	Posicion(int col = 0, int fil = 0) : fil{ fil }, col{ col } {}
 
 	//metodos
-	bool check(int, int);									//verifica que la posicion esta dentro del tablero
-	bool check(Posicion);
+	bool check(const int &, const int &)const;					//verifica que la posicion esta dentro del tablero
+	bool check(const Posicion &)const;
 
 	//operadores
 	bool operator ==(const Posicion&)const;					//verifica que la posicion es igual

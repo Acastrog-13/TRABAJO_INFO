@@ -2,7 +2,7 @@
 
 using namespace std;
 
-bool Peon::check(Posicion objetivo, const TablaInfo& info) {
+bool Peon::check(const Posicion& objetivo, const TablaInfo& info)const {
     auto dif = objetivo - pos;
     if (color == BLANCAS) {
         if (primer_mov == true)
@@ -23,7 +23,7 @@ bool Peon::check(Posicion objetivo, const TablaInfo& info) {
     return false;
 }
 
-bool Peon::check_recorrido(Posicion objetivo, const TablaInfo& info) {
+bool Peon::check_recorrido(const Posicion& objetivo, const TablaInfo& info)const {
     if (info(objetivo) == NONE) {
         if ((objetivo - pos).col == 0) return Pieza::check_recorrido(objetivo, info);
         return false;
@@ -35,7 +35,7 @@ bool Peon::check_recorrido(Posicion objetivo, const TablaInfo& info) {
     return false;
 }
 
-void Peon::dibuja() {
+void Peon::dibuja()const {
     string imagen = (color == NEGRAS) ? "imagenes/peon_negro.png" : "imagenes/peon_blanco.png";
 
     unsigned int glComun = ETSIDI::getTexture(imagen.c_str()).id;

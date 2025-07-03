@@ -7,9 +7,9 @@ struct Caballo : Pieza
     Caballo(Posicion pos, Color col) : Pieza("Caballo", pos, col) {}
 
     //metodos inline
-    bool check_recorrido(Posicion objetivo, const TablaInfo& info) override { return true; }
+    bool check_recorrido(const Posicion& objetivo, const TablaInfo& info)const override { return true; }
 
     //metodos
-    bool check(Posicion objetivo, const TablaInfo& info);
-    void dibuja() override;
+    bool check(const Posicion& objetivo, const TablaInfo& info)const;
+    void dibuja()const override;
 };
