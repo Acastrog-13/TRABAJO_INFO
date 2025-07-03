@@ -80,6 +80,19 @@ void Coordinador::tecla(unsigned char key) {
 			mitablero.set_jugadas();
 			estado = mitablero.variante;
 		}
+		if (key == 'd') {
+			if (mitablero.variante == CUATRO_CINCO)
+			{
+				cout << "No disponible para esta modalidad" << endl;
+				break;
+			}
+			cout << "Se promociona por una dama" << endl;
+			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
+			mitablero += new Dama (mitablero.posicion_promocion, mitablero.color_promocion);
+			mitablero.filtro_piezas();
+			mitablero.set_jugadas();
+			estado = mitablero.variante;
+		}
 		break;
 
 	case JAQUE_MATE:
@@ -197,6 +210,8 @@ void Coordinador::dibuja() const{
 		ETSIDI::printxy("Pulse -A- para alfil", 19, 25);
 		ETSIDI::printxy("Pulse -T- para torre", 19, 22);
 		ETSIDI::printxy("Pulse -C- para caballo", 19, 19);
+		ETSIDI::printxy("Pulse -D- para dama", 19, 16);
+		ETSIDI::printxy("(Dama solo disponible en la modalidad SPEED CHESS)", 10, 13);
 
 		break;
 
