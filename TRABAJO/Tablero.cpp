@@ -8,7 +8,7 @@ extern Coordinador ajedrez;
 
 //métodos de la clase Tablero
 void Tablero::set_t(Color t) {
-	for (auto pieza : lista) pieza->set_jugadas(*this);
+	set_jugadas();
 	turno = t;
 	contador_blancas = contador_negras = tiempo;
 	if (t != NONE) numero_click = CERO;
@@ -23,7 +23,7 @@ void Tablero::set(int c, int f, int m) {
 
 void Tablero::cambio_turno() { 
 	turno == BLANCAS ? turno = NEGRAS : turno = BLANCAS; 
-	//set_jugadas();
+	set_jugadas();
 }
 
 Pieza* Tablero::operator()(const Posicion& pos) {
@@ -61,6 +61,50 @@ Posicion Tablero::get_centro(double x, double y) {
 void Tablero::set_jugadas() {
 	for (auto p : lista) 
 		p->set_jugadas(*this);
+
+	Posicion inicial;
+	for (auto defensora : turno == BLANCAS ? piezas_blancas : piezas_negras) {
+		inicial = defensora->pos;
+		for (int i = 0; i < defensora->jugadas_posibles.size(); i++)
+			if ((jaque(busca_rey(turno == BLANCAS ? piezas_blancas : piezas_negras), turno == BLANCAS ? piezas_negras : piezas_blancas, inicial, defensora->jugadas_posibles[i]))) {
+				defensora->eliminar_jugada(defensora->jugadas_posibles[i]);
+				i--;
+			}
+	}
+}
+
+void Tablero::OnMouse(double worldX, double worldY) {
+	switch (numero_click) {
+	case CERO:
+
+		celdaClickada1 = mitablero.get_centro(worldX, worldY);
+
+		if (turno == NEGRAS) cout << "Turno de las negras" << endl;
+		if (turno == BLANCAS) cout << "Turno de las blancas" << endl;
+
+		if (celdaClickada1.check(get()) && get_turno() == get_ocupacion().operator()(celdaClickada1)) {
+			brillo_pieza(celdaClickada1, true);
+			numero_click = UNO;
+		}
+		else cout << "No es tu turno, vuelve a intentarlo" << endl;
+		break;
+
+	case UNO:
+		celdaClickada2 = get_centro((double)worldX, (double)worldY);
+
+		if (mitablero.mueve(celdaClickada1, celdaClickada2)) {
+			mitablero.cambio_turno();
+			comprobacion_tablas();
+			comprobacion_jaque_mate();
+		}
+		else {
+			brillo_pieza(celdaClickada1, false);
+			cout << "No permitido, no hay cambio de turno" << endl;
+		}
+		numero_click = CERO;
+		borra_brillo();
+		break;
+	}
 }
 
 void Tablero::filtro_piezas(vector <Pieza*>& blancas, vector <Pieza*>& negras) {
@@ -95,11 +139,7 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	Pieza* p_in = (*this)(inicial);
 	Pieza* p_fin = (*this)(objetivo);
 
-	if (!p_in || !(p_in->check(objetivo, get_ocupacion()))) {
-		ETSIDI::play("sonidos/error.wav");
-		return false;
-	}
-	if (!check_mueve(inicial, objetivo)) {
+	if (!p_in || !(p_in->check(objetivo, get_ocupacion())) || !check_mueve(inicial, objetivo)) {
 		ETSIDI::play("sonidos/error.wav");
 		return false;
 	}
@@ -113,7 +153,8 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 		if (p_fin != nullptr) {
 			eliminar_pieza(p_fin);
 			ETSIDI::play("sonidos/comerpou.wav");
-		}else ETSIDI::play("sonidos/movimiento.wav");
+		}
+		else ETSIDI::play("sonidos/movimiento.wav");
 	}
 
 	//promocion
@@ -121,7 +162,6 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 
 	//actualiza las jugadas
 	filtro_piezas(piezas_blancas, piezas_negras);
-	set_jugadas();
 
 	return true;
 }
@@ -136,7 +176,6 @@ void Tablero::promociona(Pieza* p_in, Posicion objetivo) {
 		cout << "Hay promocion del peon " << (p_in->color == BLANCAS ? "blanco" : "negro") << endl;
 	}
 }
-
 
 void Tablero::comprobacion_jaque_mate() {
 	if ((turno == NEGRAS)) {
@@ -154,6 +193,23 @@ void Tablero::comprobacion_jaque_mate() {
 		}
 	}	
 }
+
+void Tablero::comprobacion_tablas() {
+	int num_alfiles{}, num_caballos{}, num_reyes{};
+	if (num == 3 || num == 2) {
+		for (int i = 0; i < num; i++) {
+			if (lista[i]->nombre == "Rey") num_reyes++;
+			else if (lista[i]->nombre == "Caballo") num_caballos++;
+			else if (lista[i]->nombre == "Alfil") num_alfiles++;
+		}
+	}
+	if ((num_reyes == 2 && num == 2) || (num == 3 && num_reyes == 2 && (num_caballos == 1 || num_alfiles == 1))) {
+		cout << "Tablas" << endl;
+		ajedrez.estado = TABLAS;
+	}
+}
+
+
 Rey* Tablero::busca_rey(const vector<Pieza*>& piezas) {
 
 	for (auto p : piezas)
@@ -164,7 +220,7 @@ Rey* Tablero::busca_rey(const vector<Pieza*>& piezas) {
 
 bool Tablero::jaque(Rey* rey, vector<Pieza*>& piezas) {
 	for (auto pieza : piezas) {
-		pieza->set_amenazas(*this);
+		pieza->set_amenazas(get_ocupacion());
 		for (auto jugada : pieza->jugadas_ofensivas)
 			if ((*this)(jugada)->nombre == "Rey")
 				return true;
@@ -197,13 +253,12 @@ void Tablero::jaque_mate(vector <Pieza*> &defensoras, vector<Pieza*>&atacantes) 
 		inicial = defensora->pos;
 		for (int i = 0; i < defensora->jugadas_posibles.size(); i++) {
 			if (!(jaque(busca_rey(defensoras), atacantes, inicial, defensora->jugadas_posibles[i]))) c = true;
-			else { defensora->eliminar_jugada(defensora->jugadas_posibles[i]); i--; }
 		}
 	}
 	if (c == false) {
 		ajedrez.estado = JAQUE_MATE;
 		ETSIDI::play("sonidos/victoria.wav");
-		ganador == atacantes[0]->color;
+		ganador = atacantes[0]->color;
 	}
 }
 
@@ -312,8 +367,8 @@ void Tablero::vaciar() {
 
 void Tablero::dibuja() {
 	dibuja_tablero(columnas, filas);
-	for (auto b : brillos) dibuja_brillo(b, 255, 0, 255, 255, (float)0.1, 0.01);
 	for (auto p : lista) p->dibuja();
+	for (auto b : brillos) dibuja_brillo(b, 255, 0, 255, 255, (float)0.1, 0.01);
 }
 
 void Tablero::brillo_pieza(Posicion pos, bool s) {

@@ -6,10 +6,6 @@
 Coordinador ajedrez;
 Tablero mitablero;
 
-Clicks numero_click = NON;
-Posicion celdaClickada1;
-Posicion celdaClickada2;
-
 Tiempo tiempo (10,30);
 
 Tiempo contador_blancas = tiempo;
@@ -77,36 +73,7 @@ void OnMouse(int button, int state, int x, int y) {
 
 		ScreenToWorld(x, y, worldX, worldY);
 
-		switch (numero_click) {
-		case CERO:
-			if (mitablero.get_turno() == NEGRAS) cout << "Turno de las negras" << endl;
-			if (mitablero.get_turno() == BLANCAS) cout << "Turno de las blancas" << endl;
-
-			celdaClickada1 = mitablero.get_centro(worldX, worldY);
-
-			if (celdaClickada1.check(mitablero.get()) && mitablero.get_turno() == mitablero.get_ocupacion().operator()(celdaClickada1)) {
-				mitablero.brillo_pieza(celdaClickada1, true);
-				numero_click = UNO;
-			}
-			else cout << "No es tu turno, vuelve a intentarlo \n" << endl;
-			break;
-
-		case UNO:
-			celdaClickada2 = mitablero.get_centro((double)worldX, (double)worldY);
-
-			if (mitablero.mueve(celdaClickada1, celdaClickada2)) { 
-				mitablero.cambio_turno(); 
-				mitablero.comprobacion_jaque_mate();
-			}
-			else { 
-				mitablero.brillo_pieza(celdaClickada1, false);
-				cout << "No permitido, no hay cambio de turno" << endl; 
-			}
-			numero_click = CERO;
-			mitablero.borra_brillo();
-			break;
-		}
-
+		mitablero.OnMouse(worldX, worldY);
 	}
 }
 

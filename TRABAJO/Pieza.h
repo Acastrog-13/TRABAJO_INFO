@@ -38,7 +38,7 @@ public:
 	void dibuja(unsigned int glComun)const;						//dibuja cada pieza
 	virtual void dibuja() = 0;									//png especifico de cada pieza
 	void set_jugadas(Tablero&);
-	void set_amenazas(Tablero& tablero);
+	void set_amenazas(TablaInfo info);
 	void eliminar_jugada(Posicion);
 
 	//amistades

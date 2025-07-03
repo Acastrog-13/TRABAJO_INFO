@@ -11,69 +11,48 @@ void Coordinador::tecla(unsigned char key) {
 
 	switch (estado) {
 	case INICIO:
+		mitablero.vaciar();
+		mitablero.set_t(NONE);
+		mitablero.numero_click = NON;
+		primer_tick = true;
+
 		if (key == '0') exit(0);
 		if (key == '1') {
 			ETSIDI::play("sonidos/comienzo_partida.wav");
-			inicializa_45();								//llena el tablero de piezas 45 y lo pone 4x5
-			mitablero.set_t(BLANCAS);					//pone el turno de las blancas e inicializa el contador y los clicks
-			estado = CUATRO_CINCO;
-		
+			inicializa_45();													
+			estado = CUATRO_CINCO;		
 		}
 		if (key == '2') {
 			ETSIDI::play("sonidos/comienzo_partida.wav");
-			inicializa_S();									//llena el tablero de piezas S y lo pone 5x6
-			mitablero.set_t(BLANCAS);
-			estado = SPEED;
-		
+			inicializa_S();									
+			estado = SPEED;	
 		}
 		break;
 
 	case CUATRO_CINCO:
 		dibuja();
-		if (key == 'i' || key == 'I') {
-			mitablero.vaciar();									//vacia las piezas del tablero
-			mitablero.set_t(NONE);
-			primer_tick = true;
-			estado = INICIO;
-		
-		}
+		if (key == 'i' || key == 'I') estado = INICIO;		
 		if (key == '0') exit(0);
 		break;
 
 	case SPEED:
 		dibuja();
-		if (key == 'i' || key == 'I') {
-			mitablero.vaciar();
-			numero_click = NON;
-			mitablero.set_t(NONE);
-			primer_tick = true;
-			estado = INICIO;
-			
-		}
+		if (key == 'i' || key == 'I') estado = INICIO;			
 		if (key == '0') exit(0);
 		break;
 
 	case FIN_TIEMPO:
 		if (key == '0') exit(0);
-		if (key == 'i') {
-			estado = INICIO;
-			mitablero.vaciar();
-			
-		}
+		if (key == 'i') estado = INICIO;
 		if (key == '1') {
-			mitablero.set_t(NONE);  // desactiva el turno para que no se pueda jugar
-			estado = OBSERVACION;
-		
+			mitablero.set_t(NONE);  
+			estado = OBSERVACION;		
 		}
 		break;
 
 	case OBSERVACION:
 		if (key == '0') exit(0);
-		if (key == 'i') {
-			estado = INICIO;
-			mitablero.vaciar();
-		
-		}
+		if (key == 'i') estado = INICIO;
 		break;
 
 	case PROMOCION:
@@ -82,21 +61,18 @@ void Coordinador::tecla(unsigned char key) {
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Torre(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
-
 		}
 		if (key == 'a') {
 			cout << "Se promociona por un alfil" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Alfil(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
-		
 		}
 		if (key == 'c') {
 			cout << "Se promociona por un caballo" << endl;
 			mitablero.eliminar_pieza(mitablero(mitablero.posicion_promocion));
 			mitablero += new Caballo(mitablero.posicion_promocion, mitablero.color_promocion);
 			estado = CUATRO_CINCO;
-		
 		}
 		break;
 
@@ -105,8 +81,14 @@ void Coordinador::tecla(unsigned char key) {
 		if (key == '1') estado = OBSERVACION;
 		if (key == '0') exit(0);
 		
+		break;	
+
+	case TABLAS:
+		if (key == 'i') estado = INICIO;
+		if (key == '1') estado = OBSERVACION;
+		if (key == '0') exit(0);
+
 		break;
-		
 	}
 }
 
@@ -159,17 +141,16 @@ void Coordinador::dibuja()
 
 		break;
 
-
 	case FIN_TIEMPO:
-		gluLookAt(25, 25, 50,			//desde donde
-			25, 25, 0,		//hacia donde
+		gluLookAt(25, 25, 50,
+			25, 25, 0,
 			0.0, 1.0, 0.0);
 
 		ETSIDI::setTextColor(255, 180, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 18);
 		mitablero.ganador == NEGRAS ? ETSIDI::printxy("LAS PIEZAS BLANCAS SE HAN QUEDADO SIN TIEMPO", 4, 33) : ETSIDI::printxy("LAS PIEZAS NEGRAS SE HAN QUEDADO SIN TIEMPO", 4, 33);
 		mitablero.ganador == NEGRAS ? ETSIDI::printxy("PARTIDA FINALIZADA. GANAN NEGRAS", 9, 30) : ETSIDI::printxy("PARTIDA FINALIZADA. GANAN BLANCAS", 9, 30);
-		
+
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
 		ETSIDI::printxy("PULSE  0  PARA CERRAR EL PROGRAMA.", 10, 25);
@@ -184,12 +165,13 @@ void Coordinador::dibuja()
 
 		mitablero.dibuja();
 
-		DrawImage("imagenes/imagen_observacion.png", -1, 6, 2.0, 1);	//0.5,5.5
+		DrawImage("imagenes/imagen_observacion.png", -1, 6, 2.0, 1);
 
 		break;
+
 	case PROMOCION:
-		gluLookAt(25, 25, 50,			//desde donde
-			25, 25, 0,		//hacia donde
+		gluLookAt(25, 25, 50,
+			25, 25, 0,
 			0.0, 1.0, 0.0);
 
 		ETSIDI::setTextColor(255, 180, 0);
@@ -204,16 +186,37 @@ void Coordinador::dibuja()
 		ETSIDI::printxy("Pulse -C- para caballo", 19, 19);
 
 		break;
+
 	case JAQUE_MATE:
-		gluLookAt(25, 25, 50,			//desde donde
-			25, 25, 0,		//hacia donde
+		gluLookAt(25, 25, 50,
+			25, 25, 0,
 			0.0, 1.0, 0.0);
 
 		ETSIDI::setTextColor(255, 180, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 30);
-		ETSIDI::printxy("JAQUE MATE", 15, 31);
+		ETSIDI::printxy("JAQUE MATE", 13, 31);
 		mitablero.ganador == NEGRAS ? ETSIDI::printxy("Ganan Las Negras", 13, 27) : ETSIDI::printxy("Ganan las Blancas", 13, 27);
-	
+
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
+		ETSIDI::printxy("Pulse i para volver a inicio", 16, 22);
+		ETSIDI::printxy("Pulse 1 para observacion", 16, 19);
+		ETSIDI::printxy("Pulse 0 para salir", 16, 16);
+
+		break;
+
+	case TABLAS:
+		gluLookAt(25, 25, 50,			
+			25, 25, 0,		
+			0.0, 1.0, 0.0);
+
+		ETSIDI::setTextColor(255, 180, 0);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 30);
+		ETSIDI::printxy("TABLAS", 17, 36);
+		ETSIDI::printxy("NO HAY GANADOR", 12, 32);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
+		ETSIDI::printxy("POR NUMERO INSUFICIENTE DE PIEZAS", 12, 27);
+
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
 		ETSIDI::printxy("Pulse i para volver a inicio", 16, 22);
@@ -225,7 +228,7 @@ void Coordinador::dibuja()
 
 }
 
-void Coordinador::OnTimer(int value) {		//desciende el contador y le cambia el color en cada tuno y en los ultimos segundos parpadea
+void Coordinador::OnTimer(int value) {		
 	static bool parpadeo = false;
 
 	if (primer_tick) primer_tick = false;
@@ -280,6 +283,7 @@ void Coordinador::inicializa_45() {
 	mitablero += new Rey({ 1,5 }, NEGRAS);
 
 	mitablero.filtro_piezas(mitablero.piezas_blancas, mitablero.piezas_negras);
+	mitablero.set_t(BLANCAS);
 }
 
 void Coordinador::inicializa_S() {
@@ -301,6 +305,7 @@ void Coordinador::inicializa_S() {
 		mitablero += new Peon({ i,5 }, NEGRAS,false);
 
 	mitablero.filtro_piezas(mitablero.piezas_blancas, mitablero.piezas_negras);
+	mitablero.set_t(BLANCAS);
 }
 
 
@@ -322,7 +327,7 @@ void DrawText(const char* text, float x, float y, unsigned char r, unsigned char
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
 	}
 
-	glEnable(GL_LIGHTING);  // Vuelve a activar iluminación
+	glEnable(GL_LIGHTING);  
 
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);

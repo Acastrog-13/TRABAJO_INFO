@@ -4,7 +4,6 @@
 
 
 extern Tablero mitablero;
-extern Clicks numero_click;
 
 class Coordinador
 {

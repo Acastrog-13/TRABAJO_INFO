@@ -19,8 +19,6 @@ using namespace std;
 extern Tiempo tiempo;
 extern Tiempo contador_blancas;
 extern Tiempo contador_negras;
-extern Clicks numero_click;
-//extern Coordinador ajedrez;
 
 class Tablero
 {
@@ -34,7 +32,8 @@ class Tablero
 		color_promocion = NONE,
 		ganador = NONE;
 	Posicion posicion_promocion;
-
+	Clicks numero_click = NON;
+	Posicion celdaClickada1, celdaClickada2;
 
 public:
 	//constructor
@@ -49,29 +48,30 @@ public:
 	Posicion get() { return Posicion(columnas, filas); }
 
 	//operator
-	Pieza* operator()(const Posicion&);													//retorna una pieza o nullptr
-	bool operator += (Pieza* p);														//añade una pieza a la lista
+	Pieza* operator()(const Posicion&);														//retorna una pieza o nullptr
+	bool operator += (Pieza* p);															//añade una pieza a la lista
 	Pieza* operator () (int col, int fil) { return operator ()(Posicion(col, fil)); }
 
 	//metodos
-	TablaInfo get_ocupacion();
-	Posicion get_centro(double, double);
+	TablaInfo get_ocupacion();																//crea una matriz columnasXfilas con los colores de las piezas
+	Posicion get_centro(double, double);													//con el valor de un punto de una celda se busca el punto medio
 
-	void set_jugadas();
-	void filtro_piezas (vector <Pieza*>& blancas, vector <Pieza*>& negras); //Filta las piezas por colores
+	void set_jugadas();																		//crea las jugadas de todas las piezas
+	void OnMouse(double, double);															//maneja los clicks del raton y mueve las piezas 
+	void filtro_piezas (vector <Pieza*>& blancas, vector <Pieza*>& negras);					//Filta las piezas por colores
 
-	bool check_mueve(Posicion inicial, Posicion objetivo);								
-	bool mueve(Posicion inicial, Posicion objetivo);									//retorna true si en p_inicial hay una pieza y entre p_inicial 
-	//y p_objetivo no hay piezas entre medias. Si en p_objetivo hay una
-	// pieza se la come y la borra de la lista y mueve la pieza deseada
+	bool check_mueve(Posicion inicial, Posicion objetivo);									//comprueba si la pieza se puede mover a la posicion deseada						
+	bool mueve(Posicion inicial, Posicion objetivo);										//mueve la pieza si cumple los requisitos
 
 	void promociona(Pieza*,Posicion);
 
-	void comprobacion_jaque_mate();
-	Rey* busca_rey(const vector<Pieza*>&);
+	void comprobacion_jaque_mate();															//cambia el estado del coordinado a JAQUE_MATE si cumple los requisitos
+	void comprobacion_tablas();																//cambia el estado del coordinado a TABLAS si cumple los requisitos
+
+	Rey* busca_rey(const vector<Pieza*>&);													//retorna el rey de una lista de piezas
 	bool jaque(Rey*, vector<Pieza*>&);														//jaque actual
-	bool jaque(Rey*, vector<Pieza*>&, Posicion, Posicion);									//jaque futuro, comrpueba jaque con un rey, una lista de piezas atacantes, posicion inicial y final. Si esta pieza se mueve aquí habra jaque?
-	void jaque_mate(vector <Pieza*>&, vector<Pieza*>&);
+	bool jaque(Rey*, vector<Pieza*>&, Posicion, Posicion);									//jaque futuro, comprueba jaque con un rey, una lista de piezas atacantes, posicion inicial y final. Si esta pieza se mueve aquí habra jaque?
+	void jaque_mate(vector <Pieza*>&, vector<Pieza*>&);										
 
 	void enroque(Rey*);
 	Pieza* torre_enroque(const Rey*);

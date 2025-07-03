@@ -82,15 +82,34 @@ void Pieza::set_jugadas(Tablero& tablero) {
 		}
 }
 
-void Pieza::set_amenazas(Tablero& tablero) {
+void Pieza::set_amenazas(TablaInfo info) {
 	jugadas_ofensivas.clear();
-	TablaInfo info = tablero.get_ocupacion();
+	
 	for (int c = 1; c <= info.columnas; c++)
 		for (int f = 1; f <= info.filas; f++)
 			if (pos.col > 0 && pos.fil > 0 && check(Posicion(c, f), info)) {
 				if (color == BLANCAS && info(Posicion(c, f)) == NEGRAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
 				else if (color == NEGRAS && info(Posicion(c, f)) == BLANCAS) { jugadas_ofensivas.push_back(Posicion(c, f)); }
 			}
+}
+
+void Pieza::eliminar_jugada(Posicion jugada) {
+	for (int i = 0; i < jugadas_posibles.size(); i++)
+		if (jugadas_posibles[i] == jugada) {
+			jugadas_posibles.erase(jugadas_posibles.begin() + i);
+			i = (int)jugadas_posibles.size();
+		}
+	for (int i = 0; i < jugadas_ofensivas.size(); i++)
+		if (jugadas_ofensivas[i] == jugada) {
+			jugadas_ofensivas.erase(jugadas_ofensivas.begin() + i);
+			i = (int)jugadas_ofensivas.size();
+		}
+	for (int i = 0; i < jugadas_no_ofensivas.size(); i++)
+		if (jugadas_no_ofensivas[i] == jugada) {
+			jugadas_no_ofensivas.erase(jugadas_no_ofensivas.begin() + i);
+			i = (int)jugadas_no_ofensivas.size();
+		}
+	
 }
 
 void dibuja_brillo(Posicion pos, unsigned char alpha, unsigned char r, unsigned char g, unsigned char b, float lado, double fondo) {
@@ -112,23 +131,4 @@ void dibuja_brillo(Posicion pos, unsigned char alpha, unsigned char r, unsigned 
 	glEnd();
 
 	glDisable(GL_BLEND);
-}
-
-void Pieza::eliminar_jugada(Posicion jugada) {
-	for (int i = 0; i < jugadas_posibles.size(); i++)
-		if (jugadas_posibles[i] == jugada) {
-			jugadas_posibles.erase(jugadas_posibles.begin() + i);
-			i = (int)jugadas_posibles.size();
-		}
-	for (int i = 0; i < jugadas_ofensivas.size(); i++)
-		if (jugadas_ofensivas[i] == jugada) {
-			jugadas_ofensivas.erase(jugadas_ofensivas.begin() + i);
-			i = (int)jugadas_ofensivas.size();
-		}
-	for (int i = 0; i < jugadas_no_ofensivas.size(); i++)
-		if (jugadas_no_ofensivas[i] == jugada) {
-			jugadas_no_ofensivas.erase(jugadas_no_ofensivas.begin() + i);
-			i = (int)jugadas_no_ofensivas.size();
-		}
-	
 }
