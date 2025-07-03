@@ -8,8 +8,8 @@ extern Coordinador ajedrez;
 
 //métodos de la clase Tablero
 void Tablero::set_t(Color t) {
-	set_jugadas();
 	turno = t;
+	set_jugadas();	
 	contador_blancas = contador_negras = tiempo;
 	if (t != NONE) numero_click = CERO;
 	else numero_click = NON;
@@ -43,16 +43,16 @@ bool Tablero :: operator+= (Pieza* p) {
 	return true;
 }
 
-TablaInfo Tablero::get_ocupacion() {
+TablaInfo Tablero::get_ocupacion()const {
 	TablaInfo retorno(columnas, filas);
-	for (auto pieza:lista) {
-		if (pieza->pos == Posicion(0,0)) continue;
+	for (auto pieza : lista) {
+		if (pieza->pos == Posicion(0, 0)) continue;
 		retorno((pieza->pos).col, (pieza->pos).fil) = pieza->color;
 	}
 	return retorno;
 }
 
-Posicion Tablero::get_centro(double x, double y) {
+Posicion Tablero::get_centro(double x, double y) const {
 	int aux1 = (int)(x + 0.5);
 	int aux2 = (int)(y + 0.5);
 	return Posicion(aux1, aux2);
@@ -94,6 +94,7 @@ void Tablero::OnMouse(double worldX, double worldY) {
 
 		if (mitablero.mueve(celdaClickada1, celdaClickada2)) {
 			mitablero.cambio_turno();
+			comprobacion_rey_ahogado();
 			comprobacion_tablas();
 			comprobacion_jaque_mate();
 		}
@@ -107,18 +108,18 @@ void Tablero::OnMouse(double worldX, double worldY) {
 	}
 }
 
-void Tablero::filtro_piezas(vector <Pieza*>& blancas, vector <Pieza*>& negras) {
-	blancas.clear();
-	negras.clear();
+void Tablero::filtro_piezas() {
+	piezas_blancas.clear();
+	piezas_negras.clear();
 
 	for (auto pieza : lista) {
 		if (pieza == nullptr) continue;
-		if (pieza->color == BLANCAS) blancas.push_back(pieza);
-		else if (pieza->color == NEGRAS) negras.push_back(pieza);
+		if (pieza->color == BLANCAS) piezas_blancas.push_back(pieza);
+		else if (pieza->color == NEGRAS) piezas_negras.push_back(pieza);
 	}
 }
 
-bool Tablero::check_mueve(Posicion inicial, Posicion objetivo) {
+bool Tablero::check_mueve(const Posicion& inicial, const Posicion& objetivo) {
 	Pieza* p_in = (*this)(inicial);
 	Pieza* p_fin = (*this)(objetivo);
 
@@ -135,7 +136,7 @@ bool Tablero::check_mueve(Posicion inicial, Posicion objetivo) {
 	return false;
 }
 
-bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
+bool Tablero::mueve(const Posicion& inicial, const Posicion& objetivo) {
 	Pieza* p_in = (*this)(inicial);
 	Pieza* p_fin = (*this)(objetivo);
 
@@ -145,7 +146,9 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	}
 
 	//enroque o movimiento normal
-	if (enroque_mueve(p_in, objetivo)){}
+	if (enroque_mueve(p_in, objetivo)){
+		ETSIDI::play("sonidos/movimiento.wav");
+	}
 	else {
 		p_in->pos = objetivo;
 		p_in->primer_mov = false;
@@ -161,12 +164,12 @@ bool Tablero::mueve(Posicion inicial, Posicion objetivo) {
 	promociona(p_in, objetivo);
 
 	//actualiza las jugadas
-	filtro_piezas(piezas_blancas, piezas_negras);
+	filtro_piezas();
 
 	return true;
 }
 
-void Tablero::promociona(Pieza* p_in, Posicion objetivo) {
+void Tablero::promociona(Pieza* p_in, const Posicion& objetivo) {
 	if (!(p_in->nombre == "Peon")) return;
 	if (ajedrez.estado != CUATRO_CINCO) return;
 	if ((p_in->color == NEGRAS && p_in->pos.fil == 1) || (p_in->color == BLANCAS && p_in->pos.fil == filas)) {
@@ -191,16 +194,16 @@ void Tablero::comprobacion_jaque_mate() {
 			ETSIDI::play("sonidos/jaque.wav");
 			jaque_mate(piezas_blancas, piezas_negras);
 		}
-	}	
+	}
 }
 
 void Tablero::comprobacion_tablas() {
 	int num_alfiles{}, num_caballos{}, num_reyes{};
 	if (num == 3 || num == 2) {
-		for (int i = 0; i < num; i++) {
-			if (lista[i]->nombre == "Rey") num_reyes++;
-			else if (lista[i]->nombre == "Caballo") num_caballos++;
-			else if (lista[i]->nombre == "Alfil") num_alfiles++;
+		for (auto pieza:lista) {
+			if (pieza->nombre == "Rey") num_reyes++;
+			else if (pieza->nombre == "Caballo") num_caballos++;
+			else if (pieza->nombre == "Alfil") num_alfiles++;
 		}
 	}
 	if ((num_reyes == 2 && num == 2) || (num == 3 && num_reyes == 2 && (num_caballos == 1 || num_alfiles == 1))) {
@@ -209,6 +212,22 @@ void Tablero::comprobacion_tablas() {
 	}
 }
 
+void Tablero::comprobacion_rey_ahogado() {
+	if (turno == BLANCAS) {
+		for (auto pieza : piezas_blancas) {
+			if (pieza->jugadas_posibles.size() != 0)
+				return;
+		}
+	}
+	else if (turno == NEGRAS) {
+		for (auto pieza : piezas_negras) {
+			if (pieza->jugadas_posibles.size() != 0)
+				return;
+		}
+	}
+	cout << "Rey ahogado" << endl;
+	ajedrez.estado = REY_AHOGADO;
+}
 
 Rey* Tablero::busca_rey(const vector<Pieza*>& piezas) {
 
@@ -218,7 +237,7 @@ Rey* Tablero::busca_rey(const vector<Pieza*>& piezas) {
 	return nullptr;
 }
 
-bool Tablero::jaque(Rey* rey, vector<Pieza*>& piezas) {
+bool Tablero::jaque(Rey* rey, const vector<Pieza*>& piezas) {
 	for (auto pieza : piezas) {
 		pieza->set_amenazas(get_ocupacion());
 		for (auto jugada : pieza->jugadas_ofensivas)
@@ -266,7 +285,8 @@ void Tablero::enroque(Rey* rey) {
 	
 	if (!rey || !rey->primer_mov) return;
 
-	rey->enroque_posible = false;	
+	rey->enroque_posible = false;
+
 	Posicion objetivo = pos_enroque(rey);
 	Pieza* pieza_obstaculo = (*this)(objetivo);
 
@@ -296,7 +316,7 @@ void Tablero::enroque(Rey* rey) {
 	if (rey->enroque_posible) cout << "Enroque posible" << endl;
 }
 
-Posicion Tablero::pos_enroque(const Rey* rey) {
+Posicion Tablero::pos_enroque(const Rey* rey)const {
 	return (rey->color == BLANCAS) ?
 		Posicion(rey->pos.col - 2, rey->pos.fil) : Posicion(rey->pos.col + 2, rey->pos.fil);
 }
@@ -320,7 +340,7 @@ Pieza* Tablero::torre_enroque(const Rey* rey) {
 	return torre;
 }
 
-bool Tablero::enroque_mueve(Pieza* p_in, Posicion objetivo) {
+bool Tablero::enroque_mueve(Pieza* p_in, const Posicion& objetivo) {
 
 	if (!(p_in->nombre == "Rey")) return false;
 
@@ -365,13 +385,13 @@ void Tablero::vaciar() {
 	turno = BLANCAS;
 }
 
-void Tablero::dibuja() {
+void Tablero::dibuja()const {
 	dibuja_tablero(columnas, filas);
-	for (auto p : lista) p->dibuja();
-	for (auto b : brillos) dibuja_brillo(b, 255, 0, 255, 255, (float)0.1, 0.01);
+	for (auto pieza : lista) pieza->dibuja();
+	for (auto brillo : brillos) dibuja_brillo(brillo, 255, 0, 255, 255, (float)0.1, 0.01);
 }
 
-void Tablero::brillo_pieza(Posicion pos, bool s) {
+void Tablero::brillo_pieza(const Posicion& pos, bool s) {
 	Pieza* p = (*this)(pos);
 	if (p) p->hay_seleccion = s;
 	for (auto pieza : lista) pieza->hay_amenaza = false;

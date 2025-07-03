@@ -14,7 +14,7 @@ class Coordinador
 public:
 	
 	void OnTimer(int value);
-	void dibuja();
+	void dibuja()const;
 	void tecla(unsigned char key);
 
 	friend class Tablero;

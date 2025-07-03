@@ -89,11 +89,18 @@ void Coordinador::tecla(unsigned char key) {
 		if (key == '0') exit(0);
 
 		break;
+
+	case REY_AHOGADO:
+		if (key == 'i') estado = INICIO;
+		if (key == '1') estado = OBSERVACION;
+		if (key == '0') exit(0);
+
+			break;
 	}
+	
 }
 
-void Coordinador::dibuja()
-{
+void Coordinador::dibuja() const{
 	char contador_b[15];
 	char contador_n[15];
 
@@ -194,7 +201,7 @@ void Coordinador::dibuja()
 
 		ETSIDI::setTextColor(255, 180, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 30);
-		ETSIDI::printxy("JAQUE MATE", 13, 31);
+		ETSIDI::printxy("JAQUE MATE", 16, 31);
 		mitablero.ganador == NEGRAS ? ETSIDI::printxy("Ganan Las Negras", 13, 27) : ETSIDI::printxy("Ganan las Blancas", 13, 27);
 
 		ETSIDI::setTextColor(1, 1, 1);
@@ -215,8 +222,26 @@ void Coordinador::dibuja()
 		ETSIDI::printxy("TABLAS", 17, 36);
 		ETSIDI::printxy("NO HAY GANADOR", 12, 32);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
-		ETSIDI::printxy("POR NUMERO INSUFICIENTE DE PIEZAS", 12, 27);
+		ETSIDI::printxy("MATERIAL INSUFICIENTE", 12, 27);
 
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
+		ETSIDI::printxy("Pulse i para volver a inicio", 16, 22);
+		ETSIDI::printxy("Pulse 1 para observacion", 16, 19);
+		ETSIDI::printxy("Pulse 0 para salir", 16, 16);
+
+		break;
+
+	case REY_AHOGADO:
+		gluLookAt(25, 25, 50,			
+			25, 25, 0,		
+			0.0, 1.0, 0.0);
+
+		ETSIDI::setTextColor(255, 180, 0);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 30);
+		ETSIDI::printxy("REY AHOGADO", 15, 36);
+		ETSIDI::printxy("NO HAY GANADOR", 12, 32);
+		
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 14);
 		ETSIDI::printxy("Pulse i para volver a inicio", 16, 22);
@@ -282,7 +307,7 @@ void Coordinador::inicializa_45() {
 	mitablero += new Caballo({ 2,5 }, NEGRAS);
 	mitablero += new Rey({ 1,5 }, NEGRAS);
 
-	mitablero.filtro_piezas(mitablero.piezas_blancas, mitablero.piezas_negras);
+	mitablero.filtro_piezas();
 	mitablero.set_t(BLANCAS);
 }
 
@@ -304,7 +329,7 @@ void Coordinador::inicializa_S() {
 	for (int i = 1; i < 6; i++)
 		mitablero += new Peon({ i,5 }, NEGRAS,false);
 
-	mitablero.filtro_piezas(mitablero.piezas_blancas, mitablero.piezas_negras);
+	mitablero.filtro_piezas();
 	mitablero.set_t(BLANCAS);
 }
 

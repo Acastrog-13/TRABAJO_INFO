@@ -14,6 +14,7 @@ bool Pieza::check_recorrido(const Posicion &objetivo, const TablaInfo& info)cons
 		inc = Posicion((dif.col > 0 ? 1 : (dif.col < 0 ? -1 : 0)), (dif.fil > 0 ? 1 : (dif.fil < 0 ? -1 : 0))),
 		npos = pos + inc;
 	while (!(npos == objetivo)) {
+		if (!npos.check(info.columnas, info.filas))return false;
 		if (info(npos) != NONE) return false;
 		npos = npos + inc;
 	}
